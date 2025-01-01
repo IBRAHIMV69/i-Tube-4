@@ -230,31 +230,50 @@ button.green {
 button.blue {
     background-color: #007bff;
 }
-#install-message {
+.install-message {
     position: fixed;
     bottom: 20px;
-    right: 20px;
-    background-color: #4caf50;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff; /* Blue background */
+    color: #333;
+    padding: 2px 20px;
+    border-radius: 12px;
+    display: flex;
+    font-size: 9.8px;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+}
+
+.install-btn {
+    background-color: #ff0000; /* Green button */
     color: white;
-    padding: 15px 25px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-    z-index: 9999;
-    text-align: center;
-}
-
-#install-message button {
-    margin-top: 10px;
     padding: 10px 20px;
-    background-color: white;
-    color: #4caf50;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 1px; /* Space between the paragraph and the button */
 }
 
-#install-message button:hover {
-    background-color: #f1f1f1;
+.close-btn {
+    background-color: transparent;
+    color: white;
+    font-size: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+}
+
+.close-btn:hover {
+    color: #ff0000;
 }
     </style>
 </head>
@@ -276,9 +295,10 @@ button.blue {
     </div>
 </header>
 
-<div id="install-message" style="display: none;">
-    <p>Install our app for a better experience!</p>
-    <button onclick="window.location.href='https://drive.google.com/file/d/1Ktc8MKnoc65A2DeVXUpiwV2UixlKbvRW/view?usp=drivesdk'">Install App</button>
+<div id="install-message" class="install-message" style="display: none;">
+    <p>For non-stop video enjoyment, install the i Tube app now!</p>
+    <a href="https://drive.google.com/file/d/1Ktc8MKnoc65A2DeVXUpiwV2UixlKbvRW/view?usp=drivesdk" class="install-btn" target="_blank">Install Now</a>
+    <button id="close-btn" class="close-btn">✖</button>
 </div>
 
 <div id="frames-container"></div>
@@ -446,25 +466,21 @@ const showNotification = (message, type) => {
     }, 3000); // 3 seconds
 };
 
-const showInstallMessage = () => {
-    const installMessage = document.getElementById("install-message");
-    const now = new Date().getTime(); // Current timestamp
-    const lastShown = localStorage.getItem("lastInstallMessageShown");
+// Show the install message 15 seconds after the page loads
+window.onload = function() {
+    setTimeout(function() {
+        const installMessage = document.getElementById('install-message');
+        const closeButton = document.getElementById('close-btn');
 
-    // Show message if:
-    // - It's been more than 24 hours (1 day) since the last message OR
-    // - It's been more than 5 days since the last message
-    const oneDay = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-    const fiveDays = 5 * oneDay;
+        // Display the message
+        installMessage.style.display = 'flex';
 
-    if (!lastShown || now - lastShown > oneDay || now - lastShown > fiveDays) {
-        installMessage.style.display = "block"; // Show the message
-        localStorage.setItem("lastInstallMessageShown", now); // Update the last shown time
-    }
+        // Close the message when the close button is clicked
+        closeButton.onclick = function() {
+            installMessage.style.display = 'none';
+        };
+    }, 30000); // 30000 milliseconds = 30 seconds
 };
-
-// Call this function when the page loads
-window.onload = showInstallMessage;
 
     const closeNav = () => {
         document.getElementById('video-nav').style.display = 'none';
