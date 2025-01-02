@@ -241,6 +241,7 @@ button.blue {
     border-radius: 12px;
     display: flex;
     font-size: 9.8px;
+    border: 1px solid #ccc;
     flex-direction: column; /* Stack items vertically */
     align-items: center;
     justify-content: center;
@@ -253,7 +254,8 @@ button.blue {
 .install-btn {
     background-color: #ff0000; /* Green button */
     color: white;
-    padding: 10px 20px;
+    border: 1px solid #ccc;
+    padding: 10px 25px;
     border-radius: 8px;
     text-decoration: none;
     font-weight: bold;
@@ -263,8 +265,8 @@ button.blue {
 .close-btn {
     background-color: transparent;
     color: white;
-    font-size: 1px;
-    border: none;
+    font-size: 8px;
+    border: 1px solid #ccc;
     cursor: pointer;
     font-weight: bold;
     position: absolute;
@@ -288,7 +290,7 @@ button.blue {
         <div class="tag" onclick="filterByTag('America')">America</div>
         <div class="tag" onclick="filterByTag('Chinese')">Chinese</div>
         <div class="tag" onclick="filterByTag('Indian')">Indian</div>
-        <div class="tag" onclick="filterByTag('Europe')">Europe</div>
+        <div class="tag" onclick="filterByTag('Canada')">Canada</div>
         <div class="tag" onclick="filterByTag('Africa')">Africa</div>
         <div class="tag" onclick="filterByTag('Japan')">Japan</div>
         <div class="tag" onclick="filterByTag('Australia')">Australia</div>
@@ -297,7 +299,7 @@ button.blue {
 
 <div id="install-message" class="install-message" style="display: none;">
     <p>For non-stop video enjoyment, install the i Tube app now!</p>
-    <a href="https://drive.google.com/file/d/1Ktc8MKnoc65A2DeVXUpiwV2UixlKbvRW/view?usp=drivesdk" class="install-btn" target="_blank">Install Now</a>
+    <a href="https://drive.google.com/file/d/1M2BGHFzJGC_hlYgZQddiZmDXtxAiY2ML/view?usp=drivesdk" class="install-btn" target="_blank">Install Now</a>
     <button id="close-btn" class="close-btn">✖</button>
 </div>
 
@@ -315,7 +317,7 @@ button.blue {
             videoUrl: "https://youtube.com/embed/CetjkiaH2x0",
             adUrl: "https://www.profitablecpmrate.com/mdzmc2az?key=fc460ea1942633b5443e8f21f2a2e52c",
             title: "APOCALYPSE 2",
-            tag: "America",          
+            tag: "Canada",          
         },
         {
             imgUrl: "https://bit.ly/4fFLfwd",
@@ -514,7 +516,7 @@ window.onload = function() {
         closeButton.onclick = function() {
             installMessage.style.display = 'none';
         };
-    }, 30000); // 30000 milliseconds = 30 seconds
+    }, 40000); // 40000 milliseconds = 30 seconds
 };
 
     const closeNav = () => {
