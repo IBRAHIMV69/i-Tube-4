@@ -163,6 +163,7 @@
         .notification {
     padding: 15px 25px;
     font-size: 10px;
+    border: 1px solid #ccc;
     font-weight: bold;
     color: #fff;
     border-radius: 8px;
@@ -487,6 +488,27 @@ button.blue {
             title: "AMBER ALERT",
             tag: "America",
         },
+        {
+            imgUrl: "https://bit.ly/3BPUxb7",
+            videoUrl: "https://youtube.com/embed/WuGAw0cYHL4",
+            adUrl: "https://www.profitablecpmrate.com/mdzmc2az?key=fc460ea1942633b5443e8f21f2a2e52c",
+            title: "LIGHTNING STRIKES",
+            tag: "America",
+        },
+        {
+            imgUrl: "https://bit.ly/4jg9nsr",
+            videoUrl: "https://youtube.com/embed/esKGH-ThwYg",
+            adUrl: "https://www.profitablecpmrate.com/mdzmc2az?key=fc460ea1942633b5443e8f21f2a2e52c",
+            title: "FLIRTING WITH DANGER",
+            tag: "America",
+        },
+        {
+            imgUrl: "https://bit.ly/4jgayYT",
+            videoUrl: "https://youtube.com/embed/QEdJmkXQ7k4",
+            adUrl: "https://www.profitablecpmrate.com/mdzmc2az?key=fc460ea1942633b5443e8f21f2a2e52c",
+            title: "THE ANDY BAKER TAPE",
+            tag: "America",
+        },
     ];
 
     const createFrames = (filteredData = data) => {
@@ -509,13 +531,13 @@ button.blue {
 
         const button = document.createElement('button');
         const visited = localStorage.getItem(`${item.title}-ad-visited`);
-        button.textContent = visited ? 'Movie Unlocked' : 'Unlock Movie🔒';
+        button.textContent = visited ? 'Watch' : 'Unlock Movie🔒';
         button.style.backgroundColor = visited ? '#4caf50' : '#ff0000'; // Green if unlocked
         button.onclick = () => {
             if (!visited) {
                 visitAd(item.title, item.adUrl, button);
             } else {
-                showNotification('This movie is already unlocked! click the frame and watch', 'info');
+                showNotification('This movie is already unlocked! click the movie frame', 'info');
             }
         };
 
@@ -538,7 +560,7 @@ const visitAd = (videoId, adUrl, button) => {
 const openVideoNav = (videoUrl, videoId) => {
     const visited = localStorage.getItem(`${videoId}-ad-visited`);
     if (!visited) {
-        showNotification('Unlock movie for visiting sites of advertisers.', 'warning');
+        showNotification('Unlock this movie for visiting sites of advertisers.', 'warning');
         return;
     }
     document.getElementById('video-nav').style.display = 'block';
