@@ -552,7 +552,7 @@ button.blue {
 const visitAd = (videoId, adUrl, button) => {
     window.open(adUrl, '_blank');
     localStorage.setItem(`${videoId}-ad-visited`, Date.now());
-    button.textContent = 'Unlocked 🔓'; // Update button text
+    button.textContent = 'Watch'; // Update button text
     button.style.backgroundColor = '#4caf50'; // Change button color to green
     showNotification('The movie is now unlocked!', 'success');
 };
