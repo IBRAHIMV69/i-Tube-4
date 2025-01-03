@@ -453,13 +453,6 @@ button.blue {
             tag: "America",          
         },
         {
-            imgUrl: "https://bit.ly/3DBZjcJ",
-            videoUrl: "https://youtube.com/embed/xtd4VSowu6I",
-            adUrl: "https://www.profitablecpmrate.com/mdzmc2az?key=fc460ea1942633b5443e8f21f2a2e52c",
-            title: "AMBER ALERT",
-            tag: "America",
-        },
-        {
             imgUrl: "https://bit.ly/4gCtcbn",
             videoUrl: "https://youtube.com/embed/9QB2GjHg0Tw",
             adUrl: "https://www.profitablecpmrate.com/mdzmc2az?key=fc460ea1942633b5443e8f21f2a2e52c",
@@ -487,6 +480,13 @@ button.blue {
             title: "VAMPYRE NATION",
             tag: "America",
         },
+        {
+            imgUrl: "https://bit.ly/3DBZjcJ",
+            videoUrl: "https://youtube.com/embed/xtd4VSowu6I",
+            adUrl: "https://www.profitablecpmrate.com/mdzmc2az?key=fc460ea1942633b5443e8f21f2a2e52c",
+            title: "AMBER ALERT",
+            tag: "America",
+        },
     ];
 
     const createFrames = (filteredData = data) => {
@@ -509,13 +509,13 @@ button.blue {
 
         const button = document.createElement('button');
         const visited = localStorage.getItem(`${item.title}-ad-visited`);
-        button.textContent = visited ? 'Unlocked ✅' : 'Watch Ad 🔒';
+        button.textContent = visited ? 'Movie Unlocked' : 'Unlock Movie🔒';
         button.style.backgroundColor = visited ? '#4caf50' : '#ff0000'; // Green if unlocked
         button.onclick = () => {
             if (!visited) {
                 visitAd(item.title, item.adUrl, button);
             } else {
-                showNotification('This video is already unlocked! You can now watch', 'info');
+                showNotification('This movie is already unlocked! click the frame and watch', 'info');
             }
         };
 
@@ -532,13 +532,13 @@ const visitAd = (videoId, adUrl, button) => {
     localStorage.setItem(`${videoId}-ad-visited`, Date.now());
     button.textContent = 'Unlocked 🔓'; // Update button text
     button.style.backgroundColor = '#4caf50'; // Change button color to green
-    showNotification('The video is now unlocked!', 'success');
+    showNotification('The movie is now unlocked!', 'success');
 };
 
 const openVideoNav = (videoUrl, videoId) => {
     const visited = localStorage.getItem(`${videoId}-ad-visited`);
     if (!visited) {
-        showNotification('Please Watch the Ad to unlock this video.', 'warning');
+        showNotification('Unlock movie for visiting sites of advertisers.', 'warning');
         return;
     }
     document.getElementById('video-nav').style.display = 'block';
