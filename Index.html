@@ -278,6 +278,67 @@ button.blue {
 .close-btn:hover {
     color: #ff0000;
 }
+/* Bottom Navigation Styling */
+#bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 10px 0;
+    border-top: 1px solid #ccc;
+}
+
+.nav-item {
+    text-align: center;
+    color: #555;
+    text-decoration: none;
+    font-size: 10px;
+}
+
+.nav-item i {
+    display: block;
+    color: #555;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+/* Full-Screen Navigation Frame Styling */
+#nav-frame {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#nav-frame iframe {
+    width: 100%;
+    height: calc(100% - 50px); /* Leave space for the close button */
+    border: none;
+}
+
+#close-nav {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 3px 5px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+#close-nav:hover {
+    background-color: #ff1a1a;
+}
     </style>
 </head>
 <body>
@@ -306,10 +367,37 @@ button.blue {
 
 <div id="frames-container"></div>
 
-<div id="video-nav">
-    <button id="close-btn" onclick="closeNav()">Close</button>
-    <iframe id="video-player" src="" frameborder="0" allowfullscreen></iframe>
+<!-- Bottom Navigation Bar -->
+<div id="bottom-nav">
+    <a href="javascript:void(0);" class="nav-item" id="market-icon" data-url="https://www.example-market.com">
+        <i class="fas fa-store"></i>
+        <span>Market</span>
+    </a>
+    <a href="javascript:void(0);" class="nav-item" id="novels-icon" data-url="https://www.novelol.com/goodnovel/share?bid=31000388532&uid=67304178&l=bookDetail&sc=fxrw_0_bookDetail&rd=2&type=1">
+        <i class="fas fa-book"></i>
+        <span>Novels</span>
+    </a>
+    <a href="javascript:void(0);" class="nav-item" id="post-icon" data-url="https://www.example-post.com">
+        <i class="fas fa-plus-circle"></i>
+        <span>Post</span>
+    </a>
+    <a href="javascript:void(0);" class="nav-item" id="home-icon" data-url="https://singles-girls.netlify.app/">
+        <i class="fas fa-heart"></i>
+        <span>Chat</span>
+    </a>
+    <a href="javascript:void(0);" class="nav-item" id="history-icon" data-url="https://www.example-history.com">
+        <i class="fas fa-history"></i>
+        <span>History</span>
+    </a>
 </div>
+
+<!-- Full-Screen Navigation Frame -->
+<div id="nav-frame" class="hidden">
+    <button id="close-nav">✖</button>
+    <iframe id="website-frame" src="" frameborder="0"></iframe>
+</div>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
 <script>
     const data = [
@@ -559,7 +647,7 @@ button.blue {
 const visitAd = (videoId, adUrl, button) => {
     window.open(adUrl, '_blank');
     localStorage.setItem(`${videoId}-ad-visited`, Date.now());
-    button.textContent // Update button text
+    button.textContent = 'Watch'; // Update button text
     button.style.backgroundColor = '#4caf50'; // Change button color to green
     showNotification('The movie is now unlocked!', 'success');
 };
@@ -626,6 +714,33 @@ window.onload = function() {
         const filteredData = data.filter(item => item.tag === tag);
         createFrames(filteredData);
     };
+    
+    // Function to handle bottom navigation clicks
+document.querySelectorAll(".nav-item").forEach((icon) => {
+    icon.addEventListener("click", function () {
+        // Open the navigation frame
+        const navFrame = document.getElementById("nav-frame");
+        navFrame.style.display = "block";
+
+        // Get the URL from the data attribute
+        const websiteUrl = this.getAttribute("data-url");
+
+        // Load the URL into the iframe
+        const iframe = document.getElementById("website-frame");
+        iframe.src = websiteUrl;
+    });
+});
+
+// Close button functionality
+document.getElementById("close-nav").addEventListener("click", function () {
+    // Close the navigation frame
+    const navFrame = document.getElementById("nav-frame");
+    navFrame.style.display = "none";
+
+    // Stop loading the website by clearing the iframe src
+    const iframe = document.getElementById("website-frame");
+    iframe.src = "";
+});
     
     // Shuffle the data array
 function shuffleArray(array) {
