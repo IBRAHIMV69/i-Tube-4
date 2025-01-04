@@ -339,6 +339,19 @@ button.blue {
 #close-nav:hover {
     background-color: #ff1a1a;
 }
+/* Bottom navigation bar styling */
+#bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    padding: 10px 0;
+    border-top: 1px solid #ccc;
+    transition: transform 0.3s ease-in-out; /* Smooth hide/show animation */
+    z-index: 1000;
+}
     </style>
 </head>
 <body>
@@ -373,7 +386,7 @@ button.blue {
         <i class="fas fa-store"></i>
         <span>Market</span>
     </a>
-    <a href="javascript:void(0);" class="nav-item" id="novels-icon" data-url="https://www.novelol.com/goodnovel/share?bid=31000388532&uid=67304178&l=bookDetail&sc=fxrw_0_bookDetail&rd=2&type=1">
+    <a href="javascript:void(0);" class="nav-item" id="novels-icon" data-url="https://www.wattpad.com/stories/novels/hot?locale=en_us">
         <i class="fas fa-book"></i>
         <span>Novels</span>
     </a>
@@ -740,6 +753,22 @@ document.getElementById("close-nav").addEventListener("click", function () {
     // Stop loading the website by clearing the iframe src
     const iframe = document.getElementById("website-frame");
     iframe.src = "";
+});
+let lastScrollTop = 0; // Store the last scroll position
+const bottomNav = document.getElementById("bottom-nav");
+
+window.addEventListener("scroll", function () {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop) {
+        // Scrolling down
+        bottomNav.style.transform = "translateY(100%)"; // Hide the bottom nav
+    } else {
+        // Scrolling up
+        bottomNav.style.transform = "translateY(0)"; // Show the bottom nav
+    }
+
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Update the last scroll position
 });
     
     // Shuffle the data array
