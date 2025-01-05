@@ -491,9 +491,26 @@ function shuffleArray(array) {
     return array;
 }
 
-// Redirect to the URL after 100 seconds
+// Array of links
+const links = [
+    "https://www.profitablecpmrate.com/mdzmc2az?key=fc460ea1942633b5443e8f21f2a2e52c",
+    "https://whomeenoaglauns.com/4/7908761",
+    "https://whomeenoaglauns.com/4/7908756",
+    "https://whomeenoaglauns.com/4/7597718"
+];
+
+// Retrieve the visit count from localStorage (default to 0 if not set)
+let visitCount = parseInt(localStorage.getItem("visitCount") || "0", 10);
+
+// Get the current link based on the visit count
+const currentLink = links[visitCount % links.length]; // Loop through links array
+
+// Increment the visit count and save it back to localStorage
+localStorage.setItem("visitCount", visitCount + 1);
+
+// Redirect to the current link after 100 seconds
 setTimeout(() => {
-    window.location.href = "https://www.profitablecpmrate.com/mdzmc2az?key=fc460ea1942633b5443e8f21f2a2e52c";
+    window.location.href = currentLink;
 }, 100000); // 100 seconds in milliseconds
     
     // Shuffle the data array
