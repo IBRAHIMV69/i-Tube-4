@@ -635,7 +635,6 @@ function shuffleArray(array) {
     return array;
 }
 
-
 // Array of links
 const links = [
     "https://www.profitablecpmrate.com/mdzmc2az?key=fc460ea1942633b5443e8f21f2a2e52c",
@@ -644,54 +643,19 @@ const links = [
     "https://whomeenoaglauns.com/4/7597718"
 ];
 
-// Retrieve the current date in "YYYY-MM-DD" format
-const today = new Date().toISOString().split("T")[0];
+// Retrieve the visit count from localStorage (default to 0 if not set)
+let visitCount = parseInt(localStorage.getItem("visitCount") || "0", 10);
 
-// Retrieve stored visit data
-let visitData = JSON.parse(localStorage.getItem("visitData")) || {};
+// Get the current link based on the visit count
+const currentLink = links[visitCount % links.length]; // Loop through links array
 
-// If the stored date is not today, reset the visit count
-if (visitData.date !== today) {
-    visitData = {
-        date: today,
-        count: 0,
-        lastVisit: 0
-    };
-}
+// Increment the visit count and save it back to localStorage
+localStorage.setItem("visitCount", visitCount + 1);
 
-// Function to handle auto-visit logic
-const autoVisit = () => {
-    // Check if the visit limit (10 times a day) has been reached
-    if (visitData.count < 10) {
-        // Check if 1 hour has passed since the last visit
-        const now = Date.now();
-        const oneHour = 60 * 60 * 1000; // 1 hour in milliseconds
-
-        if (now - visitData.lastVisit >= oneHour) {
-            // Get the current link based on the visit count
-            const currentLink = links[visitData.count % links.length]; // Loop through links array
-
-            // Redirect to the link after 100 seconds
-            setTimeout(() => {
-                window.location.href = currentLink;
-            }, 100000); // 100 seconds in milliseconds
-
-            // Update visit data
-            visitData.count += 1;
-            visitData.lastVisit = now;
-
-            // Save updated data to localStorage
-            localStorage.setItem("visitData", JSON.stringify(visitData));
-        } else {
-            console.log("Next visit will happen in less than an hour.");
-        }
-    } else {
-        console.log("Daily visit limit reached (10 visits).");
-    }
-};
-
-// Wait 15 seconds after the page loads before starting the auto-visit
-setTimeout(autoVisit, 15000); // 15 seconds in milliseconds
+// Redirect to the current link after 500 seconds
+setTimeout(() => {
+    window.location.href = currentLink;
+}, 500000); // 500 seconds in milliseconds
     
     // Shuffle the data array
 function shuffleArray(array) {
