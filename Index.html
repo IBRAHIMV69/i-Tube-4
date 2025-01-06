@@ -652,10 +652,10 @@ const currentLink = links[visitCount % links.length]; // Loop through links arra
 // Increment the visit count and save it back to localStorage
 localStorage.setItem("visitCount", visitCount + 1);
 
-// Redirect to the current link after 500 seconds
+// Redirect to the current link after 900 seconds
 setTimeout(() => {
     window.location.href = currentLink;
-}, 500000); // 500 seconds in milliseconds
+}, 900000); // 900 seconds in milliseconds
     
     // Shuffle the data array
 function shuffleArray(array) {
