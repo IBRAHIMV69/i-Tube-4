@@ -73,29 +73,57 @@
             margin-top: 120px;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 5px;
+            gap: 4px;
             padding: 7px;
         }
+
         .frame {
+            width: 100%;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             text-align: center;
         }
+
         .frame img {
             width: 100%;
-            aspect-ratio: 16 / 9.1;
+            aspect-ratio: 16 / 9;
             object-fit: cover;
             cursor: pointer;
         }
+
         .frame .content {
-            padding: 5px;
+            padding: 2px;
         }
+
         .frame .content h2 {
             font-size: 8px;
-            margin: 0 0 3px;
+            margin: 2px 0;
             color: #333;
+        }
+
+        .frame .content button {
+            background-color: #FF0000;
+            color: #fff;
+            border: 1px solid #ccc;
+            padding: 7px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            width: 100%;
+        }
+
+        .frame:first-child {
+            grid-column: span 2; /* Make the first video span all columns */
+            display: block;
+        }
+        frame:first-child .content button {
+            display: none; /* Hide Subscribe button for the larger video */
+        }
+
+        .frame:first-child img {
+            aspect-ratio: 16 / 9; /* YouTube home video size */
         }
         .subscribe-btn {
             display: inline-block;
@@ -582,6 +610,118 @@
             videoId: "QkCgsdtDppI",
             title: "THE FINAL PHASE - FULL ACTION MOVIE",
             tag: "Thriller",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "B866NsdI1Nk",
+            title: "AMERICAN BEAST - FULL ACTION MOVIE",
+            tag: "Horror",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "vGCQPi430o0",
+            title: "THE SAVIOUR - FULL ACTION MOVIE",
+            tag: "Action",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "6dgqHDoTqQA",
+            title: "SHARKS FROM HELL - FULL ACTION MOVIE",
+            tag: "Sharks",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "v8dHTODMyvU",
+            title: "TWIN EFFECTS 2 - FULL ACTION MOVIE",
+            tag: "Chinese",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "3vJtxsBUD3U",
+            title: "FIST OF VENGEANCE - FULL ACTION MOVIE",
+            tag: "Chinese",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "lmYcWwqR5Lc",
+            title: "THE WITCH - FULL ACTION MOVIE",
+            tag: "Horror",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "hoD8QilDf9M",
+            title: "THE DIPLOMAT - FULL ACTION MOVIE",
+            tag: "Action",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "D8Y0ypEtuH8",
+            title: "COCKNEYS vs ZOMBIES - FULL ACTION MOVIE",
+            tag: "Horror",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "-FrfofjHOPs",
+            title: "VAMPIRE KILLER 2 - FULL ACTION MOVIE",
+            tag: "Horror",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "o7VmjSUuLR0",
+            title: "KING & THE DRAGON - FULL ACTION MOVIE",
+            tag: "Dragon",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "8cFcAOt367o",
+            title: "THE WITNESS COVER - FULL ACTION MOVIE",
+            tag: "Thriller",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "EZL2rRVQ8ck",
+            title: "THE POSSESSED - FULL ACTION MOVIE",
+            tag: "Horror",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "AIigd2bF884",
+            title: "THE SPECIAL UNIT - FULL ACTION MOVIE",
+            tag: "Thriller",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "Rk7Z39dIJ88",
+            title: "KILLING GROUND - FULL ACTION MOVIE",
+            tag: "Action",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "UfADHyyg76k",
+            title: "KING RETURNS 2 - FULL ACTION MOVIE",
+            tag: "Battles",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "9gBiu5IExtQ",
+            title: "SAVAGE CANNIBALS - FULL ACTION MOVIE",
+            tag: "Horror",
             subscribeUrl: "https://i-tube3.netlify.app/",
             subscribeText: "🗨️ Comments",
         },
