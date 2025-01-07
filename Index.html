@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>i Tube</title>
+    <title>Video Unlock System</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -64,11 +64,16 @@
             cursor: pointer;
             border: 1px solid #ddd;
         }
+        .tags .tag:hover {
+    background-color: #000;
+    color: white;
+    border-color: #ccc;
+}
         #frames-container {
             margin-top: 120px;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 4px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
             padding: 7px;
         }
         .frame {
@@ -80,32 +85,32 @@
         }
         .frame img {
             width: 100%;
-            aspect-ratio: 16 / 24;
+            aspect-ratio: 16 / 9.1;
             object-fit: cover;
             cursor: pointer;
         }
         .frame .content {
-            padding: 4px;
+            padding: 5px;
         }
         .frame .content h2 {
             font-size: 8px;
-            margin: 0 0 1px;
+            margin: 0 0 3px;
             color: #333;
         }
         .subscribe-btn {
             display: inline-block;
-            margin-top: 0px;
-            padding: 1px 34px;
-            background-color: #ff0000;
-            color: white;
+            margin-top: 2px;
+            padding: 2px 15px;
+            background-color: #f0f0f0;
+            color: black;
             border: 1px solid #ccc;
             text-decoration: none;
             border-radius: 8px;
-            font-size: 6px;
+            font-size: 8px;
             cursor: pointer;
         }
         .subscribe-btn:hover {
-            background-color: #ff0000;
+            background-color: #f0f0f0;
         }
         #video-nav {
             display: none;
@@ -239,23 +244,25 @@
 }
     </style>
 </head>
-<script type='text/javascript' src='//pl25477462.profitablecpmrate.com/c5/58/52/c55852e68a7f0ac8973f52421a23a863.js'></script>
 <body>
 
 <header>
     <div class="header-top">
-        <div class="logo">i Tube</div>
+        <div class="logo">i TUBE</div>
         <input type="text" id="search-bar" placeholder="Search i Tube..." oninput="handleSearch()" />
     </div>
     <div class="tags">
+        <div class="tag" onclick="filterByTag('Action')">Action</div>
         <div class="tag" onclick="filterByTag('Monster')">Monster</div>
         <div class="tag" onclick="filterByTag('Horror')">Horror</div>
         <div class="tag" onclick="filterByTag('Battles')">Battles</div>
+        <div class="tag" onclick="filterByTag('Sharks')">Sharks</div>
+        <div class="tag" onclick="filterByTag('Dragon')">Dragon</div>
+        <div class="tag" onclick="filterByTag('Action')">Action</div>
         <div class="tag" onclick="filterByTag('Chinese')">Chinese</div>
         <div class="tag" onclick="filterByTag('Hindi')">Hindi</div>
-        <div class="tag" onclick="filterByTag('Japan')">Adventure</div>
-        <div class="tag" onclick="filterByTag('Australia')">Zombies</div>
-    </div>
+        <div class="tag" onclick="filterByTag('Thriller')">Thriller</div>
+    </div>        
 </header>
 
 <div id="install-message" class="install-message" style="display: none;">
@@ -279,15 +286,15 @@
     <a href="https://singles-girls.netlify.app/" class="nav-item" target="_blank">
         <i class="fas fa-heart"></i>
         <span>Singles Girls</span>
-    </a>
+    </a>    
     <a href="" class="nav-item" target="_blank">
         <i class="fas fa-plus-circle"></i>
         <span>Upload</span>
-    </a>
+    
     <a href="" class="nav-item" target="_blank">
         <i class="fas fa-store"></i>
         <span>Marketplace</span>
-    </a>
+    </a>        </a>
     <a href="" class="nav-item" target="_blank">
         <i class="fas fa-book"></i>
         <span>Novels</span>
@@ -299,268 +306,284 @@
 <script>
     const data = [
         {
-            imgUrl: "https://bit.ly/4gCtC1L",
-            videoUrl: "https://youtube.com/embed/CetjkiaH2x0",
-            title: "APOCALYPSE",
+            videoId: "CetjkiaH2x0",
+            title: "APOCALYPTO - FULL ACTION",
             tag: "Battles",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/4fFLfwd",
-            videoUrl: "https://youtube.com/embed/BAQV7hQdznE",
-            title: "VIKING BATTLE",
+            videoId: "BAQV7hQdznE",
+            title: "VIKING BATTLE OF HEIRS - FULL ACTION",
             tag: "Battles",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/4gZ1VzL",
-            videoUrl: "https://youtube.com/embed/xzk1ko7AN2M",
-            title: "PTERODACTYL 2",
+            videoId: "xzk1ko7AN2M",
+            title: "PTERODACTYL 2 - FULL ACTION",
             tag: "Monster",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/3Phnujl",
-            videoUrl: "https://youtube.com/embed/rsvGs96-ddo",
-            title: "TSUNAMI SHARKS",
+            videoId: "rsvGs96-ddo",
+            title: "TSUNAMI SHARKS - FULL ACTION",
+            tag: "Sharks",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "t7zbGjXvUxA",
+            title: "SKY MONSTER - FULL ACTION",
             tag: "Monster",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/4gu8VVv",
-            videoUrl: "https://youtube.com/embed/t7zbGjXvUxA",
-            title: "SKY MONSTER",
-            tag: "Monster",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
-        },
-        {
-            imgUrl: "https://bit.ly/3W3HPMy",
-            videoUrl: "https://youtube.com/embed/_vFRK1LGWoE",
-            title: "DOUBLE ISMART",
+            videoId: "_vFRK1LGWoE",
+            title: "DOUBLE ISMART - FULL ACTION",
             tag: "Hindi",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/4gFznvC",
-            videoUrl: "https://youtube.com/embed/SFtKVKoscqA",
-            title: "CORA",
+            videoId: "SFtKVKoscqA",
+            title: "CORA - FULL ACTION",
             tag: "Horror",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/4gDe4dm",
-            videoUrl: "https://youtube.com/embed/hJzZRl1C8X0",
-            title: "JACK THE GIANT SLAYER",
+            videoId: "hJzZRl1C8X0",
+            title: "JACK THE GIANT SLAYER - FULL ACTION",
             tag: "Battles",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/3Pqqx8F",
-            videoUrl: "https://youtube.com/embed/O2rwH27PJx8",
-            title: "SALAAR",
+            videoId: "O2rwH27PJx8",
+            title: "SALAAR - FULL ACTION",
             tag: "Hindi",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/3VRBV13",
-            videoUrl: "https://youtube.com/embed/3_i60BLtN_s",
-            title: "GUNS OF EDEN",
-            tag: "Europe",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            videoId: "3_i60BLtN_s",
+            title: "GUNS OF EDEN - FULL ACTION",
+            tag: "Action",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/4fwBQqK",
-            videoUrl: "https://youtube.com/embed/BjkncLAZu80",
-            title: "VIKING HUNTRESS",
+            videoId: "BjkncLAZu80",
+            title: "VIKING HUNTRESS - FULL ACTION",
             tag: "Battles",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/40lmWPB",
-            videoUrl: "https://youtube.com/embed/UPjyNg1mKAM",
-            title: "JURASSIC TRIANGLE",
+            videoId: "UPjyNg1mKAM",
+            title: "JURASSIC TRIANGLE - FULL ACTION",
             tag: "Monster",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/3VSO1am",
-            videoUrl: "https://youtube.com/embed/iTNyJse9fdk",
-            title: "ALIEN INVASION",
-            tag: "Monster",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
-        },
-        {
-            imgUrl: "https://bit.ly/3BxGSW6",
-            videoUrl: "https://youtube.com/embed/siFLpeqOWDQ",
-            title: "KNIGHT OF THE DEAD",
-            tag: "Europe",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
-        },
-        {
-            imgUrl: "https://bit.ly/3Pi2GYX",
-            videoUrl: "https://youtube.com/embed/Ma9xquhYyT0",
-            title: "GOATMAN",
+            videoId: "iTNyJse9fdk",
+            title: "ALIEN INVASION - FULL ACTION",
             tag: "Horror",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/405kXOj",
-            videoUrl: "https://youtube.com/embed/CumW3IY1mMg",
-            title: "GOD OF WAR",
-            tag: "Europe",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
-        },
-        {
-            imgUrl: "https://bit.ly/4iWnymb",
-            videoUrl: "https://youtube.com/embed/5nxOTg0fXMc",
-            title: "JABBERWOCK DRAGON",
+            videoId: "siFLpeqOWDQ",
+            title: "KNIGHT OF THE DEAD - FULL ACTION",
             tag: "Battles",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/4jePAJV",
-            videoUrl: "https://youtube.com/embed/V_ZZqYSCHXs",
-            title: "TIGER HUNTER",
+            videoId: "Ma9xquhYyT0",
+            title: "GOATMAN - FULL ACTION",
+            tag: "Horror",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "CumW3IY1mMg",
+            title: "GOD OF WAR - FULL ACTION",
+            tag: "Battles",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "5nxOTg0fXMc",
+            title: "JABBERWOCK DRAGON - FULL ACTION",
+            tag: "Dragon",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "V_ZZqYSCHXs",
+            title: "TIGER HUNTER - FULL ACTION",
             tag: "Chinese",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/40hvHtW",
-            videoUrl: "https://youtube.com/embed/DAY_-IjpvTc",
-            title: "KUNLUN LABYRINTH",
+            videoId: "DAY_-IjpvTc",
+            title: "KUNLUN LABYRINTH - FULL ACTION",
             tag: "Monster",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/4gDcjxs",
-            videoUrl: "https://youtube.com/embed/BHPaUT2hSKU",
-            title: "SUNFALL",
-            tag: "Europe",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            videoId: "BHPaUT2hSKU",
+            title: "SUNFALL - FULL ACTION",
+            tag: "Action",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/4gCtcbn",
-            videoUrl: "https://youtube.com/embed/9QB2GjHg0Tw",
-            title: "FLIGHT FROM HELL",
-            tag: "Europe",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            videoId: "9QB2GjHg0Tw",
+            title: "FLIGHT FROM HELL - FULL ACTION",
+            tag: "Action",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/3ZVlYIu",
-            videoUrl: "https://youtube.com/embed/HK2Q8CeTJTc",
-            title: "THRILL OF THE KILL",
-            tag: "Europe",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            videoId: "HK2Q8CeTJTc",
+            title: "THRILL OF THE KILL - FULL ACTION",
+            tag: "Action",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/4fL0OCC",
-            videoUrl: "https://youtube.com/embed/88Xjes9lppY",
-            title: "BULL SHARK",
+            videoId: "88Xjes9lppY",
+            title: "BULL SHARK - FULL ACTION",
+            tag: "Sharks",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "4Z9xQDqX9e0",
+            title: "VAMPYRE NATION - FULL ACTION",
+            tag: "Action",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "xtd4VSowu6I",
+            title: "AMBER ALERT - FULL ACTION",
+            tag: "Action",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "WuGAw0cYHL4",
+            title: "LIGHTNING STRIKES - FULL ACTION",
+            tag: "Action",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "esKGH-ThwYg",
+            title: "FLIRTING WITH DANGER - FULL ACTION",
+            tag: "Action",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "QEdJmkXQ7k4",
+            title: "THE ANDY BAKER TAPE - FULL ACTION",
+            tag: "Action",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "V7nfc3mZKWY",
+            title: "TEXAS TWISTER - FULL ACTION",
+            tag: "Action",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "FNc4ArnSRiI",
+            title: "MONSTER GRIZZLY - FULL ACTION",
             tag: "Monster",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/3DRd3jN",
-            videoUrl: "https://youtube.com/embed/4Z9xQDqX9e0",
-            title: "VAMPYRE NATION",
-            tag: "Europe",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            videoId: "t9EmWFU2Xro",
+            title: "INVASION ROSWELL - FULL ACTION",
+            tag: "Action",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/3DBZjcJ",
-            videoUrl: "https://youtube.com/embed/xtd4VSowu6I",
-            title: "AMBER ALERT",
-            tag: "Europe",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            videoId: "t2tTknlT_To",
+            title: "BURDEN OF EVIL - FULL ACTION",
+            tag: "Action",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/3BPUxb7",
-            videoUrl: "https://youtube.com/embed/WuGAw0cYHL4",
-            title: "LIGHTNING STRIKES",
-            tag: "Europe",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            videoId: "v0m_HBGqSQw",
+            title: "FALCON DOWN - FULL ACTION",
+            tag: "Action",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/4jg9nsr",
-            videoUrl: "https://youtube.com/embed/esKGH-ThwYg",
-            title: "FLIRTING WITH DANGER",
-            tag: "Europe",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
-        },
-        {
-            imgUrl: "https://bit.ly/4jgayYT",
-            videoUrl: "https://youtube.com/embed/QEdJmkXQ7k4",
-            title: "THE ANDY BAKER TAPE",
-            tag: "Europe",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
-        },
-        {
-            imgUrl: "https://bit.ly/3DGl3Eq",
-            videoUrl: "https://youtube.com/embed/kV9H6Kba56s",
-            title: "A BATTLE OF WITS",
+            videoId: "B5NS3WXLxoQ",
+            title: "CONAN, THE ADVENTURER: IMPOSTOR - FULL ACTION",
             tag: "Battles",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/3BXDsvN",
-            videoUrl: "https://youtube.com/embed/V7nfc3mZKWY",
-            title: "TEXAS TWISTER",
-            tag: "Europe",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            videoId: "hEm2uXBR_aI",
+            title: "THE DISAPEARANCE OF FLIGHT 412 - FULL ACTION",
+            tag: "Action",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/423hS3z",
-            videoUrl: "https://youtube.com/embed/FNc4ArnSRiI",
-            title: "MONSTER GRIZZLY",
-            tag: "Monster",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            videoId: "lxQ28jSsAcI",
+            title: "SPACE - FULL ACTION MOVIE",
+            tag: "Horror",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/3BLF8bX",
-            videoUrl: "https://youtube.com/embed/t9EmWFU2Xro",
-            title: "INVASION ROSWELL",
-            tag: "Europe",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            videoId: "ZrUQwAjI6gI",
+            title: "💥The useless boy challenges the giant scorpion and fights back on the brink of life and death!",
+            tag: "Chinese",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
         {
-            imgUrl: "https://bit.ly/3C09reR",
-            videoUrl: "https://youtube.com/embed/t2tTknlT_To",
-            title: "BURDEN OF EVIL",
-            tag: "Europe",
-            subscribeUrl: "https://www.youtube.com/@iTube_drs",
-            subscribeText: "Subscribe",
+            videoId: "cuRYfYXkVfo",
+            title: "DAY OF THE CLONES - FULL ACTION MOVIE",
+            tag: "Horror",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "jOvnsinK4Cw",
+            title: "THE FACELESS MAN - FULL ACTION MOVIE",
+            tag: "Horror",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
+        },
+        {
+            videoId: "QkCgsdtDppI",
+            title: "THE FINAL PHASE - FULL ACTION MOVIE",
+            tag: "Thriller",
+            subscribeUrl: "https://i-tube3.netlify.app/",
+            subscribeText: "🗨️ Comments",
         },
     ];
 
@@ -572,9 +595,9 @@
             frame.className = 'frame';
 
             const img = document.createElement('img');
-            img.src = item.imgUrl;
+            img.src = `https://img.youtube.com/vi/${item.videoId}/0.jpg`;
             img.alt = item.title;
-            img.onclick = () => openVideoNav(item.videoUrl);
+            img.onclick = () => openVideoNav(item.videoId);
 
             const content = document.createElement('div');
             content.className = 'content';
@@ -612,7 +635,8 @@ window.onload = function() {
     }, 40000); // 40000 milliseconds = 30 seconds
 };
 
-    const openVideoNav = (videoUrl) => {
+    const openVideoNav = (videoId) => {
+        const videoUrl = `https://youtube.com/embed/${videoId}`;
         document.getElementById('video-nav').style.display = 'block';
         document.getElementById('video-player').src = videoUrl;
     };
@@ -665,7 +689,8 @@ function shuffleArray(array) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
-    return array;
+    return 
+    rray;
 }
 
     
@@ -684,6 +709,7 @@ console.log(shuffledData); // You can use this data to dynamically populate the 
 
     createFrames();
 </script>
-<script type='text/javascript' src='//pl25449821.profitablecpmrate.com/49/e8/e8/49e8e866ee0e82947b1fa4dbc86c7d7d.js'></script>
+
 </body>
+<script type='text/javascript' src='//pl25449821.profitablecpmrate.com/49/e8/e8/49e8e866ee0e82947b1fa4dbc86c7d7d.js'></script>
 </html>
