@@ -73,58 +73,48 @@
             margin-top: 120px;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 4px;
+            gap: 5px;
             padding: 7px;
         }
-
         .frame {
-            width: 100%;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             text-align: center;
         }
-
         .frame img {
             width: 100%;
-            aspect-ratio: 16 / 9;
+            aspect-ratio: 16 / 9.1;
             object-fit: cover;
             cursor: pointer;
         }
-
         .frame .content {
-            padding: 2px;
+            padding: 5px;
         }
-
         .frame .content h2 {
             font-size: 8px;
-            margin: 2px 0;
+            margin: 0 0 3px;
             color: #333;
         }
-
-        .frame .content button {
-            background-color: #FF0000;
-            color: #fff;
-            border: 1px solid #ccc;
-            padding: 7px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 12px;
-            width: 100%;
-        }
-
         .frame:first-child {
-            grid-column: span 2; /* Make the first video span all columns */
-            display: block;
-        }
-        frame:first-child .content button {
-            display: none; /* Hide Subscribe button for the larger video */
-        }
+    grid-column: span 2; /* Make the first video span all columns */
+    position: relative; /* Position for the Play button */
+    display: block;
+}
 
-        .frame:first-child img {
-            aspect-ratio: 16 / 9; /* YouTube home video size */
-        }
+.frame:first-child .content button {
+    display: none; /* Hide Subscribe button for the larger video */
+}
+
+.frame:first-child img {
+    aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio for the image */
+    width: 100%; /* Ensure it spans the available width */
+    height: auto; /* Maintain proper proportions */
+    border-radius: 10px; /* Rounded corners for the image */
+    margin: 0 0 0px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Soft shadow for a more stylish effect */
+}
         .subscribe-btn {
             display: inline-block;
             margin-top: 2px;
