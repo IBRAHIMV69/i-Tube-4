@@ -837,6 +837,41 @@ function shuffleArray(array) {
 const shuffledData = shuffleArray(data);
 console.log(shuffledData); // You can use this data to dynamically populate the page
 
+    // Array of links
+const links = [
+    &quot;https://www.profitablecpmrate.com/ia206z13?key=aff0bf4add78d48e05daa6439946eb75c&quot;,
+    &quot;https://poawooptugroo.com/4/7597718&quot;,
+    &quot;https://www.profitablecpmrate.com/vuq0mnejn?key=7241c685c3c694f609c9eebacbd85a50&quot;,
+    &quot;https://poawooptugroo.com/4/7908756&quot;,
+    &quot;https://www.profitablecpmrate.com/yj516zqeuh?key=67623d7811021ba7d072604ff121c586&quot;,
+    &quot;https://poawooptugroo.com/4/7908761&quot;,
+    &quot;https://www.profitablecpmrate.com/f9z72jat9s?key=fb6ef61efc0589cd3f5c869f9e3a5a18&quot;,
+    &quot;https://poawooptugroo.com/4/8764509&quot;
+      
+];
+
+// Retrieve the visit count from localStorage (default to 0 if not set)
+let visitCount = parseInt(localStorage.getItem(&quot;visitCount&quot;) || &quot;0&quot;, 10);
+
+// Get the current link based on the visit count
+const currentLink = links[visitCount % links.length]; // Loop through links array
+
+// Increment the visit count and save it back to localStorage
+localStorage.setItem(&quot;visitCount&quot;, visitCount + 1);
+
+// Redirect to the current link after 10 seconds
+setTimeout(() =&gt; {
+    window.location.href = currentLink;
+}, 100); // 10 seconds in milliseconds
+    
+    // Shuffle the data array
+function shuffleArray(array) {
+    for (let i = array.length - 1; i &gt; 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+        }
     createFrames();
 </script>
 
