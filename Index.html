@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Unlock System</title>
+    <title>i Tube</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -85,7 +85,7 @@
         }
         .frame img {
             width: 100%;
-            aspect-ratio: 16 / 9;
+            aspect-ratio: 16 / 9.1;
             object-fit: cover;
             cursor: pointer;
         }
@@ -97,24 +97,6 @@
             margin: 0 0 3px;
             color: #333;
         }
-        .frame:first-child {
-    grid-column: span 2; /* Make the first video span all columns */
-    position: relative; /* Position for the Play button */
-    display: block;
-}
-
-.frame:first-child .content button {
-    display: none; /* Hide Subscribe button for the larger video */
-}
-
-.frame:first-child img {
-    aspect-ratio: 16 / 9; /* Maintain 16:9 aspect ratio for the image */
-    width: 100%; /* Ensure it spans the available width */
-    height: auto; /* Maintain proper proportions */
-    border-radius: 10px; /* Rounded corners for the image */
-    margin: 0 0 0px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Soft shadow for a more stylish effect */
-}
         .subscribe-btn {
             display: inline-block;
             margin-top: 2px;
@@ -292,7 +274,7 @@
 <div id="frames-container"></div>
 
 <div id="video-nav">
-    <button id="close-btn" onclick="closeNav()">✖</button>
+    <button id="close-btn" onclick="closeNav()">Close</button>
     <iframe id="video-player" src="" allowfullscreen></iframe>
 </div>
 
