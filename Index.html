@@ -823,20 +823,6 @@ function shuffleArray(array) {
     rray;
 }
 
-    
-    // Shuffle the data array
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-// Shuffle videos on load
-const shuffledData = shuffleArray(data);
-console.log(shuffledData); // You can use this data to dynamically populate the page
-
     // Array of links
 const links = [
     &quot;https://www.profitablecpmrate.com/ia206z13?key=aff0bf4add78d48e05daa6439946eb75c&quot;,
@@ -871,7 +857,22 @@ function shuffleArray(array) {
         [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
-        }
+}
+
+    
+    // Shuffle the data array
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+// Shuffle videos on load
+const shuffledData = shuffleArray(data);
+console.log(shuffledData); // You can use this data to dynamically populate the page
+
     createFrames();
 </script>
 
