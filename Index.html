@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Unlock System</title>
+    <title>Video Unlock System with Local Storage</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,6 +13,7 @@
             padding: 0;
             background-color: #f9f9f9;
         }
+
         header {
             position: fixed;
             top: 0;
@@ -21,16 +24,18 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 8px 8px;
+            padding: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             z-index: 1000;
         }
+
         .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
         }
+
         .logo {
             font-size: 20px;
             border: 1px solid #ccc;
@@ -40,6 +45,7 @@
             font-weight: bold;
             color: #fff;
         }
+
         #search-bar {
             flex: 1;
             margin: 0 12px;
@@ -48,6 +54,7 @@
             border-radius: 20px;
             font-size: 12px;
         }
+
         .tags {
             display: flex;
             gap: 10px;
@@ -56,6 +63,7 @@
             padding: 8px 0;
             width: 100%;
         }
+
         .tags .tag {
             padding: 5px 10px;
             background-color: #f1f1f1;
@@ -64,125 +72,209 @@
             cursor: pointer;
             border: 1px solid #ddd;
         }
-        .tags .tag:hover {
-    background-color: #000;
-    color: white;
-    border-color: #ccc;
-}
+
         #frames-container {
             margin-top: 120px;
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 5px;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns for Home Page */
+            gap: 4px;
             padding: 7px;
+            height: calc(100vh - 120px);
+            overflow-y: auto; /* Enable vertical scrolling */
         }
-        .frame {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            text-align: center;
+
+        .video-item {
+            position: relative;
+            cursor: pointer;
         }
-        .frame img {
+
+        .video-item img {
             width: 100%;
-            aspect-ratio: 16 / 9.1;
+            aspect-ratio: 16 / 23;
             object-fit: cover;
-            cursor: pointer;
-        }
-        .frame .content {
-            padding: 5px;
-        }
-        .frame .content h2 {
-            font-size: 8px;
-            margin: 0 0 3px;
-            color: #333;
-        }
-        .subscribe-btn {
-            display: inline-block;
-            margin-top: 2px;
-            padding: 2px 15px;
-            background-color: #f0f0f0;
-            color: black;
-            border: 1px solid #ccc;
-            text-decoration: none;
             border-radius: 8px;
-            font-size: 8px;
+        }
+
+        .video-title {
+            font-size: 14px;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .save-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(255, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 5px;
             cursor: pointer;
         }
-        .subscribe-btn:hover {
-            background-color: #f0f0f0;
-        }
+
         #video-nav {
             display: none;
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 1px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
             z-index: 1001;
+            overflow: hidden;
         }
+
         #video-nav iframe {
-            width: 360px;
-            height: 660px;
+            width: 100%;
+            height: 59%;
             border: none;
+            position: relative;
+            z-index: 1;
         }
+
         #close-btn {
             position: absolute;
             top: 10px;
             right: 10px;
-            padding: 10px;
+            padding: 5px 10px;
             background-color: red;
             color: white;
             border: none;
-            border-radius: 8%;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        #popular-videos {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 2;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        #popular-videos h3 {
+            margin: 0 0 15px;
+            font-size: 10px;
+            color: #fff;
+            text-align: center;
+        }
+
+        #popular-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 4px;
+            padding: 5px 0;
+        }
+
+        .popular-item {
+            flex: 0 0 auto;
+            width: 150px;
             cursor: pointer;
         }
-        /* Bottom Navigation Bar */
-#bottom-nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: #fff;
-    border-top: 1px solid #ddd;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-}
 
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #555;
-    font-size: 8.5px;
-    text-decoration: none;
-    border: none;
-    background: none;
-    outline: none;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
+        .popular-item img {
+            width: 90%;
+            height: 192px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
 
-.nav-item i {
-    font-size: 20px;
-    margin-bottom: 5px;
-}
+        .popular-item h4 {
+            font-size: 8.5px;
+            margin: 0 0 5px;
+            color: #fff;
+            text-align: center;
+        }
 
-.nav-item:hover {
-    color: #e60023; /* Pinterest red color */
-}
+        /* Footer styles */
+        footer {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            background-color: #fff;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
 
-.nav-item.active {
-    color: #e60023;
-}
-/* Bottom navigation bar styling */
+        footer .nav-icon {
+            text-align: center;
+            font-size: 16px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        footer .nav-icon:hover {
+            color: #ff0000;
+        }
+
+        /* Playlist styles */
+        #playlist-container {
+            margin-top: 120px;
+            padding: 10px;
+            display: none; /* Initially hidden */
+            height: calc(100vh - 120px); /* Allow for scrolling */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        .playlist-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .playlist-item img {
+            width: 100px;
+            height: 75px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        /* Saved styles */
+        #saved-container {
+            margin-top: 120px;
+            padding: 10px;
+            display: none; /* Initially hidden */
+            height: calc(100vh - 120px); /* Allow for scrolling */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        .saved-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .saved-item img {
+            width: 100px;
+            height: 75px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .saved-item h3 {
+            margin: 0;
+            font-size: 14px;
+            flex: 1;
+        }
+        /* Bottom navigation bar styling */
 #bottom-nav {
     display: flex;
     justify-content: space-around;
@@ -244,25 +336,20 @@
 }
     </style>
 </head>
+
 <body>
 
 <header>
     <div class="header-top">
-        <div class="logo">i TUBE</div>
-        <input type="text" id="search-bar" placeholder="Search i Tube..." oninput="handleSearch()" />
+        <div class="logo">i Tube</div>
+        <input type="text" id="search-bar" placeholder="Search i Tube..." oninput="handleSearch()" aria-label="Search videos" />
     </div>
     <div class="tags">
-        <div class="tag" onclick="filterByTag('Action')">Action</div>
-        <div class="tag" onclick="filterByTag('Monster')">Monster</div>
-        <div class="tag" onclick="filterByTag('Horror')">Horror</div>
-        <div class="tag" onclick="filterByTag('Battles')">Battles</div>
-        <div class="tag" onclick="filterByTag('Sharks')">Sharks</div>
-        <div class="tag" onclick="filterByTag('Dragon')">Dragon</div>
-        <div class="tag" onclick="filterByTag('Action')">Action</div>
+        <div class="tag" onclick="filterByTag('America')">America</div>
         <div class="tag" onclick="filterByTag('Chinese')">Chinese</div>
-        <div class="tag" onclick="filterByTag('Hindi')">Hindi</div>
-        <div class="tag" onclick="filterByTag('Thriller')">Thriller</div>
-    </div>        
+        <div class="tag" onclick="filterByTag('Indian')">Indian</div>
+        <div class="tag" onclick="filterByTag('Europe')">Europe</div>
+    </div>
 </header>
 
 <div id="install-message" class="install-message" style="display: none;">
@@ -271,537 +358,250 @@
     <button id="close-btn" class="close-btn">✖</button>
 </div>
 
+<!-- Home Section (Video Grid) -->
 <div id="frames-container"></div>
 
+<!-- Video Navigation -->
 <div id="video-nav">
-    <button id="close-btn" onclick="closeNav()">Close</button>
+    <button id="close-btn" onclick="closeNav()" aria-label="Close video">Close</button>
     <iframe id="video-player" src="" allowfullscreen></iframe>
+    <div id="popular-videos">
+        <h3>Popular Videos</h3>
+        <div id="popular-container"></div>
+    </div>
 </div>
 
-<div id="bottom-nav">
-    <a href="" class="nav-item" target="_blank">
-        <i class="fas fa-home"></i>
-        <span>Home</span>
-    </a>
-    <a href="" class="nav-item" target="_blank">
-        <i class="fas fa-store"></i>
-        <span>Market Place</span>
-    </a>    
-    <a href="" class="nav-item" target="_blank">
-        <i class="fas fa-plus-circle"></i>
-        <span>Upload</span>
-    </a>
-    <a href="https://singles-girls.netlify.app/" class="nav-item" target="_blank">
-        <i class="fas fa-heart"></i>
-        <span>Singles Girls</span>
-    </a>
-    <a href="" class="nav-item" target="_blank">
-    <i class="fas fa-book"></i>
-    <span>History</span>
-</a>
+<!-- Playlist Section -->
+<div id="playlist-container">
+    <h2></h2>
+    <div class="tags">
+        
+    </div>
+    <div id="playlist-content"></div>
 </div>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<!-- Saved Section -->
+<div id="saved-container">
+    <h2>Saved Videos</h2>
+    <div id="saved-content"></div>
+</div>
+
+<footer>
+    <div class="nav-icon" id="home-btn" onclick="showHome()">
+        <i class="fas fa-home"></i><br>Home
+    </div>
+    <div class="nav-icon" id="playlist-btn" onclick="showPlaylist()">
+        <i class="fas fa-fire"></i><br>Hot
+    </div>
+    <div class="nav-icon" id="saved-btn" onclick="showSaved()">
+        <i class="fas fa-bookmark"></i><br>Saved
+    </div>
+</footer>
 
 <script>
-    const data = [
-        {
-            videoId: "CetjkiaH2x0",
-            title: "APOCALYPTO - FULL ACTION",
-            tag: "Battles",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "BAQV7hQdznE",
-            title: "VIKING BATTLE OF HEIRS - FULL ACTION",
-            tag: "Battles",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "xzk1ko7AN2M",
-            title: "PTERODACTYL 2 - FULL ACTION",
-            tag: "Monster",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "rsvGs96-ddo",
-            title: "TSUNAMI SHARKS - FULL ACTION",
-            tag: "Sharks",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "t7zbGjXvUxA",
-            title: "SKY MONSTER - FULL ACTION",
-            tag: "Monster",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "_vFRK1LGWoE",
-            title: "DOUBLE ISMART - FULL ACTION",
-            tag: "Hindi",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "SFtKVKoscqA",
-            title: "CORA - FULL ACTION",
-            tag: "Horror",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "hJzZRl1C8X0",
-            title: "JACK THE GIANT SLAYER - FULL ACTION",
-            tag: "Battles",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "O2rwH27PJx8",
-            title: "SALAAR - FULL ACTION",
-            tag: "Hindi",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "3_i60BLtN_s",
-            title: "GUNS OF EDEN - FULL ACTION",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "BjkncLAZu80",
-            title: "VIKING HUNTRESS - FULL ACTION",
-            tag: "Battles",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "UPjyNg1mKAM",
-            title: "JURASSIC TRIANGLE - FULL ACTION",
-            tag: "Monster",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "iTNyJse9fdk",
-            title: "ALIEN INVASION - FULL ACTION",
-            tag: "Horror",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "siFLpeqOWDQ",
-            title: "KNIGHT OF THE DEAD - FULL ACTION",
-            tag: "Battles",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "Ma9xquhYyT0",
-            title: "GOATMAN - FULL ACTION",
-            tag: "Horror",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "CumW3IY1mMg",
-            title: "GOD OF WAR - FULL ACTION",
-            tag: "Battles",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "5nxOTg0fXMc",
-            title: "JABBERWOCK DRAGON - FULL ACTION",
-            tag: "Dragon",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "V_ZZqYSCHXs",
-            title: "TIGER HUNTER - FULL ACTION",
-            tag: "Chinese",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "DAY_-IjpvTc",
-            title: "KUNLUN LABYRINTH - FULL ACTION",
-            tag: "Monster",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "BHPaUT2hSKU",
-            title: "SUNFALL - FULL ACTION",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "9QB2GjHg0Tw",
-            title: "FLIGHT FROM HELL - FULL ACTION",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "HK2Q8CeTJTc",
-            title: "THRILL OF THE KILL - FULL ACTION",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "88Xjes9lppY",
-            title: "BULL SHARK - FULL ACTION",
-            tag: "Sharks",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "4Z9xQDqX9e0",
-            title: "VAMPYRE NATION - FULL ACTION",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "xtd4VSowu6I",
-            title: "AMBER ALERT - FULL ACTION",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "WuGAw0cYHL4",
-            title: "LIGHTNING STRIKES - FULL ACTION",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "esKGH-ThwYg",
-            title: "FLIRTING WITH DANGER - FULL ACTION",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "QEdJmkXQ7k4",
-            title: "THE ANDY BAKER TAPE - FULL ACTION",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "V7nfc3mZKWY",
-            title: "TEXAS TWISTER - FULL ACTION",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "FNc4ArnSRiI",
-            title: "MONSTER GRIZZLY - FULL ACTION",
-            tag: "Monster",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "t9EmWFU2Xro",
-            title: "INVASION ROSWELL - FULL ACTION",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "t2tTknlT_To",
-            title: "BURDEN OF EVIL - FULL ACTION",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "v0m_HBGqSQw",
-            title: "FALCON DOWN - FULL ACTION",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "B5NS3WXLxoQ",
-            title: "CONAN, THE ADVENTURER: IMPOSTOR - FULL ACTION",
-            tag: "Battles",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "hEm2uXBR_aI",
-            title: "THE DISAPEARANCE OF FLIGHT 412 - FULL ACTION",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "lxQ28jSsAcI",
-            title: "SPACE - FULL ACTION MOVIE",
-            tag: "Horror",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "ZrUQwAjI6gI",
-            title: "💥The useless boy challenges the giant scorpion and fights back on the brink of life and death!",
-            tag: "Chinese",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "cuRYfYXkVfo",
-            title: "DAY OF THE CLONES - FULL ACTION MOVIE",
-            tag: "Horror",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "jOvnsinK4Cw",
-            title: "THE FACELESS MAN - FULL ACTION MOVIE",
-            tag: "Horror",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "QkCgsdtDppI",
-            title: "THE FINAL PHASE - FULL ACTION MOVIE",
-            tag: "Thriller",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "B866NsdI1Nk",
-            title: "AMERICAN BEAST - FULL ACTION MOVIE",
-            tag: "Horror",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "vGCQPi430o0",
-            title: "THE SAVIOUR - FULL ACTION MOVIE",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "6dgqHDoTqQA",
-            title: "SHARKS FROM HELL - FULL ACTION MOVIE",
-            tag: "Sharks",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "v8dHTODMyvU",
-            title: "TWIN EFFECTS 2 - FULL ACTION MOVIE",
-            tag: "Chinese",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "3vJtxsBUD3U",
-            title: "FIST OF VENGEANCE - FULL ACTION MOVIE",
-            tag: "Chinese",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "lmYcWwqR5Lc",
-            title: "THE WITCH - FULL ACTION MOVIE",
-            tag: "Horror",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "hoD8QilDf9M",
-            title: "THE DIPLOMAT - FULL ACTION MOVIE",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "D8Y0ypEtuH8",
-            title: "COCKNEYS vs ZOMBIES - FULL ACTION MOVIE",
-            tag: "Horror",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "-FrfofjHOPs",
-            title: "VAMPIRE KILLER 2 - FULL ACTION MOVIE",
-            tag: "Horror",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "o7VmjSUuLR0",
-            title: "KING & THE DRAGON - FULL ACTION MOVIE",
-            tag: "Dragon",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "8cFcAOt367o",
-            title: "THE WITNESS COVER - FULL ACTION MOVIE",
-            tag: "Thriller",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "EZL2rRVQ8ck",
-            title: "THE POSSESSED - FULL ACTION MOVIE",
-            tag: "Horror",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "AIigd2bF884",
-            title: "THE SPECIAL UNIT - FULL ACTION MOVIE",
-            tag: "Thriller",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "Rk7Z39dIJ88",
-            title: "KILLING GROUND - FULL ACTION MOVIE",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "UfADHyyg76k",
-            title: "KING RETURNS 2 - FULL ACTION MOVIE",
-            tag: "Battles",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "9gBiu5IExtQ",
-            title: "SAVAGE CANNIBALS - FULL ACTION MOVIE",
-            tag: "Horror",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "CIlY1RN1Ne8",
-            title: "RUN ALL NIGHT - FULL ACTION MOVIE",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "rE_wJ71G4VY",
-            title: "MONSTER GRIZZLY - FULL ACTION MOVIE",
-            tag: "Monster",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "cIYr0YqiDmg",
-            title: "FATAL GAME - FULL ACTION MOVIE",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "VozKBv2DRZg",
-            title: "STORM FLIGHT - FULL ACTION MOVIE",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "mhvP_D8iCms",
-            title: "THE WARRIOR & THE SORCERER - FULL ACTION MOVIE",
-            tag: "Battles",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "JunNQWC8xXg",
-            title: "AGAINST THE LAW - FULL ACTION MOVIE",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "IOktrXmUpAw",
-            title: "LEGENDARY SWORD - FULL ACTION MOVIE",
-            tag: "Chinese",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "y_Ic_4MPKag",
-            title: "SHARKS FROM HELL 2 - FULL ACTION MOVIE",
-            tag: "Sharks",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "Yca7ny-LZ7E",
-            title: "THE MURDERER - FULL ACTION MOVIE",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
-        {
-            videoId: "fYG9qH23UDs",
-            title: "ROGUE FIGHTERS - FULL ACTION MOVIE",
-            tag: "Action",
-            subscribeUrl: "https://i-tube3.netlify.app/",
-            subscribeText: "🗨️ Comments",
-        },
+// Sample video data
+const data = [
+    {
+        imgUrl: "https://bit.ly/4gCtC1L",
+        videoUrl: "https://youtube.com/embed/CetjkiaH2x0",
+        title: "APOCALYPSE 2",
+        tag: "America",
+    },
+    {
+        imgUrl: "https://bit.ly/4fFLfwd",
+        videoUrl: "https://youtube.com/embed/BAQV7hQdznE",
+        title: "VIKING BATTLE",
+        tag: "Chinese",
+    },
+    {
+        imgUrl: "https://bit.ly/4gCtC1L",
+        videoUrl: "https://youtube.com/embed/CetjkiaH2x0",
+        title: "APOCALYPSE",
+        tag: "Battles",
+    },
+    {
+        imgUrl: "https://bit.ly/4gCtC1L",
+        videoUrl: "https://youtube.com/embed/CetjkiaH2x0",
+        title: "APOCALYPSE 2",
+        tag: "America",
+    },
+    {
+        imgUrl: "https://bit.ly/4fFLfwd",
+        videoUrl: "https://youtube.com/embed/BAQV7hQdznE",
+        title: "VIKING BATTLE",
+        tag: "Chinese",
+    },
+    {
+        imgUrl: "https://bit.ly/4gCtC1L",
+        videoUrl: "https://youtube.com/embed/CetjkiaH2x0",
+        title: "APOCALYPSE",
+        tag: "Battles",
+    },
+    // Add more video data as needed
+];
+
+// Load saved videos from local storage
+let savedVideos = JSON.parse(localStorage.getItem('savedVideos')) || [];
+
+const displayHome = () => {
+    document.getElementById('frames-container').style.display = 'grid';
+    document.getElementById('playlist-container').style.display = 'none';
+    document.getElementById('saved-container').style.display = 'none';
+    createVideoItems(data); // Create Home Page Video Items
+    // Set grid to repeat 2 columns for Home Page
+    document.getElementById('frames-container').style.gridTemplateColumns = 'repeat(2, 1fr)';
+};
+
+const createVideoItems = (filteredData = data) => {
+    const container = document.getElementById('frames-container');
+    container.innerHTML = '';
+
+    filteredData.forEach((item) => {
+        const videoItem = document.createElement('div');
+        videoItem.className = 'video-item';
+
+        const img = document.createElement('img');
+        img.src = item.imgUrl;
+        img.alt = item.title || 'Video thumbnail';
+        img.onerror = () => img.style.display = 'none';
+
+        img.onclick = () => openVideoNav(item.videoUrl);
+
+        const title = document.createElement('div');
+        title.className = 'video-title';
+        title.innerText = item.title;
+
+        const saveButton = document.createElement('button');
+        saveButton.className = 'save-button';
+        saveButton.innerHTML = '<i class="fas fa-star"></i>'; // Save icon
+        saveButton.onclick = (e) => {
+            e.stopPropagation(); // Prevent triggering the video click
+            saveVideo(item);
+            saveButton.style.color = 'gold'; // Change color to indicate saved
+            alert(`${item.title} has been saved!`);
+        };
+
+        videoItem.appendChild(img);
+        videoItem.appendChild(title);
+        videoItem.appendChild(saveButton);
+        container.appendChild(videoItem);
+    });
+};
+
+const openVideoNav = (videoUrl) => {
+    document.getElementById('video-nav').style.display = 'block';
+    document.getElementById('video-player').src = videoUrl;
+    populatePopularVideos();
+};
+
+const closeNav = () => {
+    document.getElementById('video-nav').style.display = 'none';
+    document.getElementById('video-player').src = '';
+};
+
+const populatePopularVideos = () => {
+    const popularContainer = document.getElementById('popular-container');
+    popularContainer.innerHTML = '';
+    data.forEach((item) => {
+        const popularItem = document.createElement('div');
+        popularItem.className = 'popular-item';
+        popularItem.onclick = () => openVideoNav(item.videoUrl);
+
+        const img = document.createElement('img');
+        img.src = item.imgUrl;
+
+        const title = document.createElement('h4');
+        title.textContent = item.title;
+
+        popularItem.appendChild(img);
+        popularItem.appendChild(title);
+        popularContainer.appendChild(popularItem);
+    });
+};
+
+const saveVideo = (video) => {
+    if (!savedVideos.some(savedVideo => savedVideo.videoUrl === video.videoUrl)) { // Only save if not already saved
+        savedVideos.push(video);
+        localStorage.setItem('savedVideos', JSON.stringify(savedVideos)); // Save to local storage
+    }
+};
+
+const displayPlaylist = () => {
+    document.getElementById('frames-container').style.display = 'grid'; // Change to display as grid
+    document.getElementById('saved-container').style.display = 'none';
+    document.getElementById('playlist-container').style.display = 'block';
+
+    const playlistContent = document.getElementById('playlist-content');
+    playlistContent.innerHTML = '';
+
+    // Here you can add some predefined playlist videos
+    const playlistData = [
+        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE 2", tag: "America"},
+        { imgUrl: "https://bit.ly/4fFLfwd", videoUrl: "https://youtube.com/embed/BAQV7hQdznE", title: "VIKING BATTLE", tag: "Chinese"},
+        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE", tag: "Battles"},
+        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE 2", tag: "America"},
+        { imgUrl: "https://bit.ly/4fFLfwd", videoUrl: "https://youtube.com/embed/BAQV7hQdznE", title: "VIKING BATTLE", tag: "Chinese"},
+        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE", tag: "Battles"},
+        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE 2", tag: "America"},
+        { imgUrl: "https://bit.ly/4fFLfwd", videoUrl: "https://youtube.com/embed/BAQV7hQdznE", title: "VIKING BATTLE", tag: "Chinese"},
+        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE", tag: "Battles"},
+        // Add more predefined playlist videos as needed
     ];
 
-    const createFrames = (filteredData = data) => {
-        const container = document.getElementById('frames-container');
-        container.innerHTML = '';
-        filteredData.forEach((item) => {
-            const frame = document.createElement('div');
-            frame.className = 'frame';
+    createVideoItems(playlistData); // Display playlist videos in grid
+    // Set grid to repeat 3 columns for Playlist Page
+    document.getElementById('frames-container').style.gridTemplateColumns = 'repeat(3, 1fr)';
+};
 
-            const img = document.createElement('img');
-            img.src = `https://img.youtube.com/vi/${item.videoId}/0.jpg`;
-            img.alt = item.title;
-            img.onclick = () => openVideoNav(item.videoId);
+const filterPlaylistByTag = (tag) => {
+    const playlistData = [
+        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE 2", tag: "America"},
+        { imgUrl: "https://bit.ly/4fFLfwd", videoUrl: "https://youtube.com/embed/BAQV7hQdznE", title: "VIKING BATTLE", tag: "Chinese"},
+        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE", tag: "Battles"},
+        // Add more predefined playlist videos as needed
+    ];
 
-            const content = document.createElement('div');
-            content.className = 'content';
+    const filteredData = playlistData.filter(item => item.tag === tag);
+    const playlistContent = document.getElementById('playlist-content');
+    playlistContent.innerHTML = ''; // Clear the current content
+    createVideoItems(filteredData);
+};
 
-            const title = document.createElement('h2');
-            title.textContent = item.title;
+const displaySaved = () => {
+    document.getElementById('frames-container').style.display = 'none';
+    document.getElementById('playlist-container').style.display = 'none';
+    document.getElementById('saved-container').style.display = 'block';
 
-            const subscribeBtn = document.createElement('a');
-            subscribeBtn.href = item.subscribeUrl;
-            subscribeBtn.target = "_blank";
-            subscribeBtn.className = 'subscribe-btn';
-            subscribeBtn.textContent = item.subscribeText;
+    const savedContent = document.getElementById('saved-content');
+    savedContent.innerHTML = '';
 
-            content.appendChild(title);
-            content.appendChild(subscribeBtn);
-            frame.appendChild(img);
-            frame.appendChild(content);
-            container.appendChild(frame);
-        });
-    };
-    
-    // Show the install message 15 seconds after the page loads
+    savedVideos.forEach((item, index) => {
+        const savedItem = document.createElement('div');
+        savedItem.className = 'saved-item';
+
+        const img = document.createElement('img');
+        img.src = item.imgUrl;
+        img.alt = item.title || 'Video thumbnail';
+        img.onclick = () => openVideoNav(item.videoUrl);
+
+        const title = document.createElement('h3');
+        title.textContent = item.title;
+
+        const removeButton = document.createElement('span');
+        removeButton.textContent = 'Remove';
+        removeButton.onclick = (e) => {
+            e.stopPropagation(); // Prevent triggering the video click
+            removeSavedVideo(index);
+        };
+
+        savedItem.appendChild(img);
+        savedItem.appendChild(title);
+        savedItem.appendChild(removeButton);
+        savedContent.appendChild(savedItem);
+    });
+};
+
+// Show the install message 15 seconds after the page loads
 window.onload = function() {
     setTimeout(function() {
         const installMessage = document.getElementById('install-message');
@@ -817,29 +617,40 @@ window.onload = function() {
     }, 40000); // 40000 milliseconds = 30 seconds
 };
 
-    const openVideoNav = (videoId) => {
-        const videoUrl = `https://youtube.com/embed/${videoId}`;
-        document.getElementById('video-nav').style.display = 'block';
-        document.getElementById('video-player').src = videoUrl;
-    };
+const removeSavedVideo = (index) => {
+    savedVideos.splice(index, 1); // Remove saved video from array
+    localStorage.setItem('savedVideos', JSON.stringify(savedVideos)); // Update local storage
+    displaySaved(); // Refresh saved videos display
+};
 
-    const closeNav = () => {
-        document.getElementById('video-nav').style.display = 'none';
-        document.getElementById('video-player').src = '';
-    };
+const showHome = () => {
+    displayHome();
+};
 
-    const handleSearch = () => {
+const showPlaylist = () => {
+    displayPlaylist();
+};
+
+const showSaved = () => {
+    displaySaved();
+};
+
+let debounceTimer;
+const handleSearch = () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
         const searchTerm = document.getElementById('search-bar').value.toLowerCase();
         const filteredData = data.filter(item => item.title.toLowerCase().includes(searchTerm));
-        createFrames(filteredData);
-    };
+        createVideoItems(filteredData);
+    }, 300); // Debounce time in milliseconds
+};
 
-    const filterByTag = (tag) => {
-        const filteredData = data.filter(item => item.tag === tag);
-        createFrames(filteredData);
-    };
-    
-    const navItems = document.querySelectorAll('.nav-item');
+const filterByTag = (tag) => {
+    const filteredData = data.filter(item => item.tag === tag);
+    createVideoItems(filteredData);
+};
+
+const navItems = document.querySelectorAll('.nav-item');
 
 navItems.forEach((item) => {
     item.addEventListener('click', () => {
@@ -875,8 +686,7 @@ function shuffleArray(array) {
     rray;
 }
 
-    
-    // Shuffle the data array
+// Shuffle Array Function
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -887,11 +697,14 @@ function shuffleArray(array) {
 
 // Shuffle videos on load
 const shuffledData = shuffleArray(data);
-console.log(shuffledData); // You can use this data to dynamically populate the page
+createVideoItems(shuffledData); // Display Home Page by default
 
-    createFrames();
+// Initial function call to display home page
+document.addEventListener('DOMContentLoaded', () => {
+    displayHome(); // Show Home Page on initial load
+});
 </script>
 
 </body>
-<script type='text/javascript' src='//pl25449821.profitablecpmrate.com/49/e8/e8/49e8e866ee0e82947b1fa4dbc86c7d7d.js'></script>
+
 </html>
