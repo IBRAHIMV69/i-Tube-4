@@ -11,7 +11,8 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
+            background-color: #141414; /* Netflix dark background */
+            color: #fff; /* Netflix white text */
         }
 
         header {
@@ -20,12 +21,12 @@
             left: 0;
             width: 100%;
             height: 90px;
-            background-color: #fff;
+            background-color: #141414; /* Netflix black */
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
             z-index: 1000;
         }
 
@@ -38,8 +39,8 @@
 
         .logo {
             font-size: 20px;
-            border: 1px solid #ccc;
-            background-color: #ff0000;
+            border: 1px solid #e50914;
+            background-color: #e50914; /* Netflix red */
             border-radius: 20px;
             padding: 2px 12px;
             font-weight: bold;
@@ -50,9 +51,11 @@
             flex: 1;
             margin: 0 12px;
             padding: 6px;
-            border: 2px solid #ccc;
+            border: 2px solid #e50914;
             border-radius: 20px;
             font-size: 12px;
+            background-color: #333; /* Darker background for input */
+            color: #fff;
         }
 
         .tags {
@@ -66,18 +69,23 @@
 
         .tags .tag {
             padding: 5px 10px;
-            background-color: #f1f1f1;
+            background-color: #333;
             border-radius: 20px;
             font-size: 14px;
             cursor: pointer;
-            border: 1px solid #ddd;
+            border: 1px solid #e50914;
+            color: #fff;
+        }
+
+        .tags .tag:hover {
+            background-color: #e50914;
         }
 
         #frames-container {
             margin-top: 120px;
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 columns for Home Page */
-            gap: 4px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
             padding: 7px;
             height: calc(100vh - 120px);
             overflow-y: auto; /* Enable vertical scrolling */
@@ -96,7 +104,7 @@
         }
 
         .video-title {
-            font-size: 14px;
+            font-size: 10px;
             text-align: center;
             margin-top: 5px;
         }
@@ -127,23 +135,28 @@
 
         #video-nav iframe {
             width: 100%;
-            height: 59%;
+            height: 50%;
             border: none;
             position: relative;
             z-index: 1;
         }
 
         #close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 5px 10px;
-            background-color: red;
+            background-color: #d32f2f;
             color: white;
-            border: none;
-            border-radius: 5px;
+            font-size: 17px; 
+            font-weight: bold; 
             cursor: pointer;
-            z-index: 2;
+            border: none; 
+            border-radius: 20px; 
+            margin: 13px 0; 
+            padding: 5px 5px; top: 10px;
+            right: 10px; 
+            transition: all 0.3s ease; 
+        }
+
+        #close-btn:hover {
+            background-color: #c62828;
         }
 
         #popular-videos {
@@ -195,18 +208,19 @@
             display: flex;
             justify-content: space-around;
             padding: 10px 0;
-            background-color: #fff;
+            background-color: #141414;
             box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
+            transition: transform 0.3s; /* Smooth transition */
         }
 
         footer .nav-icon {
             text-align: center;
             font-size: 16px;
-            color: #333;
+            color: #fff;
             cursor: pointer;
         }
 
@@ -217,29 +231,24 @@
         /* Playlist styles */
         #playlist-container {
             margin-top: 120px;
-            padding: 10px;
-            display: none; /* Initially hidden */
-            height: calc(100vh - 120px); /* Allow for scrolling */
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Change to a grid layout */
+            gap: 10px; /* Set the gap between items */
+            padding: 7px;
+            height: calc(100vh - 120px);
             overflow-y: auto; /* Enable vertical scrolling */
         }
 
         .playlist-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 10px;
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            cursor: pointer;
         }
 
         .playlist-item img {
-            width: 100px;
-            height: 75px;
+            width: 100%;
+            aspect-ratio: 16 / 9;
             object-fit: cover;
-            border-radius: 5px;
-            margin-bottom: 10px;
+            border-radius: 8px;
         }
 
         /* Saved styles */
@@ -255,15 +264,15 @@
             display: flex;
             align-items: center;
             margin-bottom: 10px;
-            background-color: #fff;
+            background-color: #141414;
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .saved-item img {
-            width: 100px;
-            height: 75px;
+            width: 150px;
+            height: 200px;
             object-fit: cover;
             border-radius: 5px;
             margin-right: 10px;
@@ -271,23 +280,23 @@
 
         .saved-item h3 {
             margin: 0;
-            font-size: 14px;
+            font-size: 10px;
             flex: 1;
         }
-        /* Bottom navigation bar styling */
-#bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: #f8f9fa;
-    padding: 5px 0;
-    border-top: 1px solid #ccc;
-    transition: transform 0.3s ease-in-out; /* Smooth hide/show animation */
-    z-index: 1000;
-}
-.install-message {
+
+        .saved-item span {
+            cursor: pointer;
+            color: red; /* Change text color to red */
+            margin-left: 10px; /* Add some space between title and remove button */
+            font-size: 14px; /* Adjust font size */
+            transition: color 0.3s; /* Smooth color transition */
+        }
+
+        .saved-item span:hover {
+            color: darkred; /* Darker shade on hover */
+            text-decoration: underline; /* Underline on hover */
+        }
+        .install-message {
     position: fixed;
     bottom: 20px;
     left: 50%;
@@ -345,7 +354,11 @@
         <input type="text" id="search-bar" placeholder="Search i Tube..." oninput="handleSearch()" aria-label="Search videos" />
     </div>
     <div class="tags">
-        <div class="tag" onclick="filterByTag('America')">America</div>
+        <div class="tag" onclick="filterByTag('Action')">Action</div>
+        <div class="tag" onclick="filterByTag('Monster')">Monster</div>
+        <div class="tag" onclick="filterByTag('Horror')">Horror</div>
+        <div class="tag" onclick="filterByTag('Battles')">Battles</div>
+        <div class="tag" onclick="filterByTag('SHARKS')">SHARKS</div>
         <div class="tag" onclick="filterByTag('Chinese')">Chinese</div>
         <div class="tag" onclick="filterByTag('Indian')">Indian</div>
         <div class="tag" onclick="filterByTag('Europe')">Europe</div>
@@ -363,26 +376,20 @@
 
 <!-- Video Navigation -->
 <div id="video-nav">
-    <button id="close-btn" onclick="closeNav()" aria-label="Close video">Close</button>
+    <button id="close-btn" onclick="closeNav()" aria-label="Close video"> ⬅️ Back to Home</button>
     <iframe id="video-player" src="" allowfullscreen></iframe>
     <div id="popular-videos">
-        <h3>Popular Videos</h3>
+        <h3></h3>
         <div id="popular-container"></div>
     </div>
 </div>
 
 <!-- Playlist Section -->
-<div id="playlist-container">
-    <h2></h2>
-    <div class="tags">
-        
-    </div>
-    <div id="playlist-content"></div>
-</div>
+<div id="playlist-container"></div>
 
 <!-- Saved Section -->
 <div id="saved-container">
-    <h2>Saved Videos</h2>
+    <h2>To save a movie here, click on the movie star.</h2>
     <div id="saved-content"></div>
 </div>
 
@@ -391,7 +398,7 @@
         <i class="fas fa-home"></i><br>Home
     </div>
     <div class="nav-icon" id="playlist-btn" onclick="showPlaylist()">
-        <i class="fas fa-fire"></i><br>Hot
+        <i class="fas fa-fire"></i><br>New & Hot
     </div>
     <div class="nav-icon" id="saved-btn" onclick="showSaved()">
         <i class="fas fa-bookmark"></i><br>Saved
@@ -402,16 +409,16 @@
 // Sample video data
 const data = [
     {
-        imgUrl: "https://bit.ly/4gCtC1L",
-        videoUrl: "https://youtube.com/embed/CetjkiaH2x0",
-        title: "APOCALYPSE 2",
-        tag: "America",
+        imgUrl: "https://bit.ly/4gZ1VzL",
+        videoUrl: "https://youtube.com/embed/xzk1ko7AN2M",
+        title: "PTERODACTYL 2",
+        tag: "Monster",
     },
     {
         imgUrl: "https://bit.ly/4fFLfwd",
         videoUrl: "https://youtube.com/embed/BAQV7hQdznE",
         title: "VIKING BATTLE",
-        tag: "Chinese",
+        tag: "Battles",
     },
     {
         imgUrl: "https://bit.ly/4gCtC1L",
@@ -420,16 +427,16 @@ const data = [
         tag: "Battles",
     },
     {
-        imgUrl: "https://bit.ly/4gCtC1L",
-        videoUrl: "https://youtube.com/embed/CetjkiaH2x0",
-        title: "APOCALYPSE 2",
-        tag: "America",
+        imgUrl: "https://bit.ly/3Phnujl",
+        videoUrl: "https://youtube.com/embed/rsvGs96-ddo",
+        title: "TSUNAMI SHARKS",
+        tag: "SHARKS",
     },
     {
         imgUrl: "https://bit.ly/4fFLfwd",
         videoUrl: "https://youtube.com/embed/BAQV7hQdznE",
         title: "VIKING BATTLE",
-        tag: "Chinese",
+        tag: "Battles",
     },
     {
         imgUrl: "https://bit.ly/4gCtC1L",
@@ -448,8 +455,6 @@ const displayHome = () => {
     document.getElementById('playlist-container').style.display = 'none';
     document.getElementById('saved-container').style.display = 'none';
     createVideoItems(data); // Create Home Page Video Items
-    // Set grid to repeat 2 columns for Home Page
-    document.getElementById('frames-container').style.gridTemplateColumns = 'repeat(2, 1fr)';
 };
 
 const createVideoItems = (filteredData = data) => {
@@ -527,44 +532,49 @@ const saveVideo = (video) => {
 };
 
 const displayPlaylist = () => {
-    document.getElementById('frames-container').style.display = 'grid'; // Change to display as grid
+    document.getElementById('frames-container').style.display = 'none';
     document.getElementById('saved-container').style.display = 'none';
-    document.getElementById('playlist-container').style.display = 'block';
+    
+    // Show playlist container similar to home
+    const playlistContainer = document.getElementById('playlist-container');
+    playlistContainer.style.display = 'grid';
+    playlistContainer.innerHTML = ''; // Clear existing content
 
-    const playlistContent = document.getElementById('playlist-content');
-    playlistContent.innerHTML = '';
-
-    // Here you can add some predefined playlist videos
     const playlistData = [
-        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE 2", tag: "America"},
-        { imgUrl: "https://bit.ly/4fFLfwd", videoUrl: "https://youtube.com/embed/BAQV7hQdznE", title: "VIKING BATTLE", tag: "Chinese"},
-        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE", tag: "Battles"},
-        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE 2", tag: "America"},
-        { imgUrl: "https://bit.ly/4fFLfwd", videoUrl: "https://youtube.com/embed/BAQV7hQdznE", title: "VIKING BATTLE", tag: "Chinese"},
-        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE", tag: "Battles"},
-        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE 2", tag: "America"},
-        { imgUrl: "https://bit.ly/4fFLfwd", videoUrl: "https://youtube.com/embed/BAQV7hQdznE", title: "VIKING BATTLE", tag: "Chinese"},
-        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE", tag: "Battles"},
+        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE 2" },
+        { imgUrl: "https://bit.ly/4fFLfwd", videoUrl: "https://youtube.com/embed/BAQV7hQdznE", title: "VIKING BATTLE" }
         // Add more predefined playlist videos as needed
     ];
 
-    createVideoItems(playlistData); // Display playlist videos in grid
-    // Set grid to repeat 3 columns for Playlist Page
-    document.getElementById('frames-container').style.gridTemplateColumns = 'repeat(3, 1fr)';
-};
+    playlistData.forEach(item => {
+        const playlistItem = document.createElement('div');
+        playlistItem.className = 'video-item'; // Using same class as home videos
 
-const filterPlaylistByTag = (tag) => {
-    const playlistData = [
-        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE 2", tag: "America"},
-        { imgUrl: "https://bit.ly/4fFLfwd", videoUrl: "https://youtube.com/embed/BAQV7hQdznE", title: "VIKING BATTLE", tag: "Chinese"},
-        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE", tag: "Battles"},
-        // Add more predefined playlist videos as needed
-    ];
+        const img = document.createElement('img');
+        img.src = item.imgUrl;
+        img.alt = item.title || 'Video thumbnail';
+        img.onclick = () => openVideoNav(item.videoUrl);
 
-    const filteredData = playlistData.filter(item => item.tag === tag);
-    const playlistContent = document.getElementById('playlist-content');
-    playlistContent.innerHTML = ''; // Clear the current content
-    createVideoItems(filteredData);
+        const title = document.createElement('div');
+        title.className = 'video-title';
+        title.innerText = item.title;
+
+        // Save Button for Playlist Videos
+        const saveButton = document.createElement('button');
+        saveButton.className = 'save-button';
+        saveButton.innerHTML = '<i class="fas fa-star"></i>'; // Save icon
+        saveButton.onclick = (e) => {
+            e.stopPropagation(); // Prevent triggering the video click
+            saveVideo(item);
+            saveButton.style.color = 'gold'; // Change color to indicate saved
+            alert(`${item.title} has been saved!`);
+        };
+
+        playlistItem.appendChild(img);
+        playlistItem.appendChild(title);
+        playlistItem.appendChild(saveButton);
+        playlistContainer.appendChild(playlistItem);
+    });
 };
 
 const displaySaved = () => {
@@ -588,7 +598,7 @@ const displaySaved = () => {
         title.textContent = item.title;
 
         const removeButton = document.createElement('span');
-        removeButton.textContent = 'Remove';
+        removeButton.textContent = '⭐ Remove';
         removeButton.onclick = (e) => {
             e.stopPropagation(); // Prevent triggering the video click
             removeSavedVideo(index);
@@ -650,41 +660,27 @@ const filterByTag = (tag) => {
     createVideoItems(filteredData);
 };
 
-const navItems = document.querySelectorAll('.nav-item');
+// Scroll handling for hiding/showing footer
+let lastScrollTop = 0;
+const footer = document.querySelector('footer');
 
-navItems.forEach((item) => {
-    item.addEventListener('click', () => {
-        navItems.forEach((nav) => nav.classList.remove('active'));
-        item.classList.add('active');
-    });
-});
-
-let lastScrollTop = 0; // Store the last scroll position
-const bottomNav = document.getElementById("bottom-nav");
-
-window.addEventListener("scroll", function () {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-    if (scrollTop > lastScrollTop) {
+const handleScroll = () => {
+    const st = window.pageYOffset || document.documentElement.scrollTop;
+    if (st > lastScrollTop) {
         // Scrolling down
-        bottomNav.style.transform = "translateY(100%)"; // Hide the bottom nav
+        footer.style.transform = 'translateY(100%)'; // Move footer out of view
     } else {
         // Scrolling up
-        bottomNav.style.transform = "translateY(0)"; // Show the bottom nav
+        footer.style.transform = 'translateY(0)'; // Move footer back into view
     }
+    lastScrollTop = st <= 0 ? 0 : st; // For Mobile or margin
+};
 
-    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Update the last scroll position
-});
-    
-    // Shuffle the data array
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return 
-    rray;
-}
+// Attach the scroll event listener
+window.addEventListener('scroll', handleScroll);
+
+// Call the function on page load
+handleScroll();
 
 // Shuffle Array Function
 function shuffleArray(array) {
