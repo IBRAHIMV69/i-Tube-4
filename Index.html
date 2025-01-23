@@ -135,7 +135,7 @@
 
         #video-nav iframe {
             width: 100%;
-            height: 50%;
+            height: 40%;
             border: none;
             position: relative;
             z-index: 1;
@@ -149,14 +149,26 @@
             cursor: pointer;
             border: none; 
             border-radius: 20px; 
-            margin: 13px 0; 
-            padding: 5px 5px; top: 10px;
+            margin: 21px 0; 
+            padding: 5px 15px; top: 10px;
             right: 10px; 
             transition: all 0.3s ease; 
         }
 
         #close-btn:hover {
             background-color: #c62828;
+        }
+        #social-media {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .social-icon {
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
         }
 
         #popular-videos {
@@ -376,10 +388,19 @@
 
 <!-- Video Navigation -->
 <div id="video-nav">
-    <button id="close-btn" onclick="closeNav()" aria-label="Close video"> ⬅️ Back to Home</button>
+    <button id="close-btn" onclick="closeNav()" aria-label="Close video"> ✖ Close</button>
     <iframe id="video-player" src="" allowfullscreen></iframe>
+    
+    <!-- Social Media Icons -->
+    <div id="social-media">
+        <i class="fab fa-telegram social-icon" onclick="shareLink('telegram')"></i>
+        <i class="fab fa-twitter social-icon" onclick="shareLink('twitter')"></i>
+        <i class="fab fa-whatsapp social-icon" onclick="shareLink('whatsapp')"></i>
+        <i class="fas fa-share social-icon" onclick="shareLink('generic')"></i>
+    </div>
+    
     <div id="popular-videos">
-        <h3></h3>
+        <h3>Dive into non-stop fun with more movies below.</h3>
         <div id="popular-container"></div>
     </div>
 </div>
@@ -658,6 +679,37 @@ const handleSearch = () => {
 const filterByTag = (tag) => {
     const filteredData = data.filter(item => item.tag === tag);
     createVideoItems(filteredData);
+};
+
+// Share Functionality
+const shareLink = (platform) => {
+    const url = 'https://i-tube-movies.netlify.app/';
+    let shareUrl = '';
+
+    switch(platform) {
+        case 'telegram':
+            shareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(url)}`;
+            break;
+        case 'twitter':
+            shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`;
+            break;
+        case 'whatsapp':
+            shareUrl = `https://wa.me/?text=${encodeURIComponent(url)}`;
+            break;
+        case 'generic':
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Check out this video platform!',
+                    url: url
+                }).catch(err => console.error(err));
+                return;
+            } else {
+                alert('Sharing is not supported in your browser.');
+                return;
+            }
+    }
+
+    window.open(shareUrl, '_blank');
 };
 
 // Scroll handling for hiding/showing footer
