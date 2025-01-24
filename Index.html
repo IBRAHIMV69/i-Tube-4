@@ -7,14 +7,12 @@
     <title>Video Unlock System with Local Storage</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
-        /* CSS styles remain unchanged */
-        
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #141414; /* Netflix dark background */
-            color: #fff; /* Netflix white text */
+            background-color: #141414;
+            color: #fff;
         }
 
         header {
@@ -23,7 +21,7 @@
             left: 0;
             width: 100%;
             height: 90px;
-            background-color: #141414; /* Netflix black */
+            background-color: #141414;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -42,7 +40,7 @@
         .logo {
             font-size: 20px;
             border: 1px solid #e50914;
-            background-color: #e50914; /* Netflix red */
+            background-color: #e50914;
             border-radius: 20px;
             padding: 2px 12px;
             font-weight: bold;
@@ -56,16 +54,16 @@
             border: 2px solid #e50914;
             border-radius: 20px;
             font-size: 12px;
-            background-color: #333; /* Darker background for input */
+            background-color: #333;
             color: #fff;
         }
 
         .tags {
             display: flex;
             gap: 10px;
-            margin-top: 10px;
+            margin-top: 14px;
             overflow-x: auto;
-            padding: 8px 0;
+            padding: 8px;
             width: 100%;
         }
 
@@ -90,7 +88,7 @@
             gap: 10px;
             padding: 7px;
             height: calc(100vh - 120px);
-            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-y: auto;
         }
 
         .video-item {
@@ -123,7 +121,6 @@
             cursor: pointer;
         }
 
-        /* Video Navigation Styles */
         #video-nav {
             display: none;
             position: fixed;
@@ -138,24 +135,25 @@
 
         #video-nav iframe {
             width: 100%;
-            height: 40%;
+            height: 35%;
             border: none;
             position: relative;
+            border-radius: 10px;
             z-index: 1;
+            border: 1px solid #333;
         }
 
         #close-btn {
             background-color: #d32f2f;
             color: white;
-            font-size: 17px;
+            font-size: 15px;
             font-weight: bold;
             cursor: pointer;
             border: none;
             border-radius: 10px;
-            margin: 21px 0;
-            top: 10px;
-            right: 10px;
-            transition: all 0.3s ease;
+            margin: 10px;
+            padding: 2px 10px;
+            border: 1px solid #ccc;
         }
 
         #close-btn:hover {
@@ -166,12 +164,12 @@
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin: 15px 0;
+            margin: 10px 0;
         }
 
         .social-icon {
             color: white;
-            font-size: 24px;
+            font-size: 22px;
             cursor: pointer;
         }
 
@@ -180,22 +178,24 @@
             bottom: 0;
             left: 0;
             right: 0;
-            z-index: 2;
+            z-index: 10;
             padding: 10px;
             background-color: rgba(0, 0, 0, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
         }
 
         #popular-videos h3 {
             margin: 0 0 15px;
-            font-size: 14px;
-            color: #fff;
+            font-size: 12px;
+            color: #ffffff;
             text-align: center;
         }
 
         #popular-container {
             display: flex;
             overflow-x: auto;
-            gap: 4px;
+            gap: 10px;
             padding: 5px 0;
         }
 
@@ -203,23 +203,30 @@
             flex: 0 0 auto;
             width: 150px;
             cursor: pointer;
+            border-radius: 12px;
+            transition: transform 0.3s;
+            overflow: hidden;
+        }
+
+        .popular-item:hover {
+            transform: scale(1.05);
         }
 
         .popular-item img {
-            width: 90%;
-            height: 192px;
+            width: 92%;
+            height: 185px;
             object-fit: cover;
-            border-radius: 5px;
+            border-radius: 12px;
         }
 
         .popular-item h4 {
-            font-size: 8.5px;
+            font-size: 8px;
             margin: 0 0 5px;
-            color: #fff;
+            color: #ffffff;
             text-align: center;
+            font-weight: bold;
         }
 
-        /* Footer styles */
         footer {
             display: flex;
             justify-content: space-around;
@@ -230,40 +237,30 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            transition: transform 0.3s; /* Smooth transition */
+            transition: transform 0.3s;
         }
 
         footer .nav-icon {
-    text-align: center;
-    font-size: 10px; /* Smaller font size for titles */
-    color: #fff;
-    cursor: pointer;
-}
-
-footer .nav-icon i {
-    font-size: 18px; /* Larger size for icons */
-}
-
-footer .nav-icon:hover {
-    color: #ff0000;
-}
-        /* Playlist styles */
-        #playlist-container {
-            margin-top: 120px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px; /* Set the gap between items */
-            padding: 7px;
-            height: calc(100vh - 120px);
-            overflow-y: auto; /* Enable vertical scrolling */
+            text-align: center;
+            font-size: 12px;
+            color: #fff;
+            cursor: pointer;
         }
-        /* Saved styles */
+
+        footer .nav-icon i {
+            font-size: 19px;
+        }
+
+        footer .nav-icon:hover {
+            color: #ff0000;
+        }
+
         #saved-container {
             margin-top: 120px;
             padding: 10px;
-            display: none; /* Initially hidden */
-            height: calc(100vh - 120px); /* Allow for scrolling */
-            overflow-y: auto; /* Enable vertical scrolling */
+            display: none;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
         }
 
         .saved-item {
@@ -292,24 +289,23 @@ footer .nav-icon:hover {
 
         .saved-item span {
             cursor: pointer;
-            color: red; /* Change text color to red */
-            margin-left: 10px; /* Add some space between title and remove button */
-            font-size: 14px; /* Adjust font size */
-            transition: color 0.3s; /* Smooth color transition */
+            color: red;
+            margin-left: 10px;
+            font-size: 14px;
+            transition: color 0.3s;
         }
 
         .saved-item span:hover {
-            color: darkred; /* Darker shade on hover */
-            text-decoration: underline; /* Underline on hover */
+            color: darkred;
+            text-decoration: underline;
         }
 
-        /* Viewed History styles */
         #viewed-history-container {
             margin-top: 120px;
             padding: 10px;
-            display: none; /* Initially hidden */
-            height: calc(100vh - 120px); /* Allow for scrolling */
-            overflow-y: auto; /* Enable vertical scrolling */
+            display: none;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
         }
 
         .viewed-item {
@@ -323,8 +319,8 @@ footer .nav-icon:hover {
         }
 
         .viewed-item img {
-            width: 150px;
-            height: 200px;
+            width: 180px;
+            height: 250px;
             object-fit: cover;
             border-radius: 5px;
             margin-right: 10px;
@@ -336,20 +332,19 @@ footer .nav-icon:hover {
             flex: 1;
         }
 
-        /* Install message styles */
         .install-message {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #fff; /* Background */
-            color: #333; /* Text color */
-            padding: 10px 20px;
+            background-color: #fff;
+            color: #333;
+            padding: 2px 20px;
             border-radius: 12px;
             display: flex;
             font-size: 9.8px;
             border: 1px solid #ccc;
-            flex-direction: column; /* Stack items vertically */
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             width: 80%;
@@ -359,14 +354,14 @@ footer .nav-icon:hover {
         }
 
         .install-btn {
-            background-color: #ff0000; /* Red button */
+            background-color: #ff0000;
             color: white;
             border: 1px solid #ccc;
             padding: 10px 25px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
-            margin-top: 5px; /* Space between the paragraph and the button */
+            margin-top: 1px;
         }
 
         .close-btn {
@@ -386,7 +381,6 @@ footer .nav-icon:hover {
         }
     </style>
 </head>
-
 <body>
 
 <header>
@@ -412,15 +406,12 @@ footer .nav-icon:hover {
     <button id="close-btn" class="close-btn">✖</button>
 </div>
 
-<!-- Home Section (Video Grid) -->
 <div id="frames-container"></div>
 
-<!-- Video Navigation -->
 <div id="video-nav">
-    <button id="close-btn" onclick="closeNav()" aria-label="Close video"> ⬅️ Back to Home</button>
+    <button id="close-btn" onclick="closeNav()" aria-label="Close video"> ✖ Close</button>
     <iframe id="video-player" src="" allowfullscreen></iframe>
 
-    <!-- Social Media Icons -->
     <div id="social-media">
         <i class="fab fa-telegram social-icon" onclick="shareLink('telegram')"></i>
         <i class="fab fa-twitter social-icon" onclick="shareLink('twitter')"></i>
@@ -431,19 +422,43 @@ footer .nav-icon:hover {
     <div id="popular-videos">
         <h3>Dive into non-stop fun with more movies below.</h3>
         <div id="popular-container"></div>
+        <div id="social-media" style="display: flex; justify-content: center; margin-top: 10px;">
+            <a href="https://www.facebook.com/username" target="_blank" class="social-icon">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://twitter.com/username" target="_blank" class="social-icon">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://telegram.me/username" target="_blank" class="social-icon">
+                <i class="fab fa-telegram-plane"></i>
+            </a>
+            <a href="https://www.pinterest.com/username" target="_blank" class="social-icon">
+                <i class="fab fa-pinterest"></i>
+            </a>
+            <a href="https://www.instagram.com/username" target="_blank" class="social-icon">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://wa.me/1234567890" target="_blank" class="social-icon">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.tiktok.com/@username" target="_blank" class="social-icon">
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://www.youtube.com/channel/UC123456" target="_blank" class="social-icon">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+        <h3>Follow us on social media.</h3>
     </div>
 </div>
 
-<!-- Viewed History Section -->
 <div id="viewed-history-container">
-    <h2>Recently Viewed Videos</h2>
+    <h2>Recently Viewed</h2>
     <div id="viewed-content"></div>
 </div>
 
-<!-- Playlist Section -->
 <div id="playlist-container"></div>
 
-<!-- Saved Section -->
 <div id="saved-container">
     <h2>To save a movie here, click on the movie star.</h2>
     <div id="saved-content"></div>
@@ -469,39 +484,27 @@ footer .nav-icon:hover {
 const data = [
     {
         imgUrl: "https://bit.ly/4gZ1VzL",
-        videoUrl: "https://youtube.com/embed/xzk1ko7AN2M",
-        title: "PTERODACTYL 2",
+        videoUrl: "https://ok.ru/video/1444891462248", // Generic URL
+        title: "Video 1",
         tag: "Monster",
     },
     {
         imgUrl: "https://bit.ly/4fFLfwd",
-        videoUrl: "https://youtube.com/embed/BAQV7hQdznE",
-        title: "VIKING BATTLE",
+        videoUrl: "https://ok.ru/video/1444891462248",
+        title: "Video 2",
         tag: "Battles",
     },
     {
         imgUrl: "https://bit.ly/4gCtC1L",
-        videoUrl: "https://youtube.com/embed/CetjkiaH2x0",
-        title: "APOCALYPSE",
+        videoUrl: "https://ok.ru/video/1444891462248",
+        title: "Video 3",
         tag: "Battles",
     },
     {
         imgUrl: "https://bit.ly/3Phnujl",
-        videoUrl: "https://youtube.com/embed/rsvGs96-ddo",
-        title: "TSUNAMI SHARKS",
+        videoUrl: "https://ok.ru/video/1444891462248",
+        title: "Video 4",
         tag: "SHARKS",
-    },
-    {
-        imgUrl: "https://bit.ly/4fFLfwd",
-        videoUrl: "https://youtube.com/embed/BAQV7hQdznE",
-        title: "VIKING BATTLE",
-        tag: "Battles",
-    },
-    {
-        imgUrl: "https://bit.ly/4gCtC1L",
-        videoUrl: "https://youtube.com/embed/CetjkiaH2x0",
-        title: "APOCALYPSE",
-        tag: "Battles",
     },
 ];
 
@@ -516,19 +519,14 @@ class VideoHistory {
     }
 
     addVideo(video) {
-        // Check if the video already exists in the history
         const existingIndex = this.history.findIndex(item => item.videoUrl === video.videoUrl);
         if (existingIndex !== -1) {
-            // Remove the existing video from its current position
             this.history.splice(existingIndex, 1);
         }
-        // Add the video to the beginning of the history
         this.history.unshift(video);
-        // Only keep the last 10 viewed videos
         if (this.history.length > 10) {
             this.history.pop();
         }
-        // Store the updated history in local storage
         localStorage.setItem('videoHistory', JSON.stringify(this.history));
     }
 
@@ -545,7 +543,7 @@ const displayHome = () => {
     document.getElementById('playlist-container').style.display = 'none';
     document.getElementById('saved-container').style.display = 'none';
     document.getElementById('viewed-history-container').style.display = 'none';
-    createVideoItems(data); // Create Home Page Video Items
+    createVideoItems(data);
 };
 
 const createVideoItems = (filteredData = data) => {
@@ -563,7 +561,7 @@ const createVideoItems = (filteredData = data) => {
 
         img.onclick = () => {
             openVideoNav(item.videoUrl);
-            historyManager.addVideo(item); // Add video to history
+            historyManager.addVideo(item);
         };
 
         const title = document.createElement('div');
@@ -572,12 +570,11 @@ const createVideoItems = (filteredData = data) => {
 
         const saveButton = document.createElement('button');
         saveButton.className = 'save-button';
-        saveButton.innerHTML = '<i class="fas fa-star"></i>'; // Save icon
+        saveButton.innerHTML = '<i class="fas fa-star"></i>';
         saveButton.onclick = (e) => {
-            e.stopPropagation(); // Prevent triggering the video click
+            e.stopPropagation();
             saveVideo(item);
-            saveButton.style.color = 'gold'; // Change color to indicate saved
-            alert(`${item.title} has been saved!`);
+            saveButton.style.color = 'gold'; 
         };
 
         videoItem.appendChild(img);
@@ -591,7 +588,7 @@ const openVideoNav = (videoUrl) => {
     document.getElementById('video-nav').style.display = 'block';
     document.getElementById('video-player').src = videoUrl;
     populatePopularVideos();
-    updateViewedVideos(); // Update viewed videos when playing a new video
+    updateViewedVideos();
 };
 
 const closeNav = () => {
@@ -620,15 +617,21 @@ const populatePopularVideos = () => {
 };
 
 const saveVideo = (video) => {
-    if (!savedVideos.some(savedVideo => savedVideo.videoUrl === video.videoUrl)) { // Only save if not already saved
-        savedVideos.push(video);
-        localStorage.setItem('savedVideos', JSON.stringify(savedVideos)); // Save to local storage
+    const existingIndex = savedVideos.findIndex(savedVideo => savedVideo.videoUrl === video.videoUrl);
+    
+    if (existingIndex !== -1) {
+        savedVideos[existingIndex] = video; // Update the existing video object
+        alert(`${video.title} has been updated!`);
+    } else {
+        savedVideos.unshift(video);
+        alert(`${video.title} has been saved!`);
     }
+    localStorage.setItem('savedVideos', JSON.stringify(savedVideos));
 };
 
 const updateViewedVideos = () => {
     const viewedContent = document.getElementById('viewed-content');
-    viewedContent.innerHTML = ''; // Clear previous history display
+    viewedContent.innerHTML = '';
 
     const history = historyManager.getHistory();
     history.forEach((item) => {
@@ -648,7 +651,7 @@ const updateViewedVideos = () => {
         viewedContent.appendChild(viewedItem);
     });
 
-    document.getElementById('viewed-history-container').style.display = 'block'; // Show the viewed history container
+    document.getElementById('viewed-history-container').style.display = 'block';
 };
 
 const displayPlaylist = () => {
@@ -656,20 +659,20 @@ const displayPlaylist = () => {
     document.getElementById('saved-container').style.display = 'none';
     document.getElementById('viewed-history-container').style.display = 'none';
 
-    // Show playlist container similar to home
     const playlistContainer = document.getElementById('playlist-container');
     playlistContainer.style.display = 'grid';
-    playlistContainer.innerHTML = ''; // Clear existing content
+    playlistContainer.innerHTML = '';
 
-    // Sample playlist data, can be modified as needed
     const playlistData = [
-        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE 2" },
-        { imgUrl: "https://bit.ly/4fFLfwd", videoUrl: "https://youtube.com/embed/BAQV7hQdznE", title: "VIKING BATTLE" }
+        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://your-video-platform.com/video/3", title: "APOCALYPSE 2" },
+        { imgUrl: "https://bit.ly/4fFLfwd", videoUrl: "https://your-video-platform.com/video/2", title: "VIKING BATTLE" },
+        { imgUrl: "https://bit.ly/3Pqqx8F", videoUrl: "https://your-video-platform.com/video/5", title: "SALAAR" },
+        { imgUrl: "https://bit.ly/3VRBV13", videoUrl: "https://your-video-platform.com/video/6", title: "GUNS OF EDEN" }
     ];
 
     playlistData.forEach(item => {
         const playlistItem = document.createElement('div');
-        playlistItem.className = 'video-item'; // Using same class as home videos
+        playlistItem.className = 'video-item';
 
         const img = document.createElement('img');
         img.src = item.imgUrl;
@@ -682,12 +685,11 @@ const displayPlaylist = () => {
 
         const saveButton = document.createElement('button');
         saveButton.className = 'save-button';
-        saveButton.innerHTML = '<i class="fas fa-star"></i>'; // Save icon
+        saveButton.innerHTML = '<i class="fas fa-star"></i>';
         saveButton.onclick = (e) => {
-            e.stopPropagation(); // Prevent triggering the video click
+            e.stopPropagation();
             saveVideo(item);
-            saveButton.style.color = 'gold'; // Change color to indicate saved
-            alert(`${item.title} has been saved!`);
+            saveButton.style.color = 'gold'; 
         };
 
         playlistItem.appendChild(img);
@@ -701,9 +703,6 @@ const displaySaved = () => {
     document.getElementById('frames-container').style.display = 'none';
     document.getElementById('playlist-container').style.display = 'none';
     document.getElementById('viewed-history-container').style.display = 'none';
-    
-    document.getElementById('saved-container').style.display = 'block';
-
     const savedContent = document.getElementById('saved-content');
     savedContent.innerHTML = '';
 
@@ -722,7 +721,7 @@ const displaySaved = () => {
         const removeButton = document.createElement('span');
         removeButton.textContent = '⭐ Remove';
         removeButton.onclick = (e) => {
-            e.stopPropagation(); // Prevent triggering the video click
+            e.stopPropagation();
             removeSavedVideo(index);
         };
 
@@ -731,20 +730,20 @@ const displaySaved = () => {
         savedItem.appendChild(removeButton);
         savedContent.appendChild(savedItem);
     });
+    document.getElementById('saved-container').style.display = 'block';
 };
 
 const showViewedHistory = () => {
-    // Navigate to the viewed history
     document.getElementById('frames-container').style.display = 'none';
     document.getElementById('playlist-container').style.display = 'none';
     document.getElementById('saved-container').style.display = 'none';
-    updateViewedVideos(); // Update to show the latest viewed videos
+    updateViewedVideos();
 };
 
 const removeSavedVideo = (index) => {
-    savedVideos.splice(index, 1); // Remove saved video from array
-    localStorage.setItem('savedVideos', JSON.stringify(savedVideos)); // Update local storage
-    displaySaved(); // Refresh saved videos display
+    savedVideos.splice(index, 1);
+    localStorage.setItem('savedVideos', JSON.stringify(savedVideos));
+    displaySaved();
 };
 
 const showHome = () => {
@@ -759,10 +758,6 @@ const showSaved = () => {
     displaySaved();
 };
 
-const openNovels = () => {
-    window.open("https://your-novels-url.com", "_blank"); // Replace with the actual URL
-};
-
 let debounceTimer;
 const handleSearch = () => {
     clearTimeout(debounceTimer);
@@ -770,7 +765,7 @@ const handleSearch = () => {
         const searchTerm = document.getElementById('search-bar').value.toLowerCase();
         const filteredData = data.filter(item => item.title.toLowerCase().includes(searchTerm));
         createVideoItems(filteredData);
-    }, 300); // Debounce time in milliseconds
+    }, 300);
 };
 
 const filterByTag = (tag) => {
@@ -778,7 +773,6 @@ const filterByTag = (tag) => {
     createVideoItems(filteredData);
 };
 
-// Share Functionality
 const shareLink = (platform) => {
     const url = 'https://i-tube-movies.netlify.app/';
     let shareUrl = '';
@@ -809,29 +803,35 @@ const shareLink = (platform) => {
     window.open(shareUrl, '_blank');
 };
 
-// Scroll handling for hiding/showing footer
 let lastScrollTop = 0;
 const footer = document.querySelector('footer');
 
 const handleScroll = () => {
     const st = window.pageYOffset || document.documentElement.scrollTop;
     if (st > lastScrollTop) {
-        // Scrolling down
-        footer.style.transform = 'translateY(100%)'; // Move footer out of view
+        footer.style.transform = 'translateY(100%)';
     } else {
-        // Scrolling up
-        footer.style.transform = 'translateY(0)'; // Move footer back into view
+        footer.style.transform = 'translateY(0)';
     }
-    lastScrollTop = st <= 0 ? 0 : st; // For Mobile or margin
+    lastScrollTop = st <= 0 ? 0 : st;
 };
 
-// Attach the scroll event listener
 window.addEventListener('scroll', handleScroll);
-
-// Call the function on page load
 handleScroll();
 
-// Shuffle Array Function
+window.onload = function() {
+    setTimeout(function() {
+        const installMessage = document.getElementById('install-message');
+        const closeButton = document.getElementById('close-btn');
+
+        installMessage.style.display = 'flex';
+
+        closeButton.onclick = function() {
+            installMessage.style.display = 'none';
+        };
+    }, 4000);
+};
+
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -840,13 +840,11 @@ function shuffleArray(array) {
     return array;
 }
 
-// Shuffle videos on load
 const shuffledData = shuffleArray(data);
-createVideoItems(shuffledData); // Display Home Page by default
+createVideoItems(shuffledData);
 
-// Initial function call to display the home page
 document.addEventListener('DOMContentLoaded', () => {
-    displayHome(); // Show Home Page on initial load
+    displayHome();
 });
 </script>
 
