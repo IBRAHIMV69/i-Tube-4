@@ -7,6 +7,8 @@
     <title>Video Unlock System with Local Storage</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
+        /* CSS styles remain unchanged */
+        
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -121,6 +123,7 @@
             cursor: pointer;
         }
 
+        /* Video Navigation Styles */
         #video-nav {
             display: none;
             position: fixed;
@@ -144,20 +147,21 @@
         #close-btn {
             background-color: #d32f2f;
             color: white;
-            font-size: 17px; 
-            font-weight: bold; 
+            font-size: 17px;
+            font-weight: bold;
             cursor: pointer;
-            border: none; 
-            border-radius: 20px; 
-            margin: 21px 0; 
-            padding: 5px 15px; top: 10px;
-            right: 10px; 
-            transition: all 0.3s ease; 
+            border: none;
+            border-radius: 10px;
+            margin: 21px 0;
+            top: 10px;
+            right: 10px;
+            transition: all 0.3s ease;
         }
 
         #close-btn:hover {
             background-color: #c62828;
         }
+
         #social-media {
             display: flex;
             justify-content: center;
@@ -183,7 +187,7 @@
 
         #popular-videos h3 {
             margin: 0 0 15px;
-            font-size: 10px;
+            font-size: 14px;
             color: #fff;
             text-align: center;
         }
@@ -219,7 +223,7 @@
         footer {
             display: flex;
             justify-content: space-around;
-            padding: 10px 0;
+            padding: 12px 0;
             background-color: #141414;
             box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
             position: fixed;
@@ -230,39 +234,29 @@
         }
 
         footer .nav-icon {
-            text-align: center;
-            font-size: 16px;
-            color: #fff;
-            cursor: pointer;
-        }
+    text-align: center;
+    font-size: 10px; /* Smaller font size for titles */
+    color: #fff;
+    cursor: pointer;
+}
 
-        footer .nav-icon:hover {
-            color: #ff0000;
-        }
+footer .nav-icon i {
+    font-size: 18px; /* Larger size for icons */
+}
 
+footer .nav-icon:hover {
+    color: #ff0000;
+}
         /* Playlist styles */
         #playlist-container {
             margin-top: 120px;
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Change to a grid layout */
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px; /* Set the gap between items */
             padding: 7px;
             height: calc(100vh - 120px);
             overflow-y: auto; /* Enable vertical scrolling */
         }
-
-        .playlist-item {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .playlist-item img {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
         /* Saved styles */
         #saved-container {
             margin-top: 120px;
@@ -308,53 +302,88 @@
             color: darkred; /* Darker shade on hover */
             text-decoration: underline; /* Underline on hover */
         }
+
+        /* Viewed History styles */
+        #viewed-history-container {
+            margin-top: 120px;
+            padding: 10px;
+            display: none; /* Initially hidden */
+            height: calc(100vh - 120px); /* Allow for scrolling */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        .viewed-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            background-color: #141414;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .viewed-item img {
+            width: 150px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .viewed-item h3 {
+            margin: 0;
+            font-size: 10px;
+            flex: 1;
+        }
+
+        /* Install message styles */
         .install-message {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #fff; /* Blue background */
-    color: #333;
-    padding: 2px 20px;
-    border-radius: 12px;
-    display: flex;
-    font-size: 9.8px;
-    border: 1px solid #ccc;
-    flex-direction: column; /* Stack items vertically */
-    align-items: center;
-    justify-content: center;
-    width: 80%;
-    max-width: 500px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 10000;
-}
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff; /* Background */
+            color: #333; /* Text color */
+            padding: 10px 20px;
+            border-radius: 12px;
+            display: flex;
+            font-size: 9.8px;
+            border: 1px solid #ccc;
+            flex-direction: column; /* Stack items vertically */
+            align-items: center;
+            justify-content: center;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+        }
 
-.install-btn {
-    background-color: #ff0000; /* Green button */
-    color: white;
-    border: 1px solid #ccc;
-    padding: 10px 25px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-    margin-top: 1px; /* Space between the paragraph and the button */
-}
+        .install-btn {
+            background-color: #ff0000; /* Red button */
+            color: white;
+            border: 1px solid #ccc;
+            padding: 10px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 5px; /* Space between the paragraph and the button */
+        }
 
-.close-btn {
-    background-color: transparent;
-    color: white;
-    font-size: 8px;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    font-weight: bold;
-    position: absolute;
-    top: 15px;
-    right: 10px;
-}
+        .close-btn {
+            background-color: transparent;
+            color: white;
+            font-size: 8px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-weight: bold;
+            position: absolute;
+            top: 15px;
+            right: 10px;
+        }
 
-.close-btn:hover {
-    color: #ff0000;
-}
+        .close-btn:hover {
+            color: #ff0000;
+        }
     </style>
 </head>
 
@@ -388,9 +417,9 @@
 
 <!-- Video Navigation -->
 <div id="video-nav">
-    <button id="close-btn" onclick="closeNav()" aria-label="Close video"> ✖ Close</button>
+    <button id="close-btn" onclick="closeNav()" aria-label="Close video"> ⬅️ Back to Home</button>
     <iframe id="video-player" src="" allowfullscreen></iframe>
-    
+
     <!-- Social Media Icons -->
     <div id="social-media">
         <i class="fab fa-telegram social-icon" onclick="shareLink('telegram')"></i>
@@ -398,11 +427,17 @@
         <i class="fab fa-whatsapp social-icon" onclick="shareLink('whatsapp')"></i>
         <i class="fas fa-share social-icon" onclick="shareLink('generic')"></i>
     </div>
-    
+
     <div id="popular-videos">
         <h3>Dive into non-stop fun with more movies below.</h3>
         <div id="popular-container"></div>
     </div>
+</div>
+
+<!-- Viewed History Section -->
+<div id="viewed-history-container">
+    <h2>Recently Viewed Videos</h2>
+    <div id="viewed-content"></div>
 </div>
 
 <!-- Playlist Section -->
@@ -423,6 +458,9 @@
     </div>
     <div class="nav-icon" id="saved-btn" onclick="showSaved()">
         <i class="fas fa-bookmark"></i><br>Saved
+    </div>
+    <div class="nav-icon" id="viewed-history-btn" onclick="showViewedHistory()">
+        <i class="fas fa-history"></i><br>History
     </div>
 </footer>
 
@@ -465,16 +503,48 @@ const data = [
         title: "APOCALYPSE",
         tag: "Battles",
     },
-    // Add more video data as needed
 ];
 
 // Load saved videos from local storage
 let savedVideos = JSON.parse(localStorage.getItem('savedVideos')) || [];
+let viewedVideos = JSON.parse(localStorage.getItem('videoHistory')) || [];
+
+// Video Management Class
+class VideoHistory {
+    constructor() {
+        this.history = JSON.parse(localStorage.getItem('videoHistory')) || [];
+    }
+
+    addVideo(video) {
+        // Check if the video already exists in the history
+        const existingIndex = this.history.findIndex(item => item.videoUrl === video.videoUrl);
+        if (existingIndex !== -1) {
+            // Remove the existing video from its current position
+            this.history.splice(existingIndex, 1);
+        }
+        // Add the video to the beginning of the history
+        this.history.unshift(video);
+        // Only keep the last 10 viewed videos
+        if (this.history.length > 10) {
+            this.history.pop();
+        }
+        // Store the updated history in local storage
+        localStorage.setItem('videoHistory', JSON.stringify(this.history));
+    }
+
+    getHistory() {
+        return this.history;
+    }
+}
+
+// Initialize history
+const historyManager = new VideoHistory();
 
 const displayHome = () => {
     document.getElementById('frames-container').style.display = 'grid';
     document.getElementById('playlist-container').style.display = 'none';
     document.getElementById('saved-container').style.display = 'none';
+    document.getElementById('viewed-history-container').style.display = 'none';
     createVideoItems(data); // Create Home Page Video Items
 };
 
@@ -491,7 +561,10 @@ const createVideoItems = (filteredData = data) => {
         img.alt = item.title || 'Video thumbnail';
         img.onerror = () => img.style.display = 'none';
 
-        img.onclick = () => openVideoNav(item.videoUrl);
+        img.onclick = () => {
+            openVideoNav(item.videoUrl);
+            historyManager.addVideo(item); // Add video to history
+        };
 
         const title = document.createElement('div');
         title.className = 'video-title';
@@ -518,6 +591,7 @@ const openVideoNav = (videoUrl) => {
     document.getElementById('video-nav').style.display = 'block';
     document.getElementById('video-player').src = videoUrl;
     populatePopularVideos();
+    updateViewedVideos(); // Update viewed videos when playing a new video
 };
 
 const closeNav = () => {
@@ -552,19 +626,45 @@ const saveVideo = (video) => {
     }
 };
 
+const updateViewedVideos = () => {
+    const viewedContent = document.getElementById('viewed-content');
+    viewedContent.innerHTML = ''; // Clear previous history display
+
+    const history = historyManager.getHistory();
+    history.forEach((item) => {
+        const viewedItem = document.createElement('div');
+        viewedItem.className = 'viewed-item';
+
+        const img = document.createElement('img');
+        img.src = item.imgUrl;
+        img.alt = item.title || 'Video thumbnail';
+        img.onclick = () => openVideoNav(item.videoUrl);
+
+        const title = document.createElement('h3');
+        title.textContent = item.title;
+
+        viewedItem.appendChild(img);
+        viewedItem.appendChild(title);
+        viewedContent.appendChild(viewedItem);
+    });
+
+    document.getElementById('viewed-history-container').style.display = 'block'; // Show the viewed history container
+};
+
 const displayPlaylist = () => {
     document.getElementById('frames-container').style.display = 'none';
     document.getElementById('saved-container').style.display = 'none';
-    
+    document.getElementById('viewed-history-container').style.display = 'none';
+
     // Show playlist container similar to home
     const playlistContainer = document.getElementById('playlist-container');
     playlistContainer.style.display = 'grid';
     playlistContainer.innerHTML = ''; // Clear existing content
 
+    // Sample playlist data, can be modified as needed
     const playlistData = [
         { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE 2" },
         { imgUrl: "https://bit.ly/4fFLfwd", videoUrl: "https://youtube.com/embed/BAQV7hQdznE", title: "VIKING BATTLE" }
-        // Add more predefined playlist videos as needed
     ];
 
     playlistData.forEach(item => {
@@ -580,7 +680,6 @@ const displayPlaylist = () => {
         title.className = 'video-title';
         title.innerText = item.title;
 
-        // Save Button for Playlist Videos
         const saveButton = document.createElement('button');
         saveButton.className = 'save-button';
         saveButton.innerHTML = '<i class="fas fa-star"></i>'; // Save icon
@@ -601,6 +700,8 @@ const displayPlaylist = () => {
 const displaySaved = () => {
     document.getElementById('frames-container').style.display = 'none';
     document.getElementById('playlist-container').style.display = 'none';
+    document.getElementById('viewed-history-container').style.display = 'none';
+    
     document.getElementById('saved-container').style.display = 'block';
 
     const savedContent = document.getElementById('saved-content');
@@ -632,20 +733,12 @@ const displaySaved = () => {
     });
 };
 
-// Show the install message 15 seconds after the page loads
-window.onload = function() {
-    setTimeout(function() {
-        const installMessage = document.getElementById('install-message');
-        const closeButton = document.getElementById('close-btn');
-
-        // Display the message
-        installMessage.style.display = 'flex';
-
-        // Close the message when the close button is clicked
-        closeButton.onclick = function() {
-            installMessage.style.display = 'none';
-        };
-    }, 40000); // 40000 milliseconds = 30 seconds
+const showViewedHistory = () => {
+    // Navigate to the viewed history
+    document.getElementById('frames-container').style.display = 'none';
+    document.getElementById('playlist-container').style.display = 'none';
+    document.getElementById('saved-container').style.display = 'none';
+    updateViewedVideos(); // Update to show the latest viewed videos
 };
 
 const removeSavedVideo = (index) => {
@@ -664,6 +757,10 @@ const showPlaylist = () => {
 
 const showSaved = () => {
     displaySaved();
+};
+
+const openNovels = () => {
+    window.open("https://your-novels-url.com", "_blank"); // Replace with the actual URL
 };
 
 let debounceTimer;
@@ -747,7 +844,7 @@ function shuffleArray(array) {
 const shuffledData = shuffleArray(data);
 createVideoItems(shuffledData); // Display Home Page by default
 
-// Initial function call to display home page
+// Initial function call to display the home page
 document.addEventListener('DOMContentLoaded', () => {
     displayHome(); // Show Home Page on initial load
 });
