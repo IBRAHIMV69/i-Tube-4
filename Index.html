@@ -153,7 +153,6 @@
             border-radius: 10px;
             margin: 10px;
             padding: 2px 10px;
-            border: 1px solid #ccc;
         }
 
         #close-btn:hover {
@@ -480,372 +479,372 @@
 </footer>
 
 <script>
-// Sample video data
-const data = [
-    {
-        imgUrl: "https://bit.ly/4gZ1VzL",
-        videoUrl: "https://ok.ru/video/1444891462248", // Generic URL
-        title: "Video 1",
-        tag: "Monster",
-    },
-    {
-        imgUrl: "https://bit.ly/4fFLfwd",
-        videoUrl: "https://ok.ru/video/1444891462248",
-        title: "Video 2",
-        tag: "Battles",
-    },
-    {
-        imgUrl: "https://bit.ly/4gCtC1L",
-        videoUrl: "https://ok.ru/video/1444891462248",
-        title: "Video 3",
-        tag: "Battles",
-    },
-    {
-        imgUrl: "https://bit.ly/3Phnujl",
-        videoUrl: "https://ok.ru/video/1444891462248",
-        title: "Video 4",
-        tag: "SHARKS",
-    },
-];
-
-// Load saved videos from local storage
-let savedVideos = JSON.parse(localStorage.getItem('savedVideos')) || [];
-let viewedVideos = JSON.parse(localStorage.getItem('videoHistory')) || [];
-
-// Video Management Class
-class VideoHistory {
-    constructor() {
-        this.history = JSON.parse(localStorage.getItem('videoHistory')) || [];
-    }
-
-    addVideo(video) {
-        const existingIndex = this.history.findIndex(item => item.videoUrl === video.videoUrl);
-        if (existingIndex !== -1) {
-            this.history.splice(existingIndex, 1);
-        }
-        this.history.unshift(video);
-        if (this.history.length > 10) {
-            this.history.pop();
-        }
-        localStorage.setItem('videoHistory', JSON.stringify(this.history));
-    }
-
-    getHistory() {
-        return this.history;
-    }
-}
-
-// Initialize history
-const historyManager = new VideoHistory();
-
-const displayHome = () => {
-    document.getElementById('frames-container').style.display = 'grid';
-    document.getElementById('playlist-container').style.display = 'none';
-    document.getElementById('saved-container').style.display = 'none';
-    document.getElementById('viewed-history-container').style.display = 'none';
-    createVideoItems(data);
-};
-
-const createVideoItems = (filteredData = data) => {
-    const container = document.getElementById('frames-container');
-    container.innerHTML = '';
-
-    filteredData.forEach((item) => {
-        const videoItem = document.createElement('div');
-        videoItem.className = 'video-item';
-
-        const img = document.createElement('img');
-        img.src = item.imgUrl;
-        img.alt = item.title || 'Video thumbnail';
-        img.onerror = () => img.style.display = 'none';
-
-        img.onclick = () => {
-            openVideoNav(item.videoUrl);
-            historyManager.addVideo(item);
-        };
-
-        const title = document.createElement('div');
-        title.className = 'video-title';
-        title.innerText = item.title;
-
-        const saveButton = document.createElement('button');
-        saveButton.className = 'save-button';
-        saveButton.innerHTML = '<i class="fas fa-star"></i>';
-        saveButton.onclick = (e) => {
-            e.stopPropagation();
-            saveVideo(item);
-            saveButton.style.color = 'gold'; 
-        };
-
-        videoItem.appendChild(img);
-        videoItem.appendChild(title);
-        videoItem.appendChild(saveButton);
-        container.appendChild(videoItem);
-    });
-};
-
-const openVideoNav = (videoUrl) => {
-    document.getElementById('video-nav').style.display = 'block';
-    document.getElementById('video-player').src = videoUrl;
-    populatePopularVideos();
-    updateViewedVideos();
-};
-
-const closeNav = () => {
-    document.getElementById('video-nav').style.display = 'none';
-    document.getElementById('video-player').src = '';
-};
-
-const populatePopularVideos = () => {
-    const popularContainer = document.getElementById('popular-container');
-    popularContainer.innerHTML = '';
-    data.forEach((item) => {
-        const popularItem = document.createElement('div');
-        popularItem.className = 'popular-item';
-        popularItem.onclick = () => openVideoNav(item.videoUrl);
-
-        const img = document.createElement('img');
-        img.src = item.imgUrl;
-
-        const title = document.createElement('h4');
-        title.textContent = item.title;
-
-        popularItem.appendChild(img);
-        popularItem.appendChild(title);
-        popularContainer.appendChild(popularItem);
-    });
-};
-
-const saveVideo = (video) => {
-    const existingIndex = savedVideos.findIndex(savedVideo => savedVideo.videoUrl === video.videoUrl);
-    
-    if (existingIndex !== -1) {
-        savedVideos[existingIndex] = video; // Update the existing video object
-        alert(`${video.title} has been updated!`);
-    } else {
-        savedVideos.unshift(video);
-        alert(`${video.title} has been saved!`);
-    }
-    localStorage.setItem('savedVideos', JSON.stringify(savedVideos));
-};
-
-const updateViewedVideos = () => {
-    const viewedContent = document.getElementById('viewed-content');
-    viewedContent.innerHTML = '';
-
-    const history = historyManager.getHistory();
-    history.forEach((item) => {
-        const viewedItem = document.createElement('div');
-        viewedItem.className = 'viewed-item';
-
-        const img = document.createElement('img');
-        img.src = item.imgUrl;
-        img.alt = item.title || 'Video thumbnail';
-        img.onclick = () => openVideoNav(item.videoUrl);
-
-        const title = document.createElement('h3');
-        title.textContent = item.title;
-
-        viewedItem.appendChild(img);
-        viewedItem.appendChild(title);
-        viewedContent.appendChild(viewedItem);
-    });
-
-    document.getElementById('viewed-history-container').style.display = 'block';
-};
-
-const displayPlaylist = () => {
-    document.getElementById('frames-container').style.display = 'none';
-    document.getElementById('saved-container').style.display = 'none';
-    document.getElementById('viewed-history-container').style.display = 'none';
-
-    const playlistContainer = document.getElementById('playlist-container');
-    playlistContainer.style.display = 'grid';
-    playlistContainer.innerHTML = '';
-
-    const playlistData = [
-        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://your-video-platform.com/video/3", title: "APOCALYPSE 2" },
-        { imgUrl: "https://bit.ly/4fFLfwd", videoUrl: "https://your-video-platform.com/video/2", title: "VIKING BATTLE" },
-        { imgUrl: "https://bit.ly/3Pqqx8F", videoUrl: "https://your-video-platform.com/video/5", title: "SALAAR" },
-        { imgUrl: "https://bit.ly/3VRBV13", videoUrl: "https://your-video-platform.com/video/6", title: "GUNS OF EDEN" }
+    // Sample video data with updated URLs
+    const data = [
+        {
+            imgUrl: "https://bit.ly/4gZ1VzL",
+            videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", // Sample video URL
+            title: "Sample Video 1",
+            tag: "Monster",
+        },
+        {
+            imgUrl: "https://bit.ly/4fFLfwd",
+            videoUrl: "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4", // Sample video URL
+            title: "Sample Video 2",
+            tag: "Battles",
+        },
+        {
+            imgUrl: "https://bit.ly/4gCtC1L",
+            videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", // Sample video URL
+            title: "Sample Video 3",
+            tag: "Battles",
+        },
+        {
+            imgUrl: "https://bit.ly/3Phnujl",
+            videoUrl: "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4", // Sample video URL
+            title: "Sample Video 4",
+            tag: "SHARKS",
+        },
     ];
 
-    playlistData.forEach(item => {
-        const playlistItem = document.createElement('div');
-        playlistItem.className = 'video-item';
+    // Load saved videos from local storage
+    let savedVideos = JSON.parse(localStorage.getItem('savedVideos')) || [];
+    let viewedVideos = JSON.parse(localStorage.getItem('videoHistory')) || [];
 
-        const img = document.createElement('img');
-        img.src = item.imgUrl;
-        img.alt = item.title || 'Video thumbnail';
-        img.onclick = () => openVideoNav(item.videoUrl);
+    // Video Management Class
+    class VideoHistory {
+        constructor() {
+            this.history = JSON.parse(localStorage.getItem('videoHistory')) || [];
+        }
 
-        const title = document.createElement('div');
-        title.className = 'video-title';
-        title.innerText = item.title;
-
-        const saveButton = document.createElement('button');
-        saveButton.className = 'save-button';
-        saveButton.innerHTML = '<i class="fas fa-star"></i>';
-        saveButton.onclick = (e) => {
-            e.stopPropagation();
-            saveVideo(item);
-            saveButton.style.color = 'gold'; 
-        };
-
-        playlistItem.appendChild(img);
-        playlistItem.appendChild(title);
-        playlistItem.appendChild(saveButton);
-        playlistContainer.appendChild(playlistItem);
-    });
-};
-
-const displaySaved = () => {
-    document.getElementById('frames-container').style.display = 'none';
-    document.getElementById('playlist-container').style.display = 'none';
-    document.getElementById('viewed-history-container').style.display = 'none';
-    const savedContent = document.getElementById('saved-content');
-    savedContent.innerHTML = '';
-
-    savedVideos.forEach((item, index) => {
-        const savedItem = document.createElement('div');
-        savedItem.className = 'saved-item';
-
-        const img = document.createElement('img');
-        img.src = item.imgUrl;
-        img.alt = item.title || 'Video thumbnail';
-        img.onclick = () => openVideoNav(item.videoUrl);
-
-        const title = document.createElement('h3');
-        title.textContent = item.title;
-
-        const removeButton = document.createElement('span');
-        removeButton.textContent = '⭐ Remove';
-        removeButton.onclick = (e) => {
-            e.stopPropagation();
-            removeSavedVideo(index);
-        };
-
-        savedItem.appendChild(img);
-        savedItem.appendChild(title);
-        savedItem.appendChild(removeButton);
-        savedContent.appendChild(savedItem);
-    });
-    document.getElementById('saved-container').style.display = 'block';
-};
-
-const showViewedHistory = () => {
-    document.getElementById('frames-container').style.display = 'none';
-    document.getElementById('playlist-container').style.display = 'none';
-    document.getElementById('saved-container').style.display = 'none';
-    updateViewedVideos();
-};
-
-const removeSavedVideo = (index) => {
-    savedVideos.splice(index, 1);
-    localStorage.setItem('savedVideos', JSON.stringify(savedVideos));
-    displaySaved();
-};
-
-const showHome = () => {
-    displayHome();
-};
-
-const showPlaylist = () => {
-    displayPlaylist();
-};
-
-const showSaved = () => {
-    displaySaved();
-};
-
-let debounceTimer;
-const handleSearch = () => {
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-        const searchTerm = document.getElementById('search-bar').value.toLowerCase();
-        const filteredData = data.filter(item => item.title.toLowerCase().includes(searchTerm));
-        createVideoItems(filteredData);
-    }, 300);
-};
-
-const filterByTag = (tag) => {
-    const filteredData = data.filter(item => item.tag === tag);
-    createVideoItems(filteredData);
-};
-
-const shareLink = (platform) => {
-    const url = 'https://i-tube-movies.netlify.app/';
-    let shareUrl = '';
-
-    switch(platform) {
-        case 'telegram':
-            shareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(url)}`;
-            break;
-        case 'twitter':
-            shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`;
-            break;
-        case 'whatsapp':
-            shareUrl = `https://wa.me/?text=${encodeURIComponent(url)}`;
-            break;
-        case 'generic':
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Check out this video platform!',
-                    url: url
-                }).catch(err => console.error(err));
-                return;
-            } else {
-                alert('Sharing is not supported in your browser.');
-                return;
+        addVideo(video) {
+            const existingIndex = this.history.findIndex(item => item.videoUrl === video.videoUrl);
+            if (existingIndex !== -1) {
+                this.history.splice(existingIndex, 1);
             }
+            this.history.unshift(video);
+            if (this.history.length > 10) {
+                this.history.pop();
+            }
+            localStorage.setItem('videoHistory', JSON.stringify(this.history));
+        }
+
+        getHistory() {
+            return this.history;
+        }
     }
 
-    window.open(shareUrl, '_blank');
-};
+    // Initialize history
+    const historyManager = new VideoHistory();
 
-let lastScrollTop = 0;
-const footer = document.querySelector('footer');
+    const displayHome = () => {
+        document.getElementById('frames-container').style.display = 'grid';
+        document.getElementById('playlist-container').style.display = 'none';
+        document.getElementById('saved-container').style.display = 'none';
+        document.getElementById('viewed-history-container').style.display = 'none';
+        createVideoItems(data);
+    };
 
-const handleScroll = () => {
-    const st = window.pageYOffset || document.documentElement.scrollTop;
-    if (st > lastScrollTop) {
-        footer.style.transform = 'translateY(100%)';
-    } else {
-        footer.style.transform = 'translateY(0)';
+    const createVideoItems = (filteredData = data) => {
+        const container = document.getElementById('frames-container');
+        container.innerHTML = '';
+
+        filteredData.forEach((item) => {
+            const videoItem = document.createElement('div');
+            videoItem.className = 'video-item';
+
+            const img = document.createElement('img');
+            img.src = item.imgUrl;
+            img.alt = item.title || 'Video thumbnail';
+            img.onerror = () => img.style.display = 'none';
+
+            img.onclick = () => {
+                openVideoNav(item.videoUrl);
+                historyManager.addVideo(item);
+            };
+
+            const title = document.createElement('div');
+            title.className = 'video-title';
+            title.innerText = item.title;
+
+            const saveButton = document.createElement('button');
+            saveButton.className = 'save-button';
+            saveButton.innerHTML = '<i class="fas fa-star"></i>';
+            saveButton.onclick = (e) => {
+                e.stopPropagation();
+                saveVideo(item);
+                saveButton.style.color = 'gold';
+                alert(`${item.title} has been saved!`);
+            };
+
+            videoItem.appendChild(img);
+            videoItem.appendChild(title);
+            videoItem.appendChild(saveButton);
+            container.appendChild(videoItem);
+        });
+    };
+
+    const openVideoNav = (videoUrl) => {
+        document.getElementById('video-nav').style.display = 'block';
+        document.getElementById('video-player').src = videoUrl;
+        populatePopularVideos();
+        updateViewedVideos();
+    };
+
+    const closeNav = () => {
+        document.getElementById('video-nav').style.display = 'none';
+        document.getElementById('video-player').src = '';
+    };
+
+    const populatePopularVideos = () => {
+        const popularContainer = document.getElementById('popular-container');
+        popularContainer.innerHTML = '';
+        data.forEach((item) => {
+            const popularItem = document.createElement('div');
+            popularItem.className = 'popular-item';
+            popularItem.onclick = () => openVideoNav(item.videoUrl);
+
+            const img = document.createElement('img');
+            img.src = item.imgUrl;
+
+            const title = document.createElement('h4');
+            title.textContent = item.title;
+
+            popularItem.appendChild(img);
+            popularItem.appendChild(title);
+            popularContainer.appendChild(popularItem);
+        });
+    };
+
+    const saveVideo = (video) => {
+        const existingIndex = savedVideos.findIndex(savedVideo => savedVideo.videoUrl === video.videoUrl);
+
+        if (existingIndex === -1) {
+            savedVideos.unshift(video);
+            localStorage.setItem('savedVideos', JSON.stringify(savedVideos));
+        } else {
+            alert(`${video.title} is already saved!`);
+        }
+    };
+
+    const updateViewedVideos = () => {
+        const viewedContent = document.getElementById('viewed-content');
+        viewedContent.innerHTML = '';
+
+        const history = historyManager.getHistory();
+        history.forEach((item) => {
+            const viewedItem = document.createElement('div');
+            viewedItem.className = 'viewed-item';
+
+            const img = document.createElement('img');
+            img.src = item.imgUrl;
+            img.alt = item.title || 'Video thumbnail';
+            img.onclick = () => openVideoNav(item.videoUrl);
+
+            const title = document.createElement('h3');
+            title.textContent = item.title;
+
+            viewedItem.appendChild(img);
+            viewedItem.appendChild(title);
+            viewedContent.appendChild(viewedItem);
+        });
+
+        document.getElementById('viewed-history-container').style.display = 'block';
+    };
+
+    const displayPlaylist = () => {
+        document.getElementById('frames-container').style.display = 'none';
+        document.getElementById('saved-container').style.display = 'none';
+        document.getElementById('viewed-history-container').style.display = 'none';
+
+        const playlistContainer = document.getElementById('playlist-container');
+        playlistContainer.style.display = 'grid';
+        playlistContainer.innerHTML = '';
+
+        const playlistData = [
+            { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4", title: "Sample Video A" },
+            { imgUrl: "https://bit.ly/4fFLfwd", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", title: "Sample Video B" },
+            { imgUrl: "https://bit.ly/3Pqqx8F", videoUrl: "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4", title: "Sample Video C" },
+            { imgUrl: "https://bit.ly/3VRBV13", videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4", title: "Sample Video D" }
+        ];
+
+        playlistData.forEach(item => {
+            const playlistItem = document.createElement('div');
+            playlistItem.className = 'video-item';
+
+            const img = document.createElement('img');
+            img.src = item.imgUrl;
+            img.alt = item.title || 'Video thumbnail';
+            img.onclick = () => openVideoNav(item.videoUrl);
+
+            const title = document.createElement('div');
+            title.className = 'video-title';
+            title.innerText = item.title;
+
+            const saveButton = document.createElement('button');
+            saveButton.className = 'save-button';
+            saveButton.innerHTML = '<i class="fas fa-star"></i>'; 
+            saveButton.onclick = (e) => {
+                e.stopPropagation();
+                saveVideo(item);
+                saveButton.style.color = 'gold';
+                alert(`${item.title} has been saved!`);
+            };
+
+            playlistItem.appendChild(img);
+            playlistItem.appendChild(title);
+            playlistItem.appendChild(saveButton);
+            playlistContainer.appendChild(playlistItem);
+        });
+    };
+
+    const displaySaved = () => {
+        document.getElementById('frames-container').style.display = 'none';
+        document.getElementById('playlist-container').style.display = 'none';
+        document.getElementById('viewed-history-container').style.display = 'none';
+        const savedContent = document.getElementById('saved-content');
+        savedContent.innerHTML = '';
+
+        savedVideos.forEach((item, index) => {
+            const savedItem = document.createElement('div');
+            savedItem.className = 'saved-item';
+
+            const img = document.createElement('img');
+            img.src = item.imgUrl;
+            img.alt = item.title || 'Video thumbnail';
+            img.onclick = () => openVideoNav(item.videoUrl);
+
+            const title = document.createElement('h3');
+            title.textContent = item.title;
+
+            const removeButton = document.createElement('span');
+            removeButton.textContent = '⭐ Remove';
+            removeButton.onclick = (e) => {
+                e.stopPropagation();
+                removeSavedVideo(index);
+            };
+
+            savedItem.appendChild(img);
+            savedItem.appendChild(title);
+            savedItem.appendChild(removeButton);
+            savedContent.appendChild(savedItem);
+        });
+        document.getElementById('saved-container').style.display = 'block';
+    };
+
+    const showViewedHistory = () => {
+        document.getElementById('frames-container').style.display = 'none';
+        document.getElementById('playlist-container').style.display = 'none';
+        document.getElementById('saved-container').style.display = 'none';
+        updateViewedVideos();
+    };
+
+    const removeSavedVideo = (index) => {
+        savedVideos.splice(index, 1);
+        localStorage.setItem('savedVideos', JSON.stringify(savedVideos));
+        displaySaved(); // Refresh the display after removal
+    };
+
+    const showHome = () => {
+        displayHome();
+    };
+
+    const showPlaylist = () => {
+        displayPlaylist();
+    };
+
+    const showSaved = () => {
+        displaySaved();
+    };
+
+    let debounceTimer;
+    const handleSearch = () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            const searchTerm = document.getElementById('search-bar').value.toLowerCase();
+            const filteredData = data.filter(item => item.title.toLowerCase().includes(searchTerm));
+            createVideoItems(filteredData);
+        }, 300);
+    };
+
+    const filterByTag = (tag) => {
+        const filteredData = data.filter(item => item.tag === tag);
+        createVideoItems(filteredData);
+    };
+
+    const shareLink = (platform) => {
+        const url = 'https://i-tube-movies.netlify.app/';
+        let shareUrl = '';
+
+        switch(platform) {
+            case 'telegram':
+                shareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(url)}`;
+                break;
+            case 'twitter':
+                shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`;
+                break;
+            case 'whatsapp':
+                shareUrl = `https://wa.me/?text=${encodeURIComponent(url)}`;
+                break;
+            case 'generic':
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Check out this video platform!',
+                        url: url
+                    }).catch(err => console.error(err));
+                    return;
+                } else {
+                    alert('Sharing is not supported in your browser.');
+                    return;
+                }
+        }
+
+        window.open(shareUrl, '_blank');
+    };
+
+    let lastScrollTop = 0;
+    const footer = document.querySelector('footer');
+
+    const handleScroll = () => {
+        const st = window.pageYOffset || document.documentElement.scrollTop;
+        if (st > lastScrollTop) {
+            footer.style.transform = 'translateY(100%)';
+        } else {
+            footer.style.transform = 'translateY(0)';
+        }
+        lastScrollTop = st <= 0 ? 0 : st;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+
+    window.onload = function() {
+        setTimeout(function() {
+            const installMessage = document.getElementById('install-message');
+            const closeButton = document.getElementById('close-btn');
+
+            installMessage.style.display = 'flex';
+
+            closeButton.onclick = function() {
+                installMessage.style.display = 'none';
+            };
+        }, 4000);
+    };
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
     }
-    lastScrollTop = st <= 0 ? 0 : st;
-};
 
-window.addEventListener('scroll', handleScroll);
-handleScroll();
+    const shuffledData = shuffleArray(data);
+    createVideoItems(shuffledData);
 
-window.onload = function() {
-    setTimeout(function() {
-        const installMessage = document.getElementById('install-message');
-        const closeButton = document.getElementById('close-btn');
-
-        installMessage.style.display = 'flex';
-
-        closeButton.onclick = function() {
-            installMessage.style.display = 'none';
-        };
-    }, 4000);
-};
-
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-const shuffledData = shuffleArray(data);
-createVideoItems(shuffledData);
-
-document.addEventListener('DOMContentLoaded', () => {
-    displayHome();
-});
+    document.addEventListener('DOMContentLoaded', () => {
+        displayHome();
+    });
 </script>
 
 </body>
