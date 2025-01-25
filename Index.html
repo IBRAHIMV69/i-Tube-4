@@ -144,7 +144,7 @@
 
         #video-nav iframe {
             width: 100%;
-            height: 35%;
+            height: 37%;
             border: none;
             border-radius: 10px;
             z-index: 1;
@@ -183,7 +183,7 @@
 
         .social-icon {
             color: white;
-            font-size: 22px;
+            font-size: 20px;
             cursor: pointer;
         }
 
@@ -420,6 +420,9 @@
     </div>
     <div class="tags">
         <div class="tag" onclick="filterByTag('Action')">Action</div>
+        <div class="tag" onclick="filterByTag('Horror')">Horror</div>
+        <div class="tag" onclick="filterByTag('Indian')">Indian</div>
+        <div class="tag" onclick="filterByTag('Europe')">Europe</div>
         <div class="tag" onclick="filterByTag('Chinese')">Chinese</div>
         <div class="tag" onclick="filterByTag('Indian')">Indian</div>
         <div class="tag" onclick="filterByTag('Europe')">Europe</div>
@@ -509,26 +512,50 @@ const data = [
     {
         imgUrl: "https://bit.ly/4gZ1VzL",
         videoUrl: "https://youtube.com/embed/xzk1ko7AN2M",
-        title: "PTERODACTYL 2",
-        tag: "Monster",
+        title: "Pterodactyl 2, 2023",
+        tag: "Horror",
     },
     {
         imgUrl: "https://bit.ly/4fFLfwd",
         videoUrl: "https://youtube.com/embed/BAQV7hQdznE",
-        title: "VIKING BATTLE",
-        tag: "Battles",
+        title: "Viking: Battle of Heirs 2023",
+        tag: "Action",
     },
     {
         imgUrl: "https://bit.ly/4gCtC1L",
         videoUrl: "https://youtube.com/embed/4Q8fJlbUn3w",
-        title: "APOCALYPSE 2 - TRAILER",
+        title: "Apocalypto 2006",
         tag: "Battles",
     },
     {
         imgUrl: "https://bit.ly/3Phnujl",
         videoUrl: "https://youtube.com/embed/rsvGs96-ddo",
-        title: "TSUNAMI SHARKS",
-        tag: "SHARKS",
+        title: "Tsunami Sharks 2024",
+        tag: "Horror",
+    },
+    {
+        imgUrl: "https://bit.ly/3EdJhpW",
+        videoUrl: "https://youtube.com/embed/_q0HpkMrhdc",
+        title: "Conan the Adventurer (1997)",
+        tag: "Action",
+    },
+    {
+        imgUrl: "https://bit.ly/4haIvbD",
+        videoUrl: "https://v.moviebox.ng/SroObuh5AM",
+        title: "The Crow 2024",
+        tag: "Horror",
+    },
+    {
+        imgUrl: "https://bit.ly/405kXOj",
+        videoUrl: "https://youtube.com/embed/CumW3IY1mMg",
+        title: "God of War",
+        tag: "Action",
+    },
+    {
+        imgUrl: "https://bit.ly/4gCtcbn",
+        videoUrl: "https://youtube.com/embed/9QB2GjHg0Tw",
+        title: "Flight from Hell 2014",
+        tag: "Action",
     },
 ];
 
@@ -797,6 +824,39 @@ const shareLink = (platform) => {
     }
 
     window.open(shareUrl, '_blank');
+};
+
+// Scroll handling for hiding/showing footer
+let lastScrollTop = 0;
+const footer = document.querySelector('footer');
+
+const handleScroll = () => {
+    const st = window.pageYOffset || document.documentElement.scrollTop;
+    if (st > lastScrollTop) {
+        footer.style.transform = 'translateY(100%)'; 
+    } else {
+        footer.style.transform = 'translateY(0)'; 
+    }
+    lastScrollTop = st <= 0 ? 0 : st; 
+};
+
+window.addEventListener('scroll', handleScroll);
+handleScroll();
+
+// Show the install message 15 seconds after the page loads
+window.onload = function() {
+    setTimeout(function() {
+        const installMessage = document.getElementById('install-message');
+        const closeButton = document.getElementById('close-btn');
+
+        // Display the message
+        installMessage.style.display = 'flex';
+
+        // Close the message when the close button is clicked
+        closeButton.onclick = function() {
+            installMessage.style.display = 'none';
+        };
+    }, 40000); // 40 milliseconds = 4 seconds
 };
 
 // Shuffle Array Function
