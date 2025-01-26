@@ -213,7 +213,7 @@
         #popular-container {
             display: flex;
             overflow-x: auto;
-            gap: 3px;
+            gap: 2px;
          2  padding: 2px 0;
         }
 
@@ -433,6 +433,12 @@
         <div class="tag" onclick="filterByTag('Europe')">Europe</div>
     </div>
 </header>
+
+<div id="install-message" class="install-message" style="display: none;">
+    <p>For non-stop video enjoyment, install the i Tube app now!</p>
+    <a href="https://drive.google.com/file/d/1M2BGHFzJGC_hlYgZQddiZmDXtxAiY2ML/view?usp=drivesdk" class="install-btn" target="_blank">Install Now</a>
+    <button id="close-btn" class="close-btn">✖</button>
+</div>
 
 <div id="frames-container"></div>
 
@@ -849,23 +855,20 @@ const handleScroll = () => {
 window.addEventListener('scroll', handleScroll);
 handleScroll();
 
-// Show the install message after the page loads
+// Show the install message 15 seconds after the page loads
 window.onload = function() {
-    const installMessage = document.createElement('div');
-    installMessage.className = 'install-message';
-    installMessage.innerHTML = `
-        <p>Install our app for the best experience!</p>
-        <a href="#" class="install-btn">Install</a>
-        <span class="close-btn">&times;</span>
-    `;
-    document.body.appendChild(installMessage);
+    setTimeout(function() {
+        const installMessage = document.getElementById('install-message');
+        const closeButton = document.getElementById('close-btn');
 
-    const closeButton = installMessage.querySelector('.close-btn');
+        // Display the message
+        installMessage.style.display = 'flex';
 
-    // Close the message when the close button is clicked
-    closeButton.onclick = function() {
-        installMessage.style.display = 'none';
-    };
+        // Close the message when the close button is clicked
+        closeButton.onclick = function() {
+            installMessage.style.display = 'none';
+        };
+    }, 40000); // 40 milliseconds = 4 seconds
 };
 
 // Shuffle Array Function
