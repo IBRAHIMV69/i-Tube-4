@@ -11,8 +11,8 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #1c1c1c; /* Dark background */
-            color: #fff; /* Light text */
+            background-color: #1c1c1c;
+            color: #fff;
         }
 
         header {
@@ -21,13 +21,13 @@
             left: 0;
             width: 100%;
             height: 90px;
-            background-color: #1c1c1c; /* Darker gray for header */
+            background-color: #1c1c1c;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 8px;
             border: 1px solid #444;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
             z-index: 1000;
         }
 
@@ -40,30 +40,44 @@
 
         .logo {
             font-size: 20px;
-            background: linear-gradient(to right, #2c3e50, #4ca1af); /* Gradient background */
-            color: #ecf0f1; /* Light text color */
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            color: #ecf0f1;
             border-radius: 20px;
             padding: 5px 12px;
-            border: 1px solid #444;
             font-weight: bold;
-            color: #fff;
+            margin-right: 8px;
         }
 
         #search-bar {
-            flex: 1;
+            flex: 0 1 150px;
             margin: 0 12px;
             padding: 8px;
             border: none;
             border-radius: 20px;
             font-size: 14px;
             border: 1px solid #444;
-            background-color: #333; /* Darker gray for input */
-            color: #fff; /* Light text */
+            background-color: #333;
+            color: #fff;
         }
 
         #search-bar::placeholder {
-            color: #aaa; /* Light gray placeholder */
+            color: #aaa;
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 10px;
+            margin-right: 0px;
+        }
+
+        .nav-icon {
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .nav-icon:hover {
+            color: #4ca1af;
         }
 
         .tags {
@@ -77,11 +91,11 @@
 
         .tags .tag {
             padding: 5px 12px;
-            background-color: #333; /* Darker gray for tags */
+            background-color: #333;
             border-radius: 20px;
             font-size: 14px;
             cursor: pointer;
-            border: 1px solid #444; /* Subtle border */
+            border: 1px solid #444;
             color: #fff;
             transition: background-color 0.3s ease;
         }
@@ -93,7 +107,17 @@
         #frames-container {
             margin-top: 120px;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(3, 1fr); /* Three-column layout for Home */
+            gap: 10px;
+            padding: 7px;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+
+        #playlist-container {
+            margin-top: 120px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Two-column layout for New & Hot */
             gap: 10px;
             padding: 7px;
             height: calc(100vh - 120px);
@@ -120,7 +144,7 @@
 
         .video-year {
             font-size: 10px;
-            color: #aaa; /* Light grey for year */
+            color: #aaa;
             text-align: center;
         }
 
@@ -129,7 +153,6 @@
             top: 5px;
             right: 5px;
             background-color: rgba(0, 0, 0, 0.6);
-            overflow-x: hidden; /* Prevent horizontal scroll */
             color: #fff;
             font-size: 14px;
             border: none;
@@ -156,8 +179,6 @@
             height: 36.5%;
             border: none;
             border-radius: 10px;
-            z-index: 1;
-            border: 1px solid #333;
             margin-top: 45px;
         }
 
@@ -169,13 +190,12 @@
             cursor: pointer;
             border: none;
             border-radius: 10px;
-            margin: 0px;
-            padding: 4px 10px;
             border: 1px solid #ccc;
-            transition: background 0.3s;
+            margin: 0;
+            padding: 4px 10px;
             position: absolute;
-            top: 5px;
-            right: 5px;
+            top: 8px;
+            right: 8px;
             z-index: 2;
         }
 
@@ -281,35 +301,60 @@
         footer .nav-icon:hover {
             color: #4ca1af;
         }
+
+        /* Round icon style for add button */
         .post-video-icon {
-            background: linear-gradient(to right, #2c3e50, #4ca1af); /* Background color for round icon */
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
             border-radius: 50%; /* Making it round */
             width: 40px; /* Set a width */
             height: 40px; /* Set a height to make it a circle */
             display: flex;
-            border: 1px solid #333;
+            border: 1px solid #333; /* Border */
             align-items: center;
-            justify-content: center;
+            justify-content: center; /* Center the icon */
             color: white; /* Change icon color to white */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow */
+            cursor: pointer; /* Change pointer on hover */
         }
 
         .post-video-icon:hover {
-            background-color: #; /* Button hover color */
+            background-color: #4ca1af; /* Button hover color */
+        }
+
+        /* Install message styles */
+        .install-message {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            color: #333;
+            padding: 2px 20px;
+            border-radius: 12px;
+            display: flex;
+            font-size: 10px;
+            border: 1px solid #ccc;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+        }
+
+        .install-btn {
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            color: white;
+            border: 1px solid #ccc;
+            padding: 10px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1px;
         }
 
         /* Playlist styles */
-        #playlist-container {
-            margin-top: 120px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            padding: 7px;
-            height: calc(100vh - 120px);
-            overflow-y: auto;
-        }
-
-        /* Saved styles */
         #saved-container {
             margin-top: 120px;
             padding: 10px;
@@ -387,62 +432,62 @@
             flex: 1;
         }
 
-        .install-message {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #fff; /* Blue background */
-            color: #333;
-            padding: 2px 20px;
-            border-radius: 12px;
+        /* Discover Section */
+        #discover-container {
+            display: none;
+            margin-top: 120px;
+            padding: 10px;
+        }
+
+        .discover-category {
+            margin-bottom: 20px;
+        }
+
+        .discover-category h3 {
+            margin: 0 0 10px;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .discover-items {
             display: flex;
-            font-size: 10px;
-            border: 1px solid #ccc;
-            flex-direction: column; /* Stack items vertically */
-            align-items: center;
-            justify-content: center;
-            width: 80%;
-            max-width: 500px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 10000;
+            overflow-x: auto;
+            gap: 10px;
+            padding: 5px 0;
         }
 
-        .install-btn {
-            background: linear-gradient(to right, #2c3e50, #4ca1af);
-            color: white;
-            border: 1px solid #ccc;
-            padding: 10px 25px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 1px; /* Space between the paragraph and the button */
-        }
-
-        .close-btn {
-            background: linear-gradient(to right, #2c3e50, #4ca1af);
-            color: white;
-            font-size: 20px;
-            padding: 2px 8px;
-            border: 1px solid #ccc;
+        .discover-item {
+            flex: 0 0 auto;
+            width: 165px;
+            height: 100px;
             cursor: pointer;
-            font-weight: bold;
-            position: absolute;
-            top: 15px;
-            right: 10px;
+            border-radius: 8px;
+            transition: transform 0.3s;
+            overflow: hidden;
         }
 
-        .close-btn:hover {
-            color: #ff0000;
+        .discover-item:hover {
+            transform: scale(1.05);
         }
+
+        .discover-item img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
     </style>
 </head>
 
 <body>
-
 <header>
     <div class="header-top">
         <div class="logo">i Tube</div>
+        <div class="nav-icons">
+            <i class="fas fa-bookmark nav-icon" onclick="showSaved()"></i>
+            <i class="fas fa-history nav-icon" onclick="showHistory()"></i>
+        </div>
         <input type="text" id="search-bar" placeholder="Search i Tube..." oninput="handleSearch()" aria-label="Search videos" />
     </div>
     <div class="tags">
@@ -463,22 +508,21 @@
 <div id="frames-container"></div>
 
 <div id="video-nav">
-    <button id="close-btn" onclick="closeNav()" aria-label="Close video">✖ Close</button>
+    <button id="close-btn" onclick="closeNav()" aria-label="Close video">✖ CLOSE</button>
     <iframe id="video-player" src="" allowfullscreen></iframe>
-    
+
     <div id="social-media">
         <i class="fab fa-telegram social-icon" onclick="shareLink('telegram')"></i>
         <i class="fab fa-twitter social-icon" onclick="shareLink('twitter')"></i>
         <i class="fab fa-whatsapp social-icon" onclick="shareLink('whatsapp')"></i>
         <i class="fas fa-share social-icon" onclick="shareLink('generic')"></i>
     </div>
-    
+
     <div id="popular-videos">
         <h3>Dive into non-stop fun with more movies below.</h3>
         <div id="popular-container"></div>
         
         <h3>Follow us on social media.</h3>
-        
         <div id="social-media" style="display: flex; justify-content: center; margin-top: 10px;">
             <a href="https://www.facebook.com/username" target="_blank" class="social-icon">
                 <i class="fab fa-facebook-f"></i>
@@ -523,21 +567,52 @@
     <div id="history-content"></div>
 </div>
 
+<div id="discover-container">
+    <div class="discover-category">
+        <h3>Most Watchlisted This Week</h3>
+        <div class="discover-items" id="most-watchlisted"></div>
+    </div>
+    <div class="discover-category">
+        <h3>Trending Trailers</h3>
+        <div class="discover-items" id="trending-trailers"></div>
+    </div>
+    <div class="discover-category">
+        <h3>Trending On i Tube</h3>
+        <div class="discover-items" id="trending-on-itube"></div>
+    </div>
+    <div class="discover-category">
+        <h3>Browse by Genre</h3>
+        <div class="discover-items" id="browse-by-genre"></div>
+    </div>
+    <div class="discover-category">
+        <h3>Coming Soon</h3>
+        <div class="discover-items" id="coming-soon"></div>
+    </div>
+    <div class="discover-category">
+        <h3>New For The Family</h3>
+        <div class="discover-items" id="new-for-family"></div>
+    </div>
+    <div class="discover-category">
+        <h3>Browse by Decade</h3>
+        <div class="discover-items" id="browse-by-decade"></div>
+    </div>
+</div>
+
 <footer>
     <div class="nav-icon" id="home-btn" onclick="showHome()">
         <i class="fas fa-home"></i><br>Home
     </div>
+    <div class="nav-icon" id="on-demand-btn" onclick="openOnDemand()">
+        <i class="fas fa-tv"></i><br>On Demand
+    </div>
+    <div class="nav-icon post-video-icon" onclick="openNovels()">
+        <i class="fas fa-plus"></i>
+    </div>
     <div class="nav-icon" id="playlist-btn" onclick="showPlaylist()">
         <i class="fas fa-fire"></i><br>New & Hot 
     </div>
-    <div class="nav-icon post-video-icon" onclick="openNovels()">
-        <i class="fas fa-plus"></i><br>
-    </div>
-    <div class="nav-icon" id="saved-btn" onclick="showSaved()">
-        <i class="fas fa-bookmark"></i><br>Favorites 
-    </div>
-    <div class="nav-icon" id="history-btn" onclick="showHistory()">
-        <i class="fas fa-history"></i><br>History
+    <div class="nav-icon" id="discover-btn" onclick="showDiscover()">
+        <i class="fas fa-compass"></i><br>Discover
     </div>
 </footer>
 
@@ -602,6 +677,24 @@ const data = [
     },
 ];
 
+// New sample data for various categories in Discover
+const discoverData = [
+    { imgUrl: "https://bit.ly/4jvnTMN", title: "How To Train Your Dragon", videoUrl: "https://youtube.com/embed/5lzoxHSn0C0" }, 
+    { imgUrl: "https://bit.ly/4fFLfwd", title: "Viking: Battle of Heirs", videoUrl: "https://youtube.com/embed/BAQV7hQdznE" },
+    { imgUrl: "https://bit.ly/4gCtC1L", title: "Apocalypto", videoUrl: "https://youtube.com/embed/4Q8fJlbUn3w" }, 
+    { imgUrl: "https://bit.ly/3Phnujl", title: "Tsunami Sharks", videoUrl: "https://youtube.com/embed/rsvGs96-ddo" },
+    { imgUrl: "https://bit.ly/3EdJhpW", title: "Conan the Adventurer", videoUrl: "https://youtube.com/embed/_q0HpkMrhdc" }, 
+    { imgUrl: "https://bit.ly/4haIvbD", title: "The Crow", videoUrl: "https://v.moviebox.ng/SroObuh5AM" },
+    { imgUrl: "https://bit.ly/405kXOj", title: "God of War", videoUrl: "https://youtube.com/embed/CumW3IY1mMg" }, 
+    { imgUrl: "https://bit.ly/4gCtcbn", title: "Flight from Hell", videoUrl: "https://youtube.com/embed/9QB2GjHg0Tw" },
+    { imgUrl: "https://bit.ly/4gZ1VzL", title: "New Movie X", videoUrl: "https://youtube.com/embed/xzk1ko7AN2M" }, 
+    { imgUrl: "https://bit.ly/4fFLfwd", title: "New Movie Y", videoUrl: "https://youtube.com/embed/BAQV7hQdznE" },
+    { imgUrl: "https://bit.ly/4gCtC1L", title: "Family Movie X", videoUrl: "https://youtube.com/embed/4Q8fJlbUn3w" }, 
+    { imgUrl: "https://bit.ly/3Phnujl", title: "Family Movie Y", videoUrl: "https://youtube.com/embed/rsvGs96-ddo" },
+    { imgUrl: "https://bit.ly/3EdJhpW", title: "Classic Movie 80s", videoUrl: "https://youtube.com/embed/_q0HpkMrhdc" }, 
+    { imgUrl: "https://bit.ly/4haIvbD", title: "Classic Movie 90s", videoUrl: "https://v.moviebox.ng/SroObuh5AM" }
+];
+
 // Load data from local storage
 let savedVideos = JSON.parse(localStorage.getItem('savedVideos')) || [];
 let historyVideos = JSON.parse(localStorage.getItem('historyVideos')) || [];
@@ -609,15 +702,16 @@ let historyVideos = JSON.parse(localStorage.getItem('historyVideos')) || [];
 // Display Home Page
 const displayHome = () => {
     document.getElementById('frames-container').style.display = 'grid';
-    document.getElementById('playlist-container').style.display = 'none';
+    document.getElementById('playlist-container').style.display = 'none'; // Hide New & Hot
     document.getElementById('saved-container').style.display = 'none';
     document.getElementById('history-container').style.display = 'none';
-    createVideoItems(data);
+    document.getElementById('discover-container').style.display = 'none';    
+    createVideoItems(data); // Populate the Home section
 };
 
 // Create video items
-const createVideoItems = (filteredData = data) => {
-    const container = document.getElementById('frames-container');
+const createVideoItems = (filteredData = data, containerId = 'frames-container') => {
+    const container = document.getElementById(containerId);
     container.innerHTML = '';
 
     filteredData.forEach((item) => {
@@ -640,20 +734,20 @@ const createVideoItems = (filteredData = data) => {
 
         const year = document.createElement('div');
         year.className = 'video-year';
-        year.innerText = item.year; // Display the year of release
+        year.innerText = item.year;
 
         const saveButton = document.createElement('button');
         saveButton.className = 'save-button';
-        saveButton.innerHTML = '<i class="fas fa-bookmark"></i>'; // Save icon
+        saveButton.innerHTML = '<i class="fas fa-bookmark"></i>';
         saveButton.onclick = (e) => {
             e.stopPropagation(); // Prevent triggering the video click
             saveVideo(item); // Save video and refresh display
-            saveButton.style.color = 'white'; // Change color to indicate saved
+            saveButton.style.color = 'red'; 
         };
 
         videoItem.appendChild(img);
         videoItem.appendChild(title);
-        videoItem.appendChild(year); // Append the year display
+        videoItem.appendChild(year);
         videoItem.appendChild(saveButton);
         container.appendChild(videoItem);
     });
@@ -677,7 +771,7 @@ const populatePopularVideos = () => {
         const popularItem = document.createElement('div');
         popularItem.className = 'popular-item';
         popularItem.onclick = () => {
-            addToHistory(item); // Add to history before playing
+            addToHistory(item); 
             openVideoNav(item.videoUrl);
         };
 
@@ -695,31 +789,29 @@ const populatePopularVideos = () => {
 
 const saveVideo = (video) => {
     if (!savedVideos.some(savedVideo => savedVideo.videoUrl === video.videoUrl)) {
-        savedVideos.unshift(video); // Add to the beginning
+        savedVideos.unshift(video); 
         localStorage.setItem('savedVideos', JSON.stringify(savedVideos));
-        displaySaved(); // Refresh saved display
+        displaySaved(); 
     } else {
         alert(`${video.title} is already saved!`);
     }
 };
 
-// Add to history
 const addToHistory = (video) => {
-    // Check if the video is already in history
     if (!historyVideos.some(historyVideo => historyVideo.videoUrl === video.videoUrl)) {
-        historyVideos.unshift(video); // Add to the beginning
-        if (historyVideos.length > 10) { // Keep only the last 10 viewed videos
-            historyVideos.pop(); // Remove the oldest video
+        historyVideos.unshift(video);
+        if (historyVideos.length > 10) { 
+            historyVideos.pop(); 
         }
-        localStorage.setItem('historyVideos', JSON.stringify(historyVideos)); // Save to storage
+        localStorage.setItem('historyVideos', JSON.stringify(historyVideos)); 
     }
 };
 
-// Display saved videos
 const displaySaved = () => {
     document.getElementById('frames-container').style.display = 'none';
     document.getElementById('playlist-container').style.display = 'none';
     document.getElementById('history-container').style.display = 'none';
+    document.getElementById('discover-container').style.display = 'none';
     document.getElementById('saved-container').style.display = 'block';
 
     const savedContent = document.getElementById('saved-content');
@@ -739,61 +831,50 @@ const displaySaved = () => {
 
         const year = document.createElement('div');
         year.className = 'video-year';
-        year.innerText = item.year; // Display the year of saved video
+        year.innerText = item.year; 
 
         const removeButton = document.createElement('span');
-        removeButton.textContent = '🔖 REMOVE';
+        removeButton.textContent = '▼ REMOVE';
         removeButton.onclick = (e) => {
-            e.stopPropagation(); // Prevent triggering the video click
+            e.stopPropagation(); 
             removeSavedVideo(index);
         };
 
         savedItem.appendChild(img);
         savedItem.appendChild(title);
-        savedItem.appendChild(year); // Append the year display
+        savedItem.appendChild(year); 
         savedItem.appendChild(removeButton);
         savedContent.appendChild(savedItem);
     });
 };
 
-// Remove saved video
 const removeSavedVideo = (index) => {
     savedVideos.splice(index, 1);
     localStorage.setItem('savedVideos', JSON.stringify(savedVideos));
-    displaySaved(); // Refresh display
+    displaySaved(); 
 };
 
-// Display playlist videos
 const displayPlaylist = () => {
-    document.getElementById('frames-container').style.display = 'grid';
+    document.getElementById('frames-container').style.display = 'none'; // Hide Home
+    document.getElementById('playlist-container').style.display = 'grid'; // Show New & Hot
     document.getElementById('saved-container').style.display = 'none';
     document.getElementById('history-container').style.display = 'none';
-    document.getElementById('playlist-container').style.display = 'block';
+    document.getElementById('discover-container').style.display = 'none';
 
-    const playlistContent = document.getElementById('playlist-content');
-    playlistContent.innerHTML = '';
-
-    // Here you can add some predefined playlist videos
     const playlistData = [
         { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE 2", year: "2021" },
         { imgUrl: "https://bit.ly/4fFLfwd", videoUrl: "https://youtube.com/embed/BAQV7hQdznE", title: "VIKING BATTLE", year: "2023" },
-        {
-            imgUrl: "https://bit.ly/4gZ1VzL",
-            videoUrl: "https://youtube.com/embed/xzk1ko7AN2M",
-            title: "PTERODACTYL 2",
-            year: "2023",
-            tag: "Monster",
-        },
+        { imgUrl: "https://bit.ly/4gZ1VzL", videoUrl: "https://youtube.com/embed/xzk1ko7AN2M", title: "PTERODACTYL 2", year: "2023" },
     ];
 
-    createVideoItems(playlistData); // Display playlist videos in grid
+    createVideoItems(playlistData, 'playlist-container'); // Populate the New & Hot section
 };
 
-// Show history videos
 const displayHistory = () => {
     document.getElementById('frames-container').style.display = 'none';
     document.getElementById('playlist-container').style.display = 'none';
     document.getElementById('saved-container').style.display = 'none';
+    document.getElementById('discover-container').style.display = 'none';
     document.getElementById('history-container').style.display = 'block';
 
     const historyContent = document.getElementById('history-content');
@@ -813,16 +894,15 @@ const displayHistory = () => {
 
         const year = document.createElement('div');
         year.className = 'video-year';
-        year.innerText = item.year; // Display the year of history video
+        year.innerText = item.year; 
 
         historyItem.appendChild(img);
         historyItem.appendChild(title);
-        historyItem.appendChild(year); // Append the year display
+        historyItem.appendChild(year); 
         historyContent.appendChild(historyItem);
     });
 };
 
-// Show respective section based on clicked button
 const showHome = () => {
     displayHome();
 };
@@ -839,8 +919,23 @@ const showHistory = () => {
     displayHistory();
 };
 
+const showDiscover = () => {
+    document.getElementById('frames-container').style.display = 'none';
+    document.getElementById('playlist-container').style.display = 'none';
+    document.getElementById('saved-container').style.display = 'none';
+    document.getElementById('history-container').style.display = 'none';
+    document.getElementById('discover-container').style.display = 'block';
+    
+    // Populate the discover categories
+    populateDiscoverCategories();
+};
+
+const openOnDemand = () => {
+    window.open("https://i-tube-film.netlify.app/", "_blank");
+};
+
 const openNovels = () => {
-    window.open("https://your-novels-url.com", "_blank"); // Replace with the actual URL
+    window.open("https://your-novels-url.com", "_blank"); 
 };
 
 let debounceTimer;
@@ -848,9 +943,15 @@ const handleSearch = () => {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
         const searchTerm = document.getElementById('search-bar').value.toLowerCase();
-        const filteredData = data.filter(item => item.title.toLowerCase().includes(searchTerm));
-        createVideoItems(filteredData);
-    }, 300); // Debounce time in milliseconds
+        
+        // Combine all movie data for searching
+        const allMovies = [...data, ...discoverData, ...savedVideos, ...historyVideos];
+        
+        const filteredData = allMovies.filter(item => item.title.toLowerCase().includes(searchTerm));
+        
+        // Display the results in the frame container
+        createVideoItems(filteredData); 
+    }, 300); 
 };
 
 const filterByTag = (tag) => {
@@ -863,7 +964,7 @@ const shareLink = (platform) => {
     const url = 'https://i-tube-movies.netlify.app/';
     let shareUrl = '';
 
-    switch(platform) {
+    switch (platform) {
         case 'telegram':
             shareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(url)}`;
             break;
@@ -889,7 +990,6 @@ const shareLink = (platform) => {
     window.open(shareUrl, '_blank');
 };
 
-// Scroll handling for hiding/showing footer
 let lastScrollTop = 0;
 const footer = document.querySelector('footer');
 
@@ -906,20 +1006,17 @@ const handleScroll = () => {
 window.addEventListener('scroll', handleScroll);
 handleScroll();
 
-// Show the install message 15 seconds after the page loads
-window.onload = function() {
-    setTimeout(function() {
+window.onload = function () {
+    setTimeout(function () {
         const installMessage = document.getElementById('install-message');
         const closeButton = document.getElementById('close-btn');
 
-        // Display the message
         installMessage.style.display = 'flex';
 
-        // Close the message when the close button is clicked
-        closeButton.onclick = function() {
+        closeButton.onclick = function () {
             installMessage.style.display = 'none';
         };
-    }, 40000); // 40 seconds
+    }, 40000); 
 };
 
 // Shuffle Array Function
@@ -931,16 +1028,51 @@ function shuffleArray(array) {
     return array;
 }
 
+// Populate Discover Categories
+const populateDiscoverCategories = () => {
+    populateCategory('most-watchlisted', discoverData.slice(0, 2));  // First two items for Most Watchlisted
+    populateCategory('trending-trailers', discoverData.slice(2, 4)); // Adjust indices as needed
+    populateCategory('trending-on-itube', discoverData.slice(4, 6));
+    populateCategory('browse-by-genre', discoverData.slice(6, 8));
+    populateCategory('coming-soon', discoverData.slice(8, 10));
+    populateCategory('new-for-family', discoverData.slice(10, 12));
+    populateCategory('browse-by-decade', discoverData.slice(12, 14));
+};
+
+// Function to Populate Each Discover Category
+const populateCategory = (categoryId, movies) => {
+    const categoryContainer = document.getElementById(categoryId);
+    categoryContainer.innerHTML = '';
+
+    movies.forEach((movie) => {
+        const discoverItem = document.createElement('div');
+        discoverItem.className = 'discover-item';
+        
+        // Set the onclick event to open the video
+        discoverItem.onclick = () => openVideoNav(movie.videoUrl);
+
+        const img = document.createElement('img');
+        img.src = movie.imgUrl;
+        img.alt = movie.title;
+
+        const title = document.createElement('div');
+        title.className = 'video-title';
+        title.innerText = movie.title;
+
+        discoverItem.appendChild(img);
+        discoverItem.appendChild(title);
+        categoryContainer.appendChild(discoverItem);
+    });
+}
+
 // Shuffle videos on load
 const shuffledData = shuffleArray(data);
-createVideoItems(shuffledData); // Display Home Page by default
+createVideoItems(shuffledData); 
 
-// Initial function call to display home page
 document.addEventListener('DOMContentLoaded', () => {
-    displayHome(); // Show Home Page on initial load
+    displayHome(); 
 });
 </script>
 
 </body>
-
 </html>
