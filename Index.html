@@ -21,7 +21,7 @@
             left: 0;
             width: 100%;
             height: 90px;
-            background-color: #1c1c1c;
+            background-color: rgba(0, 0, 0, 0.6);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -43,9 +43,10 @@
             background: linear-gradient(to right, #2c3e50, #4ca1af);
             color: #ecf0f1;
             border-radius: 20px;
-            padding: 5px 12px;
+            border: 1px solid #333;
+            padding: 5px 10px;
             font-weight: bold;
-            margin-right: 8px;
+            margin-right: 10px;
         }
 
         #search-bar {
@@ -72,7 +73,7 @@
 
         .nav-icon {
             color: #fff;
-            font-size: 16px;
+            font-size: 16.2px;
             cursor: pointer;
         }
 
@@ -91,33 +92,23 @@
 
         .tags .tag {
             padding: 5px 12px;
-            background-color: #333;
+            background-color: #e50914;
             border-radius: 20px;
             font-size: 14px;
             cursor: pointer;
-            border: 1px solid #444;
+            border: 1px solid #;
             color: #fff;
             transition: background-color 0.3s ease;
         }
 
         .tags .tag:hover {
-            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            background: linear-gradient(to right, #111, #e50914);
         }
 
         #frames-container {
             margin-top: 120px;
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Three-column layout for Home */
-            gap: 10px;
-            padding: 7px;
-            height: calc(100vh - 120px);
-            overflow-y: auto;
-        }
-
-        #playlist-container {
-            margin-top: 120px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Two-column layout for New & Hot */
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             padding: 7px;
             height: calc(100vh - 120px);
@@ -274,10 +265,10 @@
         footer {
             display: flex;
             justify-content: space-around;
-            padding: 12px 0;
-            border-radius: 12px;
+            padding: 10px 0;
+            border-radius: 11px;
             border: 1px solid #333;
-            background-color: #000;
+            background-color: rgba(0, 0, 0, 0.9);
             box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
             position: fixed;
             bottom: 0;
@@ -295,7 +286,7 @@
 
         footer .nav-icon i {
             font-size: 20px;
-            margin: 5px;
+            margin: 6px;
         }
 
         footer .nav-icon:hover {
@@ -324,20 +315,20 @@
         /* Install message styles */
         .install-message {
             position: fixed;
-            bottom: 20px;
+            bottom: 150px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #fff;
-            color: #333;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
             padding: 2px 20px;
             border-radius: 12px;
             display: flex;
-            font-size: 10px;
+            font-size: 12px;
             border: 1px solid #ccc;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: 80%;
+            width: 82%;
             max-width: 500px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             z-index: 10000;
@@ -348,13 +339,41 @@
             color: white;
             border: 1px solid #ccc;
             padding: 10px 25px;
-            border-radius: 8px;
+            border-radius: 6px;
             text-decoration: none;
             font-weight: bold;
-            margin-top: 1px;
+            margin-top: 2px;
+        }
+
+        .close-btn {
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            color: white;
+            font-size: 20px;
+            padding: 2px 8px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-weight: bold;
+            position: absolute;
+            top: 15px;
+            right: 10px;
+        }
+
+        .close-btn:hover {
+            color: #ff0000;
         }
 
         /* Playlist styles */
+        #playlist-container {
+            margin-top: 120px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 7px;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+
+        /* Saved styles */
         #saved-container {
             margin-top: 120px;
             padding: 10px;
@@ -371,6 +390,7 @@
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex: 1; /* Allow saved item to increase size */
         }
 
         .saved-item img {
@@ -416,6 +436,7 @@
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex: 1; /* Allow history item to increase size */
         }
 
         .history-item img {
@@ -479,14 +500,14 @@
 
     </style>
 </head>
-
+<script type='text/javascript' src='//pl25477462.profitablecpmrate.com/c5/58/52/c55852e68a7f0ac8973f52421a23a863.js'></script>
 <body>
 <header>
     <div class="header-top">
         <div class="logo">i Tube</div>
         <div class="nav-icons">
             <i class="fas fa-bookmark nav-icon" onclick="showSaved()"></i>
-            <i class="fas fa-history nav-icon" onclick="showHistory()"></i>
+            <i class="fas fa-history nav-icon" onclick="showHistory()"></i>        
         </div>
         <input type="text" id="search-bar" placeholder="Search i Tube..." oninput="handleSearch()" aria-label="Search videos" />
     </div>
@@ -500,7 +521,7 @@
 </header>
 
 <div id="install-message" class="install-message" style="display: none;">
-    <p>For non-stop video enjoyment, install the i Tube app now!</p>
+    <p>For non-stop video enjoyment, Open app</p>
     <a href="https://drive.google.com/file/d/1M2BGHFzJGC_hlYgZQddiZmDXtxAiY2ML/view?usp=drivesdk" class="install-btn" target="_blank">Install Now</a>
     <button id="close-btn" class="close-btn">✖</button>
 </div>
@@ -603,7 +624,7 @@
         <i class="fas fa-home"></i><br>Home
     </div>
     <div class="nav-icon" id="on-demand-btn" onclick="openOnDemand()">
-        <i class="fas fa-tv"></i><br>On Demand
+        <i class="fas fa-tv"></i><br>On Demand 
     </div>
     <div class="nav-icon post-video-icon" onclick="openNovels()">
         <i class="fas fa-plus"></i>
@@ -679,18 +700,32 @@ const data = [
 
 // New sample data for various categories in Discover
 const discoverData = [
+    // Movies for "Most Watchlisted This Week"
     { imgUrl: "https://bit.ly/4jvnTMN", title: "How To Train Your Dragon", videoUrl: "https://youtube.com/embed/5lzoxHSn0C0" }, 
-    { imgUrl: "https://bit.ly/4fFLfwd", title: "Viking: Battle of Heirs", videoUrl: "https://youtube.com/embed/BAQV7hQdznE" },
+    { imgUrl: "https://bit.ly/4hdsCBo", title: "Mickey 17 | Official Trailer 2", videoUrl: "https://youtube.com/embed/tA1s65o_kYM" },
+    { imgUrl: "https://bit.ly/4aD90UL", title: "Titanic 2 (2025) - Teaser Trailer", videoUrl: "https://youtube.com/embed/FaR1mQ2b0Ck" },
+  
+    // Movies for "Trending Trailers"
     { imgUrl: "https://bit.ly/4gCtC1L", title: "Apocalypto", videoUrl: "https://youtube.com/embed/4Q8fJlbUn3w" }, 
     { imgUrl: "https://bit.ly/3Phnujl", title: "Tsunami Sharks", videoUrl: "https://youtube.com/embed/rsvGs96-ddo" },
+  
+    // Movies for "Trending On i Tube"
     { imgUrl: "https://bit.ly/3EdJhpW", title: "Conan the Adventurer", videoUrl: "https://youtube.com/embed/_q0HpkMrhdc" }, 
     { imgUrl: "https://bit.ly/4haIvbD", title: "The Crow", videoUrl: "https://v.moviebox.ng/SroObuh5AM" },
+  
+    // Movies for "Browse by Genre"
     { imgUrl: "https://bit.ly/405kXOj", title: "God of War", videoUrl: "https://youtube.com/embed/CumW3IY1mMg" }, 
     { imgUrl: "https://bit.ly/4gCtcbn", title: "Flight from Hell", videoUrl: "https://youtube.com/embed/9QB2GjHg0Tw" },
+  
+    // Movies for "Coming Soon"
     { imgUrl: "https://bit.ly/4gZ1VzL", title: "New Movie X", videoUrl: "https://youtube.com/embed/xzk1ko7AN2M" }, 
     { imgUrl: "https://bit.ly/4fFLfwd", title: "New Movie Y", videoUrl: "https://youtube.com/embed/BAQV7hQdznE" },
+  
+    // Movies for "New For The Family"
     { imgUrl: "https://bit.ly/4gCtC1L", title: "Family Movie X", videoUrl: "https://youtube.com/embed/4Q8fJlbUn3w" }, 
     { imgUrl: "https://bit.ly/3Phnujl", title: "Family Movie Y", videoUrl: "https://youtube.com/embed/rsvGs96-ddo" },
+  
+    // Movies for "Browse by Decade"
     { imgUrl: "https://bit.ly/3EdJhpW", title: "Classic Movie 80s", videoUrl: "https://youtube.com/embed/_q0HpkMrhdc" }, 
     { imgUrl: "https://bit.ly/4haIvbD", title: "Classic Movie 90s", videoUrl: "https://v.moviebox.ng/SroObuh5AM" }
 ];
@@ -702,11 +737,11 @@ let historyVideos = JSON.parse(localStorage.getItem('historyVideos')) || [];
 // Display Home Page
 const displayHome = () => {
     document.getElementById('frames-container').style.display = 'grid';
-    document.getElementById('playlist-container').style.display = 'none'; // Hide New & Hot
+    document.getElementById('playlist-container').style.display = 'none';
     document.getElementById('saved-container').style.display = 'none';
     document.getElementById('history-container').style.display = 'none';
     document.getElementById('discover-container').style.display = 'none';    
-    createVideoItems(data); // Populate the Home section
+    createVideoItems(data);
 };
 
 // Create video items
@@ -834,7 +869,7 @@ const displaySaved = () => {
         year.innerText = item.year; 
 
         const removeButton = document.createElement('span');
-        removeButton.textContent = '▼ REMOVE';
+        removeButton.textContent = '♥️ REMOVE';
         removeButton.onclick = (e) => {
             e.stopPropagation(); 
             removeSavedVideo(index);
@@ -855,11 +890,14 @@ const removeSavedVideo = (index) => {
 };
 
 const displayPlaylist = () => {
-    document.getElementById('frames-container').style.display = 'none'; // Hide Home
-    document.getElementById('playlist-container').style.display = 'grid'; // Show New & Hot
+    document.getElementById('frames-container').style.display = 'grid';
     document.getElementById('saved-container').style.display = 'none';
     document.getElementById('history-container').style.display = 'none';
     document.getElementById('discover-container').style.display = 'none';
+    document.getElementById('playlist-container').style.display = 'block';
+
+    const playlistContent = document.getElementById('playlist-content');
+    playlistContent.innerHTML = '';
 
     const playlistData = [
         { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE 2", year: "2021" },
@@ -867,7 +905,7 @@ const displayPlaylist = () => {
         { imgUrl: "https://bit.ly/4gZ1VzL", videoUrl: "https://youtube.com/embed/xzk1ko7AN2M", title: "PTERODACTYL 2", year: "2023" },
     ];
 
-    createVideoItems(playlistData, 'playlist-container'); // Populate the New & Hot section
+    createVideoItems(playlistData); 
 };
 
 const displayHistory = () => {
@@ -1073,6 +1111,6 @@ document.addEventListener('DOMContentLoaded', () => {
     displayHome(); 
 });
 </script>
- <script type='text/javascript' src='//pl25449821.profitablecpmrate.com/49/e8/e8/49e8e866ee0e82947b1fa4dbc86c7d7d.js'></script>
+<script type='text/javascript' src='//pl25449821.profitablecpmrate.com/49/e8/e8/49e8e866ee0e82947b1fa4dbc86c7d7d.js'></script>
 </body>
 </html>
