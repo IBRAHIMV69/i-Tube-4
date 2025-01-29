@@ -92,17 +92,17 @@
 
         .tags .tag {
             padding: 5px 12px;
-            background-color: #e50914;
+            background-color: #000;
             border-radius: 20px;
             font-size: 14px;
             cursor: pointer;
-            border: 1px solid #;
+            border: 1px solid #333;
             color: #fff;
             transition: background-color 0.3s ease;
         }
 
         .tags .tag:hover {
-            background: linear-gradient(to right, #111, #e50914);
+            background: linear-gradient(to right, #333, #333);
         }
 
         #frames-container {
@@ -529,7 +529,7 @@
 <div id="frames-container"></div>
 
 <div id="video-nav">
-    <button id="close-btn" onclick="closeNav()" aria-label="Close video">✖ CLOSE</button>
+    <button id="close-btn" onclick="closeNav()" aria-label="Close video">✖ Close</button>
     <iframe id="video-player" src="" allowfullscreen></iframe>
 
     <div id="social-media">
