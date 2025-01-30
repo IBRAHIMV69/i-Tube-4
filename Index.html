@@ -3,34 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netflix Style Video Page</title>
+    <title>Profile Page</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        body {
-            background: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background: #000; height: 100vh; overflow: hidden; text-align: center; }
+
         .frame-container {
             width: 100vw;
             height: 100vh;
             display: block;
+            position: relative;
         }
         iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
+
+        /* TikTok-like Profile Section */
+        .me-section { display: none; width: 100vw; height: 100vh; background: #1c1c1c; padding: 20px; position: absolute; top: 0; overflow-y: auto; color: white; }
+        .profile-header { display: flex; align-items: center; justify-content: space-between; padding: 8px; }
+        .profile-info { display: flex; align-items: center; flex: 1; }
+        .profile-info img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-right: 15px; border: 1px solid #ccc; }
+        .profile-info h2 { font-size: 18px; cursor: pointer; color: #fff; }
+        .edit-button { background: #f04e4e; padding: 5px 10px; border-radius: 5px; color: white; cursor: pointer; font-size: 14px; border: none; transition: 0.3s; }
+        .edit-button:hover { background: #d14343; }
+
+        .scroll-container {
+            display: flex;
+            overflow-x: auto;
+            padding: 10px;
+            gap: 10px;
+        }
+        .video-box {
+            width: 130px;
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center; /* Center align the button */
+        }
+        .video-box img {
+            width: 100%;
+            height: auto; /* Maintain aspect ratio */
+        }
+        .watch-now-button {
+            display: inline-block;
+            margin: 5px auto;
+            padding: 5px 10px;
+            background: #f04e4e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+        .watch-now-button:hover {
+            background: #d14343;
+        }
+
+        /* Social Media Links */
+        #social-media { display: flex; justify-content: center; gap: 15px; margin: 20px 0; color: white; }
+        .social-icon { font-size: 22px; color: white; transition: transform 0.2s; }
+        .social-icon:hover { transform: scale(1.1); }
+
+        /* Edit Section */
+        .edit-section { display: none; margin: 10px 0; }
+        .edit-section input { width: 80%; padding: 10px; margin-bottom: 10px; border: 1px solid #333; border-radius: 5px; background: #fff; color: #000; }
+        .edit-section button { padding: 10px 15px; background: #f04e4e; color: white; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
+        .edit-section button:hover { background: #d14343; }
 
         /* Netflix Style Bottom Navigation */
         footer {
@@ -114,6 +157,7 @@
             cursor: pointer;
             margin-left: 10px;
         }
+        
     </style>
 </head>
 <body>
@@ -129,6 +173,71 @@
         <iframe id="video-frame" src="https://moviebox.ng/?utm_source=h5seo_www.google.com" allowfullscreen></iframe>
     </div>
 
+    <!-- Me Section -->
+    <div class="me-section" id="meSection">
+        <div class="profile-header">
+            <div class="profile-info">
+                <input type="file" id="uploadLogo" accept="image/*" style="display: none;">
+                <img id="profileImage" src="https://bit.ly/40GbMUH" alt="Profile Picture" onclick="document.getElementById('uploadLogo').click();">
+                <h2 id="profileName">User123</h2>
+            </div>
+            <div class="edit-button" onclick="editProfile()">Edit</div>
+        </div>
+
+        <div class="edit-section" id="editSection">
+            <input type="text" id="nameInput" placeholder="Enter your name">
+            <button onclick="saveProfile()">Save</button>
+        </div>
+
+        <!-- Video List -->
+        <div class="section-title">Watch On i Tube</div>
+        <div class="scroll-container" id="videoList">
+        <div class="video-box">
+            <img src="https://bit.ly/3EdJhpW" alt="Your Dragon">
+            <a href="https://www.youtube.com/embed/5lzoxHSn0C0" class="watch-now-button" target="_blank">Watch Now</a>
+        </div>
+        <div class="video-box">
+            <img src="https://bit.ly/4fFLfwd" alt="Titanic 2 (2025)">
+            <a href="https://www.youtube.com/embed/tA1s65o_kYM" class="watch-now-button" target="_blank">Watch Now</a>
+        </div>
+        <div class="video-box">
+            <img src="https://bit.ly/4gZ1VzL" alt="Titanic 2 (2025)">
+            <a href="https://www.youtube.com/embed/tA1s65o_kYM" class="watch-now-button" target="_blank">Watch Now</a>
+        </div>
+        <!-- Add more video boxes as needed -->
+    </div>
+
+        <!-- Social Media Links -->
+        <h3>Follow us on social media.</h3>
+        <div id="social-media" style="display: flex; justify-content: center; margin-top: 10px;">
+            <a href="https://www.facebook.com/username" target="_blank" class="social-icon">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://twitter.com/username" target="_blank" class="social-icon">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://telegram.me/username" target="_blank" class="social-icon">
+                <i class="fab fa-telegram social-icon"></i>
+            </a>
+            <a href="https://www.pinterest.com/username" target="_blank" class="social-icon">
+                <i class="fab fa-pinterest"></i>
+            </a>
+            <a href="https://www.instagram.com/username" target="_blank" class="social-icon">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://wa.me/1234567890" target="_blank" class="social-icon">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.tiktok.com/@username" target="_blank" class="social-icon">
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://www.youtube.com/channel/UC123456" target="_blank" class="social-icon">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
     <footer>
         <div class="nav-icon active" data-video="https://moviebox.ng/?utm_source=h5seo_www.google.com">
             <i class="fas fa-home"></i><br>Home
@@ -142,59 +251,78 @@
         <div class="nav-icon" data-video="https://moviebox.ng/web/class-month?platform=Netflix&month=202501">
             <i class="fas fa-fire"></i><br>New & Hot
         </div>
+        <div class="nav-icon" id="meIcon">
+            <i class="fas fa-user"></i><br>Me
+        </div>
     </footer>
 
     <script>
         const videoFrame = document.getElementById("video-frame");
+        const meSection = document.getElementById("meSection");
+        const profileImage = document.getElementById("profileImage");
+        const uploadLogo = document.getElementById("uploadLogo");
+        const profileName = document.getElementById("profileName");
+        const nameInput = document.getElementById("nameInput");
+        const editSection = document.getElementById("editSection");
+        const meIcon = document.getElementById("meIcon");
 
         document.querySelectorAll(".nav-icon").forEach(icon => {
-            icon.addEventListener("click", function() {
+            icon.addEventListener("click", function () {
                 document.querySelectorAll(".nav-icon").forEach(i => i.classList.remove("active"));
                 this.classList.add("active");
 
-                // Change video source based on the selected section
-                videoFrame.src = this.getAttribute("data-video");
+                if (this.id === "meIcon") {
+                    meSection.style.display = "block";
+                    videoFrame.style.display = "none";
+                } else {
+                    meSection.style.display = "none";
+                    videoFrame.style.display = "block";
+                    videoFrame.src = this.getAttribute("data-video");
+                }
             });
         });
 
-        // Array of links
+        document.querySelectorAll(".video-box").forEach(box => {
+            box.addEventListener("click", function () {
+                const videoSrc = this.getAttribute("data-video");
+                videoFrame.src = videoSrc;
+            });
+        });
 
-const links = [
+        function editProfile() {
+            editSection.style.display = "block";
+            nameInput.value = profileName.textContent;
+        }
 
-    "https://www.link1.com",
+        function saveProfile() {
+            profileName.textContent = nameInput.value;
+            editSection.style.display = "none";
+            localStorage.setItem("profileName", nameInput.value);
+        }
 
-    "https://www.link2.com",
+        profileImage.addEventListener("click", () => uploadLogo.click());
 
-    "https://www.link3.com",
+        uploadLogo.addEventListener("change", function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    profileImage.src = e.target.result;
+                    localStorage.setItem("profileImage", e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
 
-    "https://www.link4.com"
-
-];
-
-
-// Retrieve the visit count from localStorage (default to 0 if not set)
-
-let visitCount = parseInt(localStorage.getItem("visitCount") || "0", 10);
-
-
-// Get the current link based on the visit count
-
-const currentLink = links[visitCount % links.length]; // Loop through links array
-
-
-// Increment the visit count and save it back to localStorage
-
-localStorage.setItem("visitCount", visitCount + 1);
-
-
-// Redirect to the current link after 10 seconds
-
-setTimeout(() => {
-
-    window.location.href = currentLink;
-
-}, 100); // 10 seconds in milliseconds
-        
+        // Load saved data
+        window.onload = function () {
+            if (localStorage.getItem("profileName")) {
+                profileName.textContent = localStorage.getItem("profileName");
+            }
+            if (localStorage.getItem("profileImage")) {
+                profileImage.src = localStorage.getItem("profileImage");
+            }
+        };
         setTimeout(() => {
             document.getElementById('notification-bar').style.opacity = '1';
         }, 400); // Show after 40 seconds
@@ -203,5 +331,6 @@ setTimeout(() => {
             document.getElementById('notification-bar').style.opacity = '0';
         }
     </script>
+
 </body>
 </html>
