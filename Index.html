@@ -1,258 +1,1115 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netflix Style Video Page</title>
+    <title>i Tube Movie</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
-        * {
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        body {
-            background: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-        .frame-container {
-            width: 100vw;
-            height: 100vh;
-            display: block;
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+            background-color: #121212;
+            color: #fff;
         }
 
-        /* Netflix Style Bottom Navigation */
-        footer {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 12px 0;
-            border-radius: 10px;
-            background-color: rgba(0, 0, 0, 0.8);
+        header {
             position: fixed;
-            bottom: 0;
+            top: 0;
             left: 0;
             width: 100%;
-            z-index: 100;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        footer .nav-icon {
-            flex: 1;
-            text-align: center;
-            color: #b3b3b3;
-            transition: all 0.3s ease-in-out;
-            cursor: pointer;
-            font-size: 10px;
-        }
-        footer .nav-icon i {
-            font-size: 24px;
-            margin-bottom: 5px;
-            transition: 0.3s;
-        }
-        footer .nav-icon.active, 
-        footer .nav-icon:hover {
-            color: #00b300;
-        }
-        footer .nav-icon.active i, 
-        footer .nav-icon:hover i {
-            transform: scale(1.2);
-        }
-        .notification-bar {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 400px;
-            background: linear-gradient(to right, #004d00, #00b300);
-            color: white;
-            padding: 10px;
-            border-radius: 8px;
+            height: 90px;
+            background-color: rgba(0, 0, 0, 0.8);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            padding: 8px;
+            border: 1px solid #444;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
             z-index: 1000;
         }
-        .notification-bar img {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 20px;
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            color: #ecf0f1;
+            border-radius: 20px;
+            border: 1px solid #333;
+            padding: 5px 10px;
+            font-weight: bold;
             margin-right: 10px;
         }
-        .notification-text {
-            flex: 1;
-            font-size: 12px;
-            text-align: left;
-        }
-        .notification-button {
-            background: #ccff00;
-            color: #000;
-            padding: 5px 15px;
+
+        #search-bar {
+            flex: 0 1 150px;
+            margin: 0 12px;
+            padding: 8px;
+            border: none;
             border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
+            font-size: 14px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: #fff;
         }
-        .close-button {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-            margin-left: 10px;
+
+        #search-bar::placeholder {
+            color: #aaa;
         }
-        .overlay {
+
+        .nav-icons {
+            display: flex;
+            gap: 10px;
+            margin-right: 0px;
+        }
+
+        .nav-icon {
+            color: #fff;
+            font-size: 16.2px;
+            cursor: pointer;
+        }
+
+        .nav-icon:hover {
+            color: #4ca1af;
+        }
+
+        .tags {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            overflow-x: auto;
+            padding: 8px 0;
+            width: 100%;
+        }
+
+        .tags .tag {
+            padding: 5px 12px;
+            background-color: #000;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        .tags .tag:hover {
+            background: linear-gradient(to right, #333, #333);
+        }
+
+        #frames-container {
+            margin-top: 120px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 7px;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+
+        .video-item {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .video-item img {
+            width: 100%;
+            aspect-ratio: 16 / 23;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .video-title {
+            font-size: 11px;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .video-year {
+            font-size: 10px;
+            color: #aaa;
+            text-align: center;
+        }
+
+        .save-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            font-size: 14px;
+            border: none;
+            border-radius: 50px;
+            padding: 3px 4px;
+            cursor: pointer;
+        }
+
+        /* Video Navigation Styles */
+        #video-nav {
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
+            background-color: #121212;
+            z-index: 1001;
+            overflow: hidden;
         }
-        .popup {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 20px;
+
+        #video-nav iframe {
+            width: 100%;
+            height: 36.5%;
+            border: none;
             border-radius: 10px;
-            text-align: center;
-            width: 98%;
-            max-width: 400px;
+            margin-top: 45px;
         }
-        .popup h2 {
-            font-size: 18px;
+
+        #close-btn {
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
             color: white;
-            margin-bottom: 20px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            margin: 0;
+            padding: 4px 10px;
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            z-index: 2;
         }
-        .button-group {
+
+        #close-btn:hover {
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+        }
+
+        #social-media {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 6px 0;
+        }
+
+        .social-icon {
+            color: white;
+            font-size: 23px;
+            cursor: pointer;
+        }
+
+        #popular-videos {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+        }
+
+        #popular-videos h3 {
+            margin: 0 0 15px;
+            font-size: 14px;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        #popular-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 2px;
+            padding: 2px 0;
+        }
+
+        .popular-item {
+            flex: 0 0 auto;
+            width: 150px;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: transform 0.3s;
+            overflow: hidden;
+        }
+
+        .popular-item:hover {
+            transform: scale(1.05);
+        }
+
+        .popular-item img {
+            width: 92%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .popular-item h4 {
+            font-size: 0px;
+            margin: 0 0 10px;
+            color: #ffffff;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Footer styles */
+        footer {
             display: flex;
             justify-content: space-around;
-            margin-top: 10px;
+            padding: 10px 0;
+            border-radius: 11px;
+            border: 1px solid #333;
+            background-color: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            transition: transform 0.3s;
         }
-        .button {
-            padding: 12px 20px;
-            border-radius: 30px;
-            border: none;
+
+        footer .nav-icon {
+            text-align: center;
+            font-size: 10px;
+            color: #ccc;
             cursor: pointer;
+        }
+
+        footer .nav-icon i {
+            font-size: 20px;
+            margin: 6px;
+        }
+
+        footer .nav-icon:hover {
+            color: #4ca1af;
+        }
+
+        /* Round icon style for add button */
+        .post-video-icon {
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            border-radius: 50%; /* Making it round */
+            width: 40px; /* Set a width */
+            height: 40px; /* Set a height to make it a circle */
+            display: flex;
+            border: 1px solid #333; /* Border */
+            align-items: center;
+            justify-content: center; /* Center the icon */
+            color: white; /* Change icon color to white */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow */
+            cursor: pointer; /* Change pointer on hover */
+        }
+
+        .post-video-icon:hover {
+            background-color: #4ca1af; /* Button hover color */
+        }
+
+        /* Install message styles */
+        .install-message {
+            position: fixed;
+            bottom: 150px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 2px 20px;
+            border-radius: 12px;
+            display: flex;
             font-size: 12px;
-            font-weight: bold;
-            flex: 1;
-            margin: 0 10px;
+            border: 1px solid #ccc;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 82%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
         }
-        .watch-ads {
-            background: #00b300;
+
+        .install-btn {
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
             color: white;
+            border: 1px solid #ccc;
+            padding: 10px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 2px;
         }
-        .activate-vip {
-            background: #f5b58a;
-            color: black;
+
+        .close-btn {
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            color: white;
+            font-size: 20px;
+            padding: 2px 8px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            font-weight: bold;
+            position: absolute;
+            top: 15px;
+            right: 10px;
         }
+
+        .close-btn:hover {
+            color: #ff0000;
+        }
+
+        /* Playlist styles */
+        #playlist-container {
+            margin-top: 120px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 7px;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+
+        /* Saved styles */
+        #saved-container {
+            margin-top: 120px;
+            padding: 10px;
+            display: none;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+
+        .saved-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            background-color: #141414;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex: 1; /* Allow saved item to increase size */
+        }
+
+        .saved-item img {
+            width: 150px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .saved-item h3 {
+            margin: 0;
+            font-size: 8px;
+            flex: 1;
+        }
+
+        .saved-item span {
+            cursor: pointer;
+            color: red;
+            margin-left: 10px;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .saved-item span:hover {
+            color: darkred;
+            text-decoration: underline;
+        }
+
+        #history-container {
+            margin-top: 120px;
+            padding: 10px;
+            display: none;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            background-color: #141414;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex: 1; /* Allow history item to increase size */
+        }
+
+        .history-item img {
+            width: 150px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .history-item h3 {
+            margin: 0;
+            font-size: 10px;
+            flex: 1;
+        }
+
+        /* Discover Section */
+        #discover-container {
+            display: none;
+            margin-top: 120px;
+            padding: 10px;
+        }
+
+        .discover-category {
+            margin-bottom: 20px;
+        }
+
+        .discover-category h3 {
+            margin: 0 0 10px;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .discover-items {
+            display: flex;
+            overflow-x: auto;
+            gap: 4px;
+            padding: 5px 0;
+        }
+
+        .discover-item {
+            flex: 0 0 auto;
+            width: 165px;
+            height: 120px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: transform 0.3s;
+            overflow: hidden;
+        }
+
+        .discover-item:hover {
+            transform: scale(1.05);
+        }
+
+        .discover-item img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
     </style>
 </head>
 <body>
-    
-    <!-- Ad Popup -->
-    <div class="overlay" id="adOverlay">
-        <div class="popup">
-            <h2>Watch the ad to continue</h2>
-            <div class="button-group">
-                <button class="button watch-ads" onclick="showAdPage('https://hausa-news.blogspot.com/?m=1')">Watch Ads</button>
-                <button class="button activate-vip" onclick="showAdPage('https://hausa-news.blogspot.com/?m=1')">Activate VIP</button>
-            </div>
+<header>
+    <div class="header-top">
+        <div class="logo">i Tube</div>
+        <div class="nav-icons">
+            <i class="fas fa-bookmark nav-icon" onclick="showSaved()"></i>
+            <i class="fas fa-history nav-icon" onclick="showHistory()"></i>        
         </div>
+        <input type="text" id="search-bar" placeholder="Search i Tube..." oninput="handleSearch()" aria-label="Search videos" />
     </div>
-    
-    <div class="notification-bar" id="notification-bar">
-        <img src="https://h5-static.aoneroom.com/oneroomStatic/public/_nuxt/web-logo.apJjVir2.svg" alt="App Logo">
-        <div class="notification-text">Enjoy more unparalleled movies download Moviebox.</div>
-        <button class="notification-button" onclick="window.open('https://example.com', '_blank')">OPEN</button>
-        <button class="close-button" onclick="closeNotification()">✖</button>
+    <div class="tags">
+        <div class="tag" onclick="filterByTag('Action')">Action</div>
+        <div class="tag" onclick="filterByTag('Horror')">Horror</div>
+        <div class="tag" onclick="filterByTag('Indian')">Indian</div>
+        <div class="tag" onclick="filterByTag('Europe')">Europe</div>
+        <div class="tag" onclick="filterByTag('Chinese')">Chinese</div>
+    </div>
+</header>
+
+<div id="install-message" class="install-message" style="display: none;">
+    <p>For non-stop video enjoyment, Open app</p>
+    <a href="https://drive.google.com/file/d/1M2BGHFzJGC_hlYgZQddiZmDXtxAiY2ML/view?usp=drivesdk" class="install-btn" target="_blank">Install Now</a>
+    <button id="close-btn" class="close-btn">✖</button>
+</div>
+
+<div id="frames-container"></div>
+
+<div id="video-nav">
+    <button id="close-btn" onclick="closeNav()" aria-label="Close video">✖ Close</button>
+    <iframe id="video-player" src="" allowfullscreen></iframe>
+
+    <div id="social-media">
+        <i class="fab fa-telegram social-icon" onclick="shareLink('telegram')"></i>
+        <i class="fab fa-twitter social-icon" onclick="shareLink('twitter')"></i>
+        <i class="fab fa-whatsapp social-icon" onclick="shareLink('whatsapp')"></i>
+        <i class="fas fa-share social-icon" onclick="shareLink('generic')"></i>
     </div>
 
-    <div class="frame-container">
-        <iframe id="video-frame" src="https://moviebox.ng/?utm_source=h5seo_www.google.com" allowfullscreen></iframe>
-    </div>
-
-    <footer>
-        <div class="nav-icon active" data-video="https://moviebox.ng/?utm_source=h5seo_www.google.com">
-            <i class="fas fa-home"></i><br>Home
-        </div>
-        <div class="nav-icon" data-video="https://moviebox.ng/web/class-list?platform=Netflix">
-            <i class="fas fa-compass"></i><br>Explore 
-        </div>
-        <div class="nav-icon" data-video="https://moviebox.ng/web/ranking-list?id=997144265920760504&utm_source=h5seo_www.google.com">
-            <i class="fas fa-play-circle"></i><br>For You 
-        </div>
-        <div class="nav-icon" data-video="https://moviebox.ng/web/class-month?platform=Netflix&month=202501">
-            <i class="fas fa-fire"></i><br>New & Hot
-        </div>
-    </footer>
-
-    <script>
-        const videoFrame = document.getElementById("video-frame");
-
-        document.querySelectorAll(".nav-icon").forEach(icon => {
-            icon.addEventListener("click", function() {
-                document.querySelectorAll(".nav-icon").forEach(i => i.classList.remove("active"));
-                this.classList.add("active");
-
-                // Change video source based on the selected section
-                videoFrame.src = this.getAttribute("data-video");
-            });
-        });
+    <div id="popular-videos">
+        <h3>Dive into non-stop fun with more movies below.</h3>
+        <div id="popular-container"></div>
         
-        setTimeout(() => {
-            document.getElementById('notification-bar').style.opacity = '1';
-        }, 400); // Show after 40 seconds
+        <h3>Follow us on social media.</h3>
+        <div id="social-media" style="display: flex; justify-content: center; margin-top: 10px;">
+            <a href="https://www.facebook.com/username" target="_blank" class="social-icon">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://twitter.com/username" target="_blank" class="social-icon">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://telegram.me/username" target="_blank" class="social-icon">
+                <i class="fab fa-telegram social-icon"></i>
+            </a>
+            <a href="https://www.pinterest.com/username" target="_blank" class="social-icon">
+                <i class="fab fa-pinterest"></i>
+            </a>
+            <a href="https://www.instagram.com/username" target="_blank" class="social-icon">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://wa.me/1234567890" target="_blank" class="social-icon">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://www.tiktok.com/@username" target="_blank" class="social-icon">
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <a href="https://www.youtube.com/channel/UC123456" target="_blank" class="social-icon">
+                <i class="fab fa-youtube"></i>
+            </a>
+        </div>
+    </div>
+</div>
 
-        function closeNotification() {
-            document.getElementById('notification-bar').style.opacity = '0';
+<div id="playlist-container">
+    <h2></h2>
+    <div id="playlist-content"></div>
+</div>
+
+<div id="saved-container">
+    <h2>Favorites</h2>
+    <div id="saved-content"></div>
+</div>
+
+<div id="history-container">
+    <h2>History Views</h2>
+    <div id="history-content"></div>
+</div>
+
+<div id="discover-container">
+    <div class="discover-category">
+        <h3>Best Trailers</h3>
+        <div class="discover-items" id="most-watchlisted"></div>
+    </div>
+    <div class="discover-category">
+        <h3></h3>
+        <div class="discover-items" id="trending-trailers"></div>
+    </div>
+    <div class="discover-category">
+        <h3></h3>
+        <div class="discover-items" id="trending-on-itube"></div>
+    </div>
+    <div class="discover-category">
+        <h3></h3>
+        <div class="discover-items" id="browse-by-genre"></div>
+    </div>
+    <div class="discover-category">
+        <h3></h3>
+        <div class="discover-items" id="coming-soon"></div>
+    </div>
+    <div class="discover-category">
+        <h3></h3>
+        <div class="discover-items" id="new-for-family"></div>
+    </div>
+    <div class="discover-category">
+        <h3></h3>
+        <div class="discover-items" id="browse-by-decade"></div>
+    </div>
+</div>
+
+<footer>
+    <div class="nav-icon" id="home-btn" onclick="showHome()">
+        <i class="fas fa-home"></i><br>Home
+    </div>
+    <div class="nav-icon" id="on-demand-btn" onclick="openOnDemand()">
+        <i class="fas fa-tv"></i><br>On Demand 
+    </div>
+    <div class="nav-icon post-video-icon" onclick="openNovels()">
+        <i class="fas fa-plus"></i>
+    </div>
+    <div class="nav-icon" id="playlist-btn" onclick="showPlaylist()">
+        <i class="fas fa-fire"></i><br>New & Hot 
+    </div>
+    <div class="nav-icon" id="discover-btn" onclick="showDiscover()">
+        <i class="fas fa-compass"></i><br>Discover
+    </div>
+</footer>
+
+<script>
+// Sample video data
+const data = [
+    {
+        imgUrl: "https://bit.ly/4gZ1VzL",
+        videoUrl: "https://youtube.com/embed/xzk1ko7AN2M",
+        title: "Pterodactyl 2",
+        year: "2023",
+        tag: "Horror",
+    },
+    {
+        imgUrl: "https://bit.ly/4fFLfwd",
+        videoUrl: "https://youtube.com/embed/BAQV7hQdznE",
+        title: "Viking: Battle of Heirs",
+        year: "2023",
+        tag: "Action",
+    },
+    {
+        imgUrl: "https://bit.ly/4gCtC1L",
+        videoUrl: "https://youtube.com/embed/4Q8fJlbUn3w",
+        title: "Apocalypto",
+        year: "2006",
+        tag: "Battles",
+    },
+    {
+        imgUrl: "https://bit.ly/3Phnujl",
+        videoUrl: "https://youtube.com/embed/rsvGs96-ddo",
+        title: "Tsunami Sharks",
+        year: "2024",
+        tag: "Horror",
+    },
+    {
+        imgUrl: "https://bit.ly/3EdJhpW",
+        videoUrl: "https://youtube.com/embed/_q0HpkMrhdc",
+        title: "Conan the Adventurer",
+        year: "1997",
+        tag: "Action",
+    },
+    {
+        imgUrl: "https://bit.ly/4haIvbD",
+        videoUrl: "https://v.moviebox.ng/SroObuh5AM",
+        title: "The Crow",
+        year: "2024",
+        tag: "Horror",
+    },
+    {
+        imgUrl: "https://bit.ly/405kXOj",
+        videoUrl: "https://youtube.com/embed/CumW3IY1mMg",
+        title: "God of War",
+        year: "2024",
+        tag: "Action",
+    },
+    {
+        imgUrl: "https://bit.ly/4gCtcbn",
+        videoUrl: "https://youtube.com/embed/9QB2GjHg0Tw",
+        title: "Flight from Hell",
+        year: "2014",
+        tag: "Action",
+    },
+];
+
+// New sample data for various categories in Discover
+const discoverData = [
+    // Movies for "Most Watchlisted This Week"
+    { imgUrl: "https://bit.ly/4jvnTMN", title: "How To Train Your Dragon", videoUrl: "https://youtube.com/embed/5lzoxHSn0C0" }, 
+    { imgUrl: "https://bit.ly/4hdsCBo", title: "Mickey 17 | Official Trailer 2", videoUrl: "https://youtube.com/embed/tA1s65o_kYM" },
+    { imgUrl: "https://bit.ly/4aD90UL", title: "Titanic 2 (2025) - Teaser Trailer", videoUrl: "https://youtube.com/embed/FaR1mQ2b0Ck" },
+  
+    // Movies for "Trending Trailers"
+    { imgUrl: "https://bit.ly/4gCtC1L", title: "Apocalypto", videoUrl: "https://youtube.com/embed/4Q8fJlbUn3w" }, 
+    { imgUrl: "https://bit.ly/3Phnujl", title: "Tsunami Sharks", videoUrl: "https://youtube.com/embed/rsvGs96-ddo" },
+  
+    // Movies for "Trending On i Tube"
+    { imgUrl: "https://bit.ly/3EdJhpW", title: "Conan the Adventurer", videoUrl: "https://youtube.com/embed/_q0HpkMrhdc" }, 
+    { imgUrl: "https://bit.ly/4haIvbD", title: "The Crow", videoUrl: "https://v.moviebox.ng/SroObuh5AM" },
+  
+    // Movies for "Browse by Genre"
+    { imgUrl: "https://bit.ly/405kXOj", title: "God of War", videoUrl: "https://youtube.com/embed/CumW3IY1mMg" }, 
+    { imgUrl: "https://bit.ly/4gCtcbn", title: "Flight from Hell", videoUrl: "https://youtube.com/embed/9QB2GjHg0Tw" },
+  
+    // Movies for "Coming Soon"
+    { imgUrl: "https://bit.ly/4gZ1VzL", title: "New Movie X", videoUrl: "https://youtube.com/embed/xzk1ko7AN2M" }, 
+    { imgUrl: "https://bit.ly/4fFLfwd", title: "New Movie Y", videoUrl: "https://youtube.com/embed/BAQV7hQdznE" },
+  
+    // Movies for "New For The Family"
+    { imgUrl: "https://bit.ly/4gCtC1L", title: "Family Movie X", videoUrl: "https://youtube.com/embed/4Q8fJlbUn3w" }, 
+    { imgUrl: "https://bit.ly/3Phnujl", title: "Family Movie Y", videoUrl: "https://youtube.com/embed/rsvGs96-ddo" },
+  
+    // Movies for "Browse by Decade"
+    { imgUrl: "https://bit.ly/3EdJhpW", title: "Classic Movie 80s", videoUrl: "https://youtube.com/embed/_q0HpkMrhdc" }, 
+    { imgUrl: "https://bit.ly/4haIvbD", title: "Classic Movie 90s", videoUrl: "https://v.moviebox.ng/SroObuh5AM" }
+];
+
+// Load data from local storage
+let savedVideos = JSON.parse(localStorage.getItem('savedVideos')) || [];
+let historyVideos = JSON.parse(localStorage.getItem('historyVideos')) || [];
+
+// Display Home Page
+const displayHome = () => {
+    document.getElementById('frames-container').style.display = 'grid';
+    document.getElementById('playlist-container').style.display = 'none';
+    document.getElementById('saved-container').style.display = 'none';
+    document.getElementById('history-container').style.display = 'none';
+    document.getElementById('discover-container').style.display = 'none';    
+    createVideoItems(data);
+};
+
+// Create video items
+const createVideoItems = (filteredData = data, containerId = 'frames-container') => {
+    const container = document.getElementById(containerId);
+    container.innerHTML = '';
+
+    filteredData.forEach((item) => {
+        const videoItem = document.createElement('div');
+        videoItem.className = 'video-item';
+
+        const img = document.createElement('img');
+        img.src = item.imgUrl;
+        img.alt = item.title || 'Video thumbnail';
+        img.onerror = () => img.style.display = 'none';
+
+        img.onclick = () => {
+            addToHistory(item); // Add to history before playing
+            openVideoNav(item.videoUrl);
+        };
+
+        const title = document.createElement('div');
+        title.className = 'video-title';
+        title.innerText = item.title;
+
+        const year = document.createElement('div');
+        year.className = 'video-year';
+        year.innerText = item.year;
+
+        const saveButton = document.createElement('button');
+        saveButton.className = 'save-button';
+        saveButton.innerHTML = '<i class="fas fa-bookmark"></i>';
+        saveButton.onclick = (e) => {
+            e.stopPropagation(); // Prevent triggering the video click
+            saveVideo(item); // Save video and refresh display
+            saveButton.style.color = 'red'; 
+        };
+
+        videoItem.appendChild(img);
+        videoItem.appendChild(title);
+        videoItem.appendChild(year);
+        videoItem.appendChild(saveButton);
+        container.appendChild(videoItem);
+    });
+};
+
+const openVideoNav = (videoUrl) => {
+    document.getElementById('video-nav').style.display = 'block';
+    document.getElementById('video-player').src = videoUrl;
+    populatePopularVideos();
+};
+
+const closeNav = () => {
+    document.getElementById('video-nav').style.display = 'none';
+    document.getElementById('video-player').src = '';
+};
+
+const populatePopularVideos = () => {
+    const popularContainer = document.getElementById('popular-container');
+    popularContainer.innerHTML = '';
+    data.forEach((item) => {
+        const popularItem = document.createElement('div');
+        popularItem.className = 'popular-item';
+        popularItem.onclick = () => {
+            addToHistory(item); 
+            openVideoNav(item.videoUrl);
+        };
+
+        const img = document.createElement('img');
+        img.src = item.imgUrl;
+
+        const title = document.createElement('h4');
+        title.textContent = item.title;
+
+        popularItem.appendChild(img);
+        popularItem.appendChild(title);
+        popularContainer.appendChild(popularItem);
+    });
+};
+
+const saveVideo = (video) => {
+    if (!savedVideos.some(savedVideo => savedVideo.videoUrl === video.videoUrl)) {
+        savedVideos.unshift(video); 
+        localStorage.setItem('savedVideos', JSON.stringify(savedVideos));
+        displaySaved(); 
+    } else {
+        alert(`${video.title} is already saved!`);
+    }
+};
+
+const addToHistory = (video) => {
+    if (!historyVideos.some(historyVideo => historyVideo.videoUrl === video.videoUrl)) {
+        historyVideos.unshift(video);
+        if (historyVideos.length > 10) { 
+            historyVideos.pop(); 
         }
-        
-        
-        const firstPopupDelay = 80000; // 20 seconds delay after page load
-        const popupInterval = 900000;   // 15 seconds between popups
+        localStorage.setItem('historyVideos', JSON.stringify(historyVideos)); 
+    }
+};
 
-        function showAd() {
-            const lastPopupTime = localStorage.getItem('lastPopupTime');
-            const currentTime = Date.now();
+const displaySaved = () => {
+    document.getElementById('frames-container').style.display = 'none';
+    document.getElementById('playlist-container').style.display = 'none';
+    document.getElementById('history-container').style.display = 'none';
+    document.getElementById('discover-container').style.display = 'none';
+    document.getElementById('saved-container').style.display = 'block';
 
-            if (!lastPopupTime || currentTime - lastPopupTime >= popupInterval) {
-                document.getElementById('adOverlay').style.display = 'flex';
-                localStorage.setItem('lastPopupTime', currentTime); // Save the current time
+    const savedContent = document.getElementById('saved-content');
+    savedContent.innerHTML = '';
+
+    savedVideos.forEach((item, index) => {
+        const savedItem = document.createElement('div');
+        savedItem.className = 'saved-item';
+
+        const img = document.createElement('img');
+        img.src = item.imgUrl;
+        img.alt = item.title || 'Video thumbnail';
+        img.onclick = () => openVideoNav(item.videoUrl);
+
+        const title = document.createElement('h3');
+        title.textContent = item.title;
+
+        const year = document.createElement('div');
+        year.className = 'video-year';
+        year.innerText = item.year; 
+
+        const removeButton = document.createElement('span');
+        removeButton.textContent = '♥️ REMOVE';
+        removeButton.onclick = (e) => {
+            e.stopPropagation(); 
+            removeSavedVideo(index);
+        };
+
+        savedItem.appendChild(img);
+        savedItem.appendChild(title);
+        savedItem.appendChild(year); 
+        savedItem.appendChild(removeButton);
+        savedContent.appendChild(savedItem);
+    });
+};
+
+const removeSavedVideo = (index) => {
+    savedVideos.splice(index, 1);
+    localStorage.setItem('savedVideos', JSON.stringify(savedVideos));
+    displaySaved(); 
+};
+
+const displayPlaylist = () => {
+    document.getElementById('frames-container').style.display = 'grid';
+    document.getElementById('saved-container').style.display = 'none';
+    document.getElementById('history-container').style.display = 'none';
+    document.getElementById('discover-container').style.display = 'none';
+    document.getElementById('playlist-container').style.display = 'block';
+
+    const playlistContent = document.getElementById('playlist-content');
+    playlistContent.innerHTML = '';
+
+    const playlistData = [
+        { imgUrl: "https://bit.ly/4gCtC1L", videoUrl: "https://youtube.com/embed/CetjkiaH2x0", title: "APOCALYPSE 2", year: "2021" },
+        { imgUrl: "https://bit.ly/4fFLfwd", videoUrl: "https://youtube.com/embed/BAQV7hQdznE", title: "VIKING BATTLE", year: "2023" },
+        { imgUrl: "https://bit.ly/4gZ1VzL", videoUrl: "https://youtube.com/embed/xzk1ko7AN2M", title: "PTERODACTYL 2", year: "2023" },
+    ];
+
+    createVideoItems(playlistData); 
+};
+
+const displayHistory = () => {
+    document.getElementById('frames-container').style.display = 'none';
+    document.getElementById('playlist-container').style.display = 'none';
+    document.getElementById('saved-container').style.display = 'none';
+    document.getElementById('discover-container').style.display = 'none';
+    document.getElementById('history-container').style.display = 'block';
+
+    const historyContent = document.getElementById('history-content');
+    historyContent.innerHTML = '';
+
+    historyVideos.forEach((item) => {
+        const historyItem = document.createElement('div');
+        historyItem.className = 'history-item';
+
+        const img = document.createElement('img');
+        img.src = item.imgUrl;
+        img.alt = item.title || 'Video thumbnail';
+        img.onclick = () => openVideoNav(item.videoUrl);
+
+        const title = document.createElement('h3');
+        title.textContent = item.title;
+
+        const year = document.createElement('div');
+        year.className = 'video-year';
+        year.innerText = item.year; 
+
+        historyItem.appendChild(img);
+        historyItem.appendChild(title);
+        historyItem.appendChild(year); 
+        historyContent.appendChild(historyItem);
+    });
+};
+
+const showHome = () => {
+    displayHome();
+};
+
+const showPlaylist = () => {
+    displayPlaylist();
+};
+
+const showSaved = () => {
+    displaySaved();
+};
+
+const showHistory = () => {
+    displayHistory();
+};
+
+const showDiscover = () => {
+    document.getElementById('frames-container').style.display = 'none';
+    document.getElementById('playlist-container').style.display = 'none';
+    document.getElementById('saved-container').style.display = 'none';
+    document.getElementById('history-container').style.display = 'none';
+    document.getElementById('discover-container').style.display = 'block';
+    
+    // Populate the discover categories
+    populateDiscoverCategories();
+};
+
+const openOnDemand = () => {
+    window.open("https://i-tube-film.netlify.app/", "_blank");
+};
+
+const openNovels = () => {
+    window.open("https://your-novels-url.com", "_blank"); 
+};
+
+let debounceTimer;
+const handleSearch = () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+        const searchTerm = document.getElementById('search-bar').value.toLowerCase();
+        
+        // Combine all movie data for searching
+        const allMovies = [...data, ...discoverData, ...savedVideos, ...historyVideos];
+        
+        const filteredData = allMovies.filter(item => item.title.toLowerCase().includes(searchTerm));
+        
+        // Display the results in the frame container
+        createVideoItems(filteredData); 
+    }, 300); 
+};
+
+const filterByTag = (tag) => {
+    const filteredData = data.filter(item => item.tag === tag);
+    createVideoItems(filteredData);
+};
+
+// Share Functionality
+const shareLink = (platform) => {
+    const url = 'https://i-tube-movies.netlify.app/';
+    let shareUrl = '';
+
+    switch (platform) {
+        case 'telegram':
+            shareUrl = `https://telegram.me/share/url?url=${encodeURIComponent(url)}`;
+            break;
+        case 'twitter':
+            shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`;
+            break;
+        case 'whatsapp':
+            shareUrl = `https://wa.me/?text=${encodeURIComponent(url)}`;
+            break;
+        case 'generic':
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Check out this video platform!',
+                    url: url
+                }).catch(err => console.error(err));
+                return;
             } else {
-                setTimeout(showAd, popupInterval - (currentTime - lastPopupTime));
+                alert('Sharing is not supported in your browser.');
+                return;
             }
-        }
+    }
 
-        function showAdPage(url) {
-            window.open(url, '_blank'); // Open ad in a new tab
-            closeAd();
-        }
+    window.open(shareUrl, '_blank');
+};
 
-        function closeAd() {
-            document.getElementById('adOverlay').style.display = 'none';
-            setTimeout(showAd, popupInterval); // Show again after 15 seconds
-        }
+let lastScrollTop = 0;
+const footer = document.querySelector('footer');
 
-        // Start the first popup after 20 seconds
-        setTimeout(showAd, firstPopupDelay);
-    </script>
+const handleScroll = () => {
+    const st = window.pageYOffset || document.documentElement.scrollTop;
+    if (st > lastScrollTop) {
+        footer.style.transform = 'translateY(100%)'; 
+    } else {
+        footer.style.transform = 'translateY(0)'; 
+    }
+    lastScrollTop = st <= 0 ? 0 : st; 
+};
+
+window.addEventListener('scroll', handleScroll);
+handleScroll();
+
+window.onload = function () {
+    setTimeout(function () {
+        const installMessage = document.getElementById('install-message');
+        const closeButton = document.getElementById('close-btn');
+
+        installMessage.style.display = 'flex';
+
+        closeButton.onclick = function () {
+            installMessage.style.display = 'none';
+        };
+    }, 40000); 
+};
+
+// Shuffle Array Function
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+// Populate Discover Categories
+const populateDiscoverCategories = () => {
+    populateCategory('most-watchlisted', discoverData.slice(0, 2));  // First two items for Most Watchlisted
+    populateCategory('trending-trailers', discoverData.slice(2, 4)); // Adjust indices as needed
+    populateCategory('trending-on-itube', discoverData.slice(4, 6));
+    populateCategory('browse-by-genre', discoverData.slice(6, 8));
+    populateCategory('coming-soon', discoverData.slice(8, 10));
+    populateCategory('new-for-family', discoverData.slice(10, 12));
+    populateCategory('browse-by-decade', discoverData.slice(12, 14));
+};
+
+// Function to Populate Each Discover Category
+const populateCategory = (categoryId, movies) => {
+    const categoryContainer = document.getElementById(categoryId);
+    categoryContainer.innerHTML = '';
+
+    movies.forEach((movie) => {
+        const discoverItem = document.createElement('div');
+        discoverItem.className = 'discover-item';
+        
+        // Set the onclick event to open the video
+        discoverItem.onclick = () => openVideoNav(movie.videoUrl);
+
+        const img = document.createElement('img');
+        img.src = movie.imgUrl;
+        img.alt = movie.title;
+
+        const title = document.createElement('div');
+        title.className = 'video-title';
+        title.innerText = movie.title;
+
+        discoverItem.appendChild(img);
+        discoverItem.appendChild(title);
+        categoryContainer.appendChild(discoverItem);
+    });
+}
+
+// Shuffle videos on load
+const shuffledData = shuffleArray(data);
+createVideoItems(shuffledData); 
+
+document.addEventListener('DOMContentLoaded', () => {
+    displayHome(); 
+});
+</script>
+<script type='text/javascript' src='//pl25449821.profitablecpmrate.com/49/e8/e8/49e8e866ee0e82947b1fa4dbc86c7d7d.js'></script>
 </body>
 </html>
