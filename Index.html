@@ -117,7 +117,7 @@
       slide.className = 'video-slide';
 
       slide.innerHTML = `
-        <video src="${src}" autoplay playsinline loop></video>
+        <video src="${src}" playsinline></video>
         <div class="overlay">
           <div class="logo">Tik <span style="color:#25F4EE">G</span>irls</div>
           <div class="actions">
@@ -133,21 +133,33 @@
           </div>
         </div>
       `;
-      const video = slide.querySelector('video');
-      video.volume = 1;
-      video.muted = false;
-      video.autoplay = true;
-      video.play().catch(err => {
-        console.warn('Autoplay with sound may be blocked by the browser', err);
-      });
-
-      return slide;
+      wrapper.appendChild(slide);
+      return slide.querySelector('video');
     }
 
-    videos.forEach(src => {
-      const slide = createSlide(src);
-      wrapper.appendChild(slide);
-    });
+    const videoElements = videos.map(src => createSlide(src));
+
+    // Autoplay first video with sound on user gesture
+    window.addEventListener('click', enableSoundOnce, { once: true });
+
+    function enableSoundOnce() {
+      videoElements[0].muted = false;
+      videoElements[0].play().catch(console.warn);
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          video.muted = false;
+          video.play().catch(console.warn);
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.75 });
+
+    videoElements.forEach(video => observer.observe(video));
   </script>
 </body>
 </html>
