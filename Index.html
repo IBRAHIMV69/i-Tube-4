@@ -15,6 +15,7 @@
       overflow: hidden;
       font-family: sans-serif;
       background: black;
+      color: white;
     }
     #video-wrapper {
       height: 100%;
@@ -70,14 +71,14 @@
       display: flex;
       justify-content: space-around;
       background-color: rgba(0, 0, 0, 0.7);
-      padding: 10px 0;
+      padding: 5px 0;
       border-top: 1px solid #444;
       z-index: 10;
     }
     .bottom-nav div {
       text-align: center;
       color: white;
-      font-size: 14px;
+      font-size: 20px;
     }
     .bottom-nav img {
       width: 25px;
@@ -100,20 +101,20 @@
     }
   </style>
 </head>
-<body>
+<body>    
   <div id="video-wrapper"></div>
 
   <div class="bottom-nav">
     <div>
-      <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Dating" />
+      <img src="https://best-girls-around.com/video_app/new/main/1/img/notif.png" alt="Dating" />
       <div>Dating</div>
     </div>
     <div>
-      <img src="https://cdn-icons-png.flaticon.com/512/10431/10431238.png" alt="Live" />
+      <img src="https://cdn-icons-png.flaticon.com/128/2936/2936956.png" alt="Live" />
       <div>Live</div>
     </div>
     <div>
-      <img src="https://cdn-icons-png.flaticon.com/512/60/60740.png" alt="Download" />
+      <img src="https://best-girls-around.com/video_app/new/main/1/img/download.png" alt="Download" />
       <div>Download</div>
     </div>
   </div>
@@ -126,9 +127,9 @@
     ];
 
     const profileImages = [
-      'https://cdn-icons-png.flaticon.com/512/194/194938.png',
-      'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
-      'https://cdn-icons-png.flaticon.com/512/219/219983.png'
+      'https://best-girls-around.com/video_app/new/main/1/img/avatar4.jpg',
+      'https://best-girls-around.com/video_app/new/main/1/img/avatar5.jpg',
+      'https://best-girls-around.com/video_app/new/main/1/img/avatar1.jpg'
     ];
 
     const wrapper = document.getElementById('video-wrapper');
@@ -140,19 +141,19 @@
       slide.innerHTML = `
         <video src="${src}" playsinline></video>
         <div class="overlay">
-          <div class="logo">Tik <span style="color:#25F4EE">G</span>irls</div>
+      <div class="logo">Tik <span style="color:#25F4EE">G</span>irls</div>        
           <div class="actions">
             <div class="profile-logo">
               <img src="${profileImg}" alt="Profile" />
             </div>
             <div>
-              <img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png" alt="like"/><br/>887
+              <img src="https://best-girls-around.com/video_app/new/main/1/img/like.gif" alt="like"/><br/>887
             </div>
             <div>
-              <img src="https://cdn-icons-png.flaticon.com/512/1380/1380338.png" alt="comment"/><br/>221
+              <img src="https://best-girls-around.com/video_app/new/main/1/img/speech-bubble.png" alt="comment"/><br/>221
             </div>
             <div>
-              <img src="https://cdn-icons-png.flaticon.com/512/786/786205.png" alt="share"/><br/>229
+              <img src="https://best-girls-around.com/video_app/new/main/1/img/share.png" alt="share"/><br/>229
             </div>
           </div>
         </div>
