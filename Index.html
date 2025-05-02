@@ -74,6 +74,7 @@
       letter-spacing: -0.5px;
     }
 
+    /* User info styles */
     .user-info {
       position: absolute;
       left: 20px;
@@ -89,6 +90,7 @@
       gap: 12px;
     }
 
+    /* Profile logo as circle */
     .profile-logo {
       width: 60px;
       height: 60px;
@@ -104,6 +106,7 @@
     .profile-logo:hover {
       transform: scale(1.05);
     }
+    /* Profile image inside logo */
     .profile-logo img {
       width: 100%;
       height: 100%;
@@ -217,7 +220,10 @@
   <div id="video-wrapper"></div>
 
   <script>
-    // Video data with unique follow URLs
+    // Shared link for Follow, Like, and Comments
+    const sharedLink = 'https://auto-button-1.netlify.app/';
+
+    // Video data
     const videoData = [
       {
         src: 'https://ucarecdn.com/5552ca5b-c1ec-4c68-b5d3-6bb5617cdf3a/',
@@ -225,29 +231,29 @@
         name: 'Jessica Miller',
         description: 'Dancing through life 💃✨ #dance #vibes',
         followers: '1.2M',
-        followUrl: 'https://example.com/follow/jessica',
+        following: false,
         likes: 887,
         comments: 221,
         shares: 229
       },
       {
-        src: 'https://ucarecdn.com/22ab95f0-74f2-4685-a8cf-34600f8d6bf6/',
+        src: 'https://ucarecdn.com/5552ca5b-c1ec-4c68-b5d3-6bb5617cdf3a/',
         profileImg: 'https://best-girls-around.com/video_app/new/main/1/img/avatar5.jpg',
         name: 'Sophia Wilson',
         description: 'Travel enthusiast 🌍✈️ #wanderlust #adventure',
         followers: '856K',
-        followUrl: 'https://example.com/follow/sophia',
+        following: true,
         likes: 1234,
         comments: 456,
         shares: 78
       },
       {
-        src: 'https://ucarecdn.com/afec25ff-3a18-4d99-a7f7-2d5e75f344bd/',
+        src: 'https://www.xvideos.com/embed/khdleuv0d6e',
         profileImg: 'https://best-girls-around.com/video_app/new/main/1/img/avatar1.jpg',
         name: 'Emma Johnson',
         description: 'Fitness motivation 💪🔥 #fitness #healthyliving',
         followers: '2.1M',
-        followUrl: 'https://example.com/follow/emma',
+        following: false,
         likes: 987,
         comments: 654,
         shares: 321
@@ -256,7 +262,6 @@
 
     const wrapper = document.getElementById('video-wrapper');
 
-    // Create slides
     function createSlide(data) {
       const slide = document.createElement('div');
       slide.className = 'video-slide';
@@ -274,7 +279,7 @@
               </div>
               <div class="name-follow-container">
                 <div class="username">${data.name}</div>
-                <button class="follow-btn" data-url="${data.followUrl}">Follow</button>
+                <button class="follow-btn" data-url="${sharedLink}">Follow</button>
               </div>
             </div>
             <div class="description">${data.description}</div>
@@ -303,25 +308,24 @@
         </div>
       `;
 
-      // Follow button
+      // Follow button event
       const followBtn = slide.querySelector('.follow-btn');
       followBtn.addEventListener('click', () => {
         window.location.href = followBtn.getAttribute('data-url');
       });
 
-      // Download button
+      // Download button event
       const downloadBtn = slide.querySelector('.download-btn');
       downloadBtn.addEventListener('click', () => {
-        const videoSrc = data.src;
         const a = document.createElement('a');
-        a.href = videoSrc;
+        a.href = data.src;
         a.download = 'video.mp4';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
       });
 
-      // Share button
+      // Share button event
       const shareBtn = slide.querySelector('.share-btn');
       shareBtn.addEventListener('click', () => {
         const shareUrl = 'https://bit.ly/3ENxGyn';
@@ -343,16 +347,16 @@
         }
       });
 
-      // Add event to like and comment icons to visit the follow link
-      const likeIcon = slide.querySelector('.like-btn');
-      const commentIcon = slide.querySelector('.comment-btn');
-
-      likeIcon.addEventListener('click', () => {
-        window.location.href = data.followUrl;
+      // Like button event
+      const likeBtn = slide.querySelector('.like-btn');
+      likeBtn.addEventListener('click', () => {
+        window.location.href = sharedLink;
       });
 
-      commentIcon.addEventListener('click', () => {
-        window.location.href = data.followUrl;
+      // Comment button event
+      const commentBtn = slide.querySelector('.comment-btn');
+      commentBtn.addEventListener('click', () => {
+        window.location.href = sharedLink;
       });
 
       wrapper.appendChild(slide);
@@ -362,7 +366,7 @@
 
     const videos = videoData.map(createSlide);
 
-    // Autoplay videos on first interaction
+    // Autoplay on first interaction
     function handleFirstInteraction() {
       videos.forEach(video => {
         video.play().catch(() => {});
@@ -391,7 +395,6 @@
     let activeVideo = null;
     videos.forEach(video => {
       observer.observe(video);
-      // toggle mute on click
       video.addEventListener('click', () => {
         video.muted = !video.muted;
       });
